@@ -1,0 +1,17 @@
+# Official list of OpenEBS Maintainers.
+#
+# Names added to this file should be in the following format:
+#     Individual's name,@githubhandle, Company Name
+#
+# Please keep the below list sorted in ascending order.
+#
+#Maintainers
+"Kiran Mova",@kmova,MayaData
+
+#Reviewers
+"Abhishek Agarwal",@Ab-hishek,MayaData
+"Rahul Agarwal",@rahul799,Independent
+"Sahil",@rajaSahil,MayaData
+"Sanjay",@Sanjay1611,MayaData
+"Sebastien Dionne",@survivant,Jerabi inc.
+"Vishnu Attur",@avishnu,MayaData
