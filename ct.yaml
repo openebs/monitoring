@@ -1,4 +1,4 @@
-# See https://github.com/helm/chart-testing#configuration
+#See https://github.com/helm/chart-testing#configuration
 remote: origin
 target-branch: develop
 chart-dirs:
