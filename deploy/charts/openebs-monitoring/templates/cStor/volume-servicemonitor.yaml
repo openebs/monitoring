@@ -12,8 +12,7 @@ spec:
     matchLabels:
       openebs.io/cas-type: cstor
   namespaceSelector:
-    matchNames:
-      - openebs
+    any: true
   endpoints:
   - port: {{ .Values.cstor.cstorVolume.cstorVolumeService.portName }}
     path: {{ .Values.cstor.cstorVolume.serviceMonitor.path | quote }}

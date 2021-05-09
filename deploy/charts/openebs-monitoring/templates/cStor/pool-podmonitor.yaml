@@ -12,8 +12,7 @@ spec:
     matchLabels:
       app: cstor-pool
   namespaceSelector:
-    matchNames:
-      - openebs
+    any: true
   podMetricsEndpoints:
   - targetPort: {{ .Values.cstor.cstorPool.cstorPoolPod.targetPort }}
     path: {{ .Values.cstor.cstorPool.podMonitor.path | quote }}
