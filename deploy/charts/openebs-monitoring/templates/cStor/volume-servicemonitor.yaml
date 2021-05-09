@@ -1,0 +1,19 @@
+{{- if and .Values.cstor.enabled .Values.cstor.cstorVolume.serviceMonitor.selfMonitor }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "openebs-monitoring.fullname" . }}-cstor-volume
+  namespace: {{ template "openebs-monitoring.namespace" . }}
+  labels:
+    app: {{ template "openebs-monitoring.name" . }}-cstor-volume
+{{ include "openebs-monitoring.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      openebs.io/cas-type: cstor
+  namespaceSelector:
+    any: true
+  endpoints:
+  - port: {{ .Values.cstor.cstorVolume.cstorVolumeService.portName }}
+    path: {{ .Values.cstor.cstorVolume.serviceMonitor.path | quote }}
+{{- end }}
