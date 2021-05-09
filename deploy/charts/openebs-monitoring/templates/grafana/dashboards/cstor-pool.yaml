@@ -611,7 +611,7 @@ data:
                 "exemplar": true,
                 "expr": "sum(openebs_total_write_count{pod=\"$cstor_pool\"})",
                 "interval": "",
-                "legendFormat": "wrie_iops",
+                "legendFormat": "write iops",
                 "refId": "A"
                 }
             ],
