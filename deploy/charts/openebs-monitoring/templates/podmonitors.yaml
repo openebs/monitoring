@@ -1,0 +1,39 @@
+{{- if .Values.podMonitors }}
+{{- range $openebsEngine, $fields := .Values.podMonitors }}
+{{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ template "openebs-monitoring.fullname" $ }}-{{ $openebsEngine }}
+  namespace: {{ template "openebs-monitoring.namespace" $ }}
+  labels:
+    app: {{ template "openebs-monitoring.name" $ }}-{{ $openebsEngine }}
+{{ include "openebs-monitoring.labels" $ | indent 4 }}
+spec:
+{{- if (and (hasKey $fields "labelSelector") ($fields.labelSelector)) }}
+  selector:
+{{ toYaml $fields.labelSelector | indent 4 }}
+{{ else }}
+  selector:
+    matchLabels:
+{{ toYaml $fields.defaultLabelSelector | indent 6 }}
+{{- end }}
+{{- if (and (hasKey $fields "namespaceSelector") ($fields.namespaceSelector)) }}
+  namespaceSelector:
+{{ toYaml $fields.namespaceSelector | indent 4 }}
+  {{ else }}
+  namespaceSelector:
+    any: true
+{{- end }}
+{{- if (and (hasKey $fields "podMetricsEndpoints") ($fields.podMetricsEndpoints)) }}
+  podMetricsEndpoints:
+{{ toYaml $fields.podMetricsEndpoints | indent 2 }}
+{{ else }}
+  podMetricsEndpoints:
+  - targetPort: 9500
+    path: /metrics
+{{- end }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

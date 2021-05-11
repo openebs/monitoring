@@ -1,0 +1,39 @@
+{{- if .Values.serviceMonitors }}
+{{- range $openebsEngine, $fields := .Values.serviceMonitors }}
+{{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "openebs-monitoring.fullname" $ }}-{{ $openebsEngine }}
+  namespace: {{ template "openebs-monitoring.namespace" $ }}
+  labels:
+    app: {{ template "openebs-monitoring.name" $ }}-{{ $openebsEngine }}
+{{ include "openebs-monitoring.labels" $ | indent 4 }}
+spec:
+{{- if (and (hasKey $fields "labelSelector") ($fields.labelSelector)) }}
+  selector:
+{{ toYaml $fields.labelSelector | indent 4 }}
+{{ else }}
+  selector:
+    matchLabels:
+      openebs.io/cas-type: {{ $openebsEngine }}
+{{- end }}
+{{- if (and (hasKey $fields "namespaceSelector") ($fields.namespaceSelector)) }}
+  namespaceSelector:
+{{ toYaml $fields.namespaceSelector | indent 4 }}
+  {{ else }}
+  namespaceSelector:
+    any: true
+{{- end }}
+{{- if (and (hasKey $fields "endpoints") ($fields.endpoints)) }}
+  endpoints:
+{{ toYaml $fields.endpoints | indent 2 }}
+{{ else }}
+  endpoints:
+  - port: exporter
+    path: /metrics
+{{- end }}
+---
+{{- end }}
+{{- end }}
+{{- end }}
