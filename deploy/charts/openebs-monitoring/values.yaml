@@ -44,7 +44,7 @@ kube-prometheus-stack:
         enabled: true
         # ConfigMaps with label below will be added to Grafana as dashboards.
         label: grafana_dashboard
-        
+
 serviceMonitors:
   cstor:
     enabled: true
@@ -59,9 +59,9 @@ serviceMonitors:
        ##
        #   path: /metrics
     endpoints:
-    - port: exporter
-      path: /mertics
-    
+      - port: exporter
+        path: /mertics
+
     ## Label selector for services to which this ServiceMonitor applies
     ## selector: {}
        # matchLabels: {}
@@ -70,7 +70,7 @@ serviceMonitors:
     selector:
       matchLabels:
         openebs.io/cas-type: cstor
-    
+
     ## Namespaces from which services are selected
     ## namespaceSelector: []
        ## Match any namespace
@@ -85,10 +85,10 @@ serviceMonitors:
        #     - default
     namespaceSelector:
       any: true
-    
-  jiva: 
+
+  jiva:
     enabled: false
-    
+
     ## Endpoints of the selected service to be monitored
     ## endpoints: []
        ## Name of the endpoint's service port
@@ -99,9 +99,9 @@ serviceMonitors:
        ##
        #   path: /metrics
     endpoints:
-    - port: exporter
-      path: /mertics
-    
+      - port: exporter
+        path: /mertics
+
     ## Label selector for services to which this ServiceMonitor applies
     ## selector: {}
        # matchLabels: {}
@@ -110,7 +110,7 @@ serviceMonitors:
     selector:
       matchLabels:
         openebs.io/cas-type: jiva
-    
+
     ## Namespaces from which services are selected
     ## namespaceSelector: []
        ## Match any namespace
@@ -141,9 +141,9 @@ podMonitors:
        ##
        #   path: /metrics
     podMetricsEndpoints:
-    - targetPort: 9500
-      path: /metrics
-    
+      - targetPort: 9500
+        path: /metrics
+
     ## Label selector for pods to which this PodMonitor applies
     ## selector: {}
        # matchLabels: {}
@@ -152,7 +152,7 @@ podMonitors:
     selector:
       matchLabels:
         app: cstor-pool
-    
+
     ## Namespaces from which services are selected
     ##
     # namespaceSelector: []
