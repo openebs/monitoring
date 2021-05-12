@@ -1,0 +1,22 @@
+{{- if and (index .Values "kube-prometheus-stack" "grafana" "enabled") (index .Values "kube-prometheus-stack" "grafana" "customDashboardsEnabled") }}
+{{- $files := .Files.Glob "dashboards/**.json" }}
+{{- if $files }}
+{{- range $fileName, $fileContents := $files }}
+{{- $dashboardName := regexReplaceAll "(^.*/)(.*)\\.json$" $fileName "${2}" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-%s" (include "openebs-monitoring.fullname" $) $dashboardName | trunc 63 | trimSuffix "-" }}
+  namespace: {{ template "openebs-monitoring.namespace" $ }}
+  labels:
+    {{- if index $.Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}
+    {{ index $.Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}: "1"
+    {{- end }}
+    app: {{ template "openebs-monitoring.name" $ }}-grafana
+{{ include "openebs-monitoring.labels" $ | indent 4 }}
+data:
+  {{ $dashboardName }}.json: {{ $.Files.Get $fileName | toPrettyJson }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

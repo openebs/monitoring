@@ -18,7 +18,6 @@ fullnameOverride: ""
 kube-prometheus-stack:
   prometheus:
     prometheusSpec:
-
       ## If true, a nil or {} value for prometheus.prometheusSpec.serviceMonitorSelector will cause the
       ## prometheus resource to be created with selectors based on values in the helm deployment,
       ## which will also match the servicemonitors created
@@ -37,6 +36,7 @@ kube-prometheus-stack:
     ## Deploy default dashboards.
     ##
     defaultDashboardsEnabled: true
+    customDashboardsEnabled: true
     adminPassword: admin
 
     sidecar:
@@ -51,38 +51,37 @@ serviceMonitors:
 
     ## Endpoints of the selected service to be monitored
     ## endpoints: []
-       ## Name of the endpoint's service port
-       ## Mutually exclusive with targetPort
-       # - port: ""
+    ## Name of the endpoint's service port
+    ## Mutually exclusive with targetPort
+    #    - port: ""
 
-       ## HTTP path to scrape for metrics
-       ##
-       #   path: /metrics
+    ## HTTP path to scrape for metrics
+    ##
+    #      path: /metrics
     endpoints:
       - port: exporter
         path: /mertics
 
     ## Label selector for services to which this ServiceMonitor applies
     ## selector: {}
-       # matchLabels: {}
-       # Eg- matchLabels:
-       #       cas-type: cstor
+    #    Eg- matchLabels:
+    #    matchLabels: {}
+    #      cas-type: cstor
     selector:
       matchLabels:
         openebs.io/cas-type: cstor
 
     ## Namespaces from which services are selected
     ## namespaceSelector: []
-       ## Match any namespace
-       ##
-       # any: true
+    ## Match any namespace
+    #    any: true
 
-       ## Explicit list of namespace names to select
-       ##
-       # matchNames: []
-       ## Eg- matchNames:
-       #     - openebs
-       #     - default
+    ## Explicit list of namespace names to select
+    ##
+    #    matchNames: []
+    ## Eg- matchNames:
+    #        - openebs
+    #        - default
     namespaceSelector:
       any: true
 
@@ -91,38 +90,37 @@ serviceMonitors:
 
     ## Endpoints of the selected service to be monitored
     ## endpoints: []
-       ## Name of the endpoint's service port
-       ## Mutually exclusive with targetPort
-       # - port: ""
+    ## Name of the endpoint's service port
+    ## Mutually exclusive with targetPort
+    # - port: ""
 
-       ## HTTP path to scrape for metrics
-       ##
-       #   path: /metrics
+    ## HTTP path to scrape for metrics
+    ##
+    #   path: /metrics
     endpoints:
       - port: exporter
         path: /mertics
 
     ## Label selector for services to which this ServiceMonitor applies
     ## selector: {}
-       # matchLabels: {}
-       # Eg- matchLabels:
-       #       cas-type: jiva
+    # Eg- matchLabels:
+    #    matchLabels: {}
+    #       cas-type: jiva
     selector:
       matchLabels:
         openebs.io/cas-type: jiva
 
     ## Namespaces from which services are selected
     ## namespaceSelector: []
-       ## Match any namespace
-       ##
-       # any: true
+    ## Match any namespace
+    #    any: true
 
-       ## Explicit list of namespace names to select
-       ##
-       # matchNames: []
-       # Eg- matchNames:
-       #     - openebs
-       #     - default
+    ## Explicit list of namespace names to select
+    ##
+    # matchNames: []
+    # Eg- matchNames:
+    #       - openebs
+    #       - default
     namespaceSelector:
       any: true
 
@@ -133,22 +131,22 @@ podMonitors:
     ## Endpoints of the selected pods to be monitored
     ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
     ## podMetricsEndpoints: []
-       ## Name or number of the endpoint's target port
-       ## Mutually exclusive with port
-       # - targetPort: ""
+    ## Name or number of the endpoint's target port
+    ## Mutually exclusive with port
+    # - targetPort: ""
 
-       ## HTTP path to scrape for metrics
-       ##
-       #   path: /metrics
+    ## HTTP path to scrape for metrics
+    ##
+    #   path: /metrics
     podMetricsEndpoints:
       - targetPort: 9500
         path: /metrics
 
     ## Label selector for pods to which this PodMonitor applies
     ## selector: {}
-       # matchLabels: {}
-       # Eg- matchLabels:
-       #       app: cstor-pod
+    # Eg- matchLabels:
+    #    matchLabels: {}
+    #       app: cstor-pod
     selector:
       matchLabels:
         app: cstor-pool
@@ -156,15 +154,14 @@ podMonitors:
     ## Namespaces from which services are selected
     ##
     # namespaceSelector: []
-      ## Match any namespace
-      ##
-      # any: true
+    ## Match any namespace
+    #   any: true
 
-      ## Explicit list of namespace names to select
-      ##
-      # matchNames: []
-      # Eg- matchNames:
-      #     - openebs
-      #     - default
+    ## Explicit list of namespace names to select
+    ##
+    # matchNames: []
+    # Eg- matchNames:
+    #       - openebs
+    #       - default
     namespaceSelector:
       any: true
