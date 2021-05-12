@@ -12,6 +12,18 @@ description: A Helm chart for monitoring OpenEBS
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
 
+maintainers:
+  - name: kiranmova
+    email: kiran.mova@mayadata.io
+  - name: avishnu
+    email: vishnu.attur@mayadata.io
+  - name: Ab-hishek
+    email: abhishek.agarwal@mayadata.io
+  - name: rajaSahil
+    email: sahil.raja@mayadata.io
+  - name: Sanjay1611
+    email: sanjay.nathani@mayadata.io
+
 sources:
   - https://github.com/openebs/monitoring
 
