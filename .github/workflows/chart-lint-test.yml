@@ -48,10 +48,5 @@ jobs:
         uses: helm/kind-action@v1.0.0
         if: steps.list-changed.outputs.changed == 'true'
 
-      - name: Add dependency chart repos
-        run: |
-          helm repo add kube-prometheus-stack https://prometheus-community.github.io/helm-charts
-          helm repo update
-
       - name: Run chart-testing (install)
         run: ct install --config ct.yaml

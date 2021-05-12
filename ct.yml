@@ -3,4 +3,6 @@ remote: origin
 target-branch: develop
 chart-dirs:
   - deploy/charts
+chart-repos:
+  - kube-prometheus-stack=https://prometheus-community.github.io/helm-charts
 helm-extra-args: --timeout=500s
