@@ -1,0 +1,13 @@
+OpenEBS monitoring has been installed.
+Check its status by running:
+$ kubectl get pods -n {{ .Release.Namespace }}
+
+Use `kubectl get svc -n {{ .Release.Namespace }}` to list all the 
+services in the `{{ .Release.Namespace }}` namespace.
+
+To see the dashboards in grafana UI, create either a NodePort service for 
+Grafana(grafana running on port 3000) and access it using that Node's IP 
+or you can port-forward the traffic to Grafana pods to your host and 
+access it via Host's IP
+
+For more information, visit our Slack at https://openebs.io/community 

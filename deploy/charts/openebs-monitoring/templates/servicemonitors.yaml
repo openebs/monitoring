@@ -1,0 +1,22 @@
+{{- if .Values.serviceMonitors }}
+{{- range $openebsEngine, $fields := .Values.serviceMonitors }}
+{{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "openebs-monitoring.fullname" $ }}-{{ $openebsEngine }}
+  namespace: {{ template "openebs-monitoring.namespace" $ }}
+  labels:
+    app: {{ template "openebs-monitoring.name" $ }}-{{ $openebsEngine }}
+{{ include "openebs-monitoring.labels" $ | indent 4 }}
+spec:
+  selector:
+{{ toYaml $fields.selector | indent 4 }}
+  namespaceSelector:
+{{ toYaml $fields.namespaceSelector | indent 4 }}
+  endpoints:
+{{ toYaml $fields.endpoints | indent 2 }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

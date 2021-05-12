@@ -1,0 +1,22 @@
+{{- if .Values.podMonitors }}
+{{- range $openebsEngine, $fields := .Values.podMonitors }}
+{{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ template "openebs-monitoring.fullname" $ }}-{{ $openebsEngine }}
+  namespace: {{ template "openebs-monitoring.namespace" $ }}
+  labels:
+    app: {{ template "openebs-monitoring.name" $ }}-{{ $openebsEngine }}
+{{ include "openebs-monitoring.labels" $ | indent 4 }}
+spec:
+  selector:
+{{ toYaml $fields.selector | indent 4 }}
+  namespaceSelector:
+{{ toYaml $fields.namespaceSelector | indent 4 }}
+  podMetricsEndpoints:
+{{ toYaml $fields.podMetricsEndpoints | indent 2 }}
+---
+{{- end }}
+{{- end }}
+{{- end }}
