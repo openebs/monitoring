@@ -99,7 +99,7 @@ serviceMonitors:
     #   path: /metrics
     endpoints:
       - port: exporter
-        path: /mertics
+        path: /metrics
 
     ## Label selector for services to which this ServiceMonitor applies
     ## selector: {}
