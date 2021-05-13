@@ -49,78 +49,108 @@ serviceMonitors:
   cstor:
     enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    ## endpoints: []
+    ## 	Endpoints of the selected service to be monitored
+    # endpoints: []
+
     ## Name of the endpoint's service port
     ## Mutually exclusive with targetPort
-    #    - port: ""
+    #   - port: ""
 
     ## HTTP path to scrape for metrics
-    ##
-    #      path: /metrics
+    #     path: /metrics
+
+    ## Example
+
+    # endpoints:
+    #   - port: exporter
+    #     path: /metrics
     endpoints:
       - port: exporter
         path: /mertics
 
-    ## Label selector for services to which this ServiceMonitor applies
-    ## selector: {}
-    #    Eg- matchLabels:
-    #    matchLabels: {}
-    #      cas-type: cstor
+    ## 	Label selector for services to which this ServiceMonitor applies
+    # selector: {}
+    #   matchLabels: {}
+
+    ## Example
+
+    # selector:
+    #   matchLabels:
+    #     cas-type: cstor
+
     selector:
       matchLabels:
         openebs.io/cas-type: cstor
 
-    ## Namespaces from which services are selected
-    ## namespaceSelector: []
+    ## 	Namespaces from which services are selected
+    # namespaceSelector: []
     ## Match any namespace
-    #    any: true
+    #   any: true
 
     ## Explicit list of namespace names to select
-    ##
-    #    matchNames: []
-    ## Eg- matchNames:
-    #        - openebs
-    #        - default
+    # matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
     namespaceSelector:
       any: true
 
   jiva:
-    enabled: false
+    enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    ## endpoints: []
+    ## 	Endpoints of the selected service to be monitored
+    # endpoints: []
     ## Name of the endpoint's service port
     ## Mutually exclusive with targetPort
-    # - port: ""
+    #   - port: ""
 
     ## HTTP path to scrape for metrics
-    ##
-    #   path: /metrics
+    #     path: /metrics
+
+    ## Example
+
+    # endpoints:
+    #   - port: exporter
+    #     path: /metrics
+
     endpoints:
       - port: exporter
         path: /metrics
 
-    ## Label selector for services to which this ServiceMonitor applies
-    ## selector: {}
-    # Eg- matchLabels:
-    #    matchLabels: {}
-    #       cas-type: jiva
+    ## 	Label selector for services to which this ServiceMonitor applies
+    # selector: {}
+    #   matchLabels: {}
+
+    ## Example
+
+    # selector:
+    #   matchLabels:
+    #     cas-type: jiva
+
     selector:
       matchLabels:
         openebs.io/cas-type: jiva
 
-    ## Namespaces from which services are selected
-    ## namespaceSelector: []
+    ## 	Namespaces from which services are selected
+    # namespaceSelector: []
     ## Match any namespace
-    #    any: true
+    #   any: true
 
     ## Explicit list of namespace names to select
-    ##
-    # matchNames: []
-    # Eg- matchNames:
-    #       - openebs
-    #       - default
+    #   matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
     namespaceSelector:
       any: true
 
@@ -128,40 +158,57 @@ podMonitors:
   cstor:
     enabled: true
 
-    ## Endpoints of the selected pods to be monitored
+    ## 	Endpoints of the selected pods to be monitored
     ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
-    ## podMetricsEndpoints: []
+    # podMetricsEndpoints: []
     ## Name or number of the endpoint's target port
     ## Mutually exclusive with port
-    # - targetPort: ""
+    #   - targetPort: ""
 
     ## HTTP path to scrape for metrics
-    ##
-    #   path: /metrics
+    #     path: /metrics
+
+    ## Example
+
+    # podMetricsEndpoints:
+    #   - targetPort: 9500
+    #     path: /metrics
+
     podMetricsEndpoints:
       - targetPort: 9500
         path: /metrics
 
-    ## Label selector for pods to which this PodMonitor applies
-    ## selector: {}
-    # Eg- matchLabels:
-    #    matchLabels: {}
+    ## 	Label selector for pods to which this PodMonitor applies
+    # selector: {}
+    #   matchlabels: {}
+
+    ## Example
+
+    # selector: {}
+    #   matchLabels:
     #       app: cstor-pod
+
     selector:
       matchLabels:
         app: cstor-pool
 
-    ## Namespaces from which services are selected
-    ##
+    ## 	Namespaces from which services are selected
     # namespaceSelector: []
-    ## Match any namespace
+
+    ## Example
+
+    # namespaceSelector:
     #   any: true
 
-    ## Explicit list of namespace names to select
-    ##
+    ## Explicit list of namespace names to select using matchNames
     # matchNames: []
-    # Eg- matchNames:
-    #       - openebs
-    #       - default
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
     namespaceSelector:
       any: true
