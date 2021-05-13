@@ -49,7 +49,7 @@ serviceMonitors:
   cstor:
     enabled: true
 
-    ## 	Endpoints of the selected service to be monitored
+    ## Endpoints of the selected service to be monitored
     # endpoints: []
 
     ## Name of the endpoint's service port
@@ -68,7 +68,7 @@ serviceMonitors:
       - port: exporter
         path: /mertics
 
-    ## 	Label selector for services to which this ServiceMonitor applies
+    ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
     #   matchLabels: {}
 
@@ -82,7 +82,7 @@ serviceMonitors:
       matchLabels:
         openebs.io/cas-type: cstor
 
-    ## 	Namespaces from which services are selected
+    ## Namespaces from which services are selected
     # namespaceSelector: []
     ## Match any namespace
     #   any: true
@@ -108,7 +108,7 @@ serviceMonitors:
   jiva:
     enabled: true
 
-    ## 	Endpoints of the selected service to be monitored
+    ## Endpoints of the selected service to be monitored
     # endpoints: []
     ## Name of the endpoint's service port
     ## Mutually exclusive with targetPort
@@ -127,7 +127,7 @@ serviceMonitors:
       - port: exporter
         path: /metrics
 
-    ## 	Label selector for services to which this ServiceMonitor applies
+    ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
     #   matchLabels: {}
 
@@ -141,7 +141,7 @@ serviceMonitors:
       matchLabels:
         openebs.io/cas-type: jiva
 
-    ## 	Namespaces from which services are selected
+    ## Namespaces from which services are selected
     # namespaceSelector: []
     ## Match any namespace
     #   any: true
@@ -168,7 +168,7 @@ podMonitors:
   cstor:
     enabled: true
 
-    ## 	Endpoints of the selected pods to be monitored
+    ## Endpoints of the selected pods to be monitored
     ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
     # podMetricsEndpoints: []
     ## Name or number of the endpoint's target port
@@ -188,7 +188,7 @@ podMonitors:
       - targetPort: 9500
         path: /metrics
 
-    ## 	Label selector for pods to which this PodMonitor applies
+    ## Label selector for pods to which this PodMonitor applies
     # selector: {}
     #   matchlabels: {}
 
@@ -202,7 +202,7 @@ podMonitors:
       matchLabels:
         app: cstor-pool
 
-    ## 	Namespaces from which services are selected
+    ## Namespaces from which services are selected
     # namespaceSelector: []
     ## Match any namespace
     #   any: true
