@@ -87,6 +87,11 @@ serviceMonitors:
     ## Match any namespace
     #   any: true
 
+    ## Example
+
+    # namespaceSelector:
+    #   any: true
+
     ## Explicit list of namespace names to select
     # matchNames: []
 
@@ -139,6 +144,11 @@ serviceMonitors:
     ## 	Namespaces from which services are selected
     # namespaceSelector: []
     ## Match any namespace
+    #   any: true
+
+    ## Example
+
+    # namespaceSelector:
     #   any: true
 
     ## Explicit list of namespace names to select
@@ -194,6 +204,8 @@ podMonitors:
 
     ## 	Namespaces from which services are selected
     # namespaceSelector: []
+    ## Match any namespace
+    #   any: true
 
     ## Example
 
