@@ -10,6 +10,21 @@ This repository will aggregate all the monitoring related artifacts that are cur
 
 Pre-alpha. Under active development.
 
+## Usage
+
+[Helm](https://helm.sh) must be installed to use the charts.
+Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
+
+Once Helm is set up properly, add the repo as follows:
+
+```console
+helm repo add openebs-monitoring https://openebs.github.io/monitoring/
+```
+
+You can then run `helm search repo openebs-monitoring` to see the charts.
+
+<!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
+Chart documentation is available in [openebs-monitoring directory](https://github.com/openebs/monitoring/blob/develop/deploy/charts/openebs-monitoring/README.md).
 
 ## Contributing
 
