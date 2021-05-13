@@ -18,7 +18,6 @@ fullnameOverride: ""
 kube-prometheus-stack:
   prometheus:
     prometheusSpec:
-
       ## If true, a nil or {} value for prometheus.prometheusSpec.serviceMonitorSelector will cause the
       ## prometheus resource to be created with selectors based on values in the helm deployment,
       ## which will also match the servicemonitors created
@@ -37,6 +36,7 @@ kube-prometheus-stack:
     ## Deploy default dashboards.
     ##
     defaultDashboardsEnabled: true
+    customDashboardsEnabled: true
     adminPassword: admin
 
     sidecar:
@@ -49,80 +49,118 @@ serviceMonitors:
   cstor:
     enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    ## endpoints: []
-       ## Name of the endpoint's service port
-       ## Mutually exclusive with targetPort
-       # - port: ""
+    ## 	Endpoints of the selected service to be monitored
+    # endpoints: []
 
-       ## HTTP path to scrape for metrics
-       ##
-       #   path: /metrics
+    ## Name of the endpoint's service port
+    ## Mutually exclusive with targetPort
+    #   - port: ""
+
+    ## HTTP path to scrape for metrics
+    #     path: /metrics
+
+    ## Example
+
+    # endpoints:
+    #   - port: exporter
+    #     path: /metrics
     endpoints:
       - port: exporter
         path: /mertics
 
-    ## Label selector for services to which this ServiceMonitor applies
-    ## selector: {}
-       # matchLabels: {}
-       # Eg- matchLabels:
-       #       cas-type: cstor
+    ## 	Label selector for services to which this ServiceMonitor applies
+    # selector: {}
+    #   matchLabels: {}
+
+    ## Example
+
+    # selector:
+    #   matchLabels:
+    #     cas-type: cstor
+
     selector:
       matchLabels:
         openebs.io/cas-type: cstor
 
-    ## Namespaces from which services are selected
-    ## namespaceSelector: []
-       ## Match any namespace
-       ##
-       # any: true
+    ## 	Namespaces from which services are selected
+    # namespaceSelector: []
+    ## Match any namespace
+    #   any: true
 
-       ## Explicit list of namespace names to select
-       ##
-       # matchNames: []
-       ## Eg- matchNames:
-       #     - openebs
-       #     - default
+    ## Example
+
+    # namespaceSelector:
+    #   any: true
+
+    ## Explicit list of namespace names to select
+    # matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
     namespaceSelector:
       any: true
 
   jiva:
-    enabled: false
+    enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    ## endpoints: []
-       ## Name of the endpoint's service port
-       ## Mutually exclusive with targetPort
-       # - port: ""
+    ## 	Endpoints of the selected service to be monitored
+    # endpoints: []
+    ## Name of the endpoint's service port
+    ## Mutually exclusive with targetPort
+    #   - port: ""
 
-       ## HTTP path to scrape for metrics
-       ##
-       #   path: /metrics
+    ## HTTP path to scrape for metrics
+    #     path: /metrics
+
+    ## Example
+
+    # endpoints:
+    #   - port: exporter
+    #     path: /metrics
+
     endpoints:
       - port: exporter
-        path: /mertics
+        path: /metrics
 
-    ## Label selector for services to which this ServiceMonitor applies
-    ## selector: {}
-       # matchLabels: {}
-       # Eg- matchLabels:
-       #       cas-type: jiva
+    ## 	Label selector for services to which this ServiceMonitor applies
+    # selector: {}
+    #   matchLabels: {}
+
+    ## Example
+
+    # selector:
+    #   matchLabels:
+    #     cas-type: jiva
+
     selector:
       matchLabels:
         openebs.io/cas-type: jiva
 
-    ## Namespaces from which services are selected
-    ## namespaceSelector: []
-       ## Match any namespace
-       ##
-       # any: true
+    ## 	Namespaces from which services are selected
+    # namespaceSelector: []
+    ## Match any namespace
+    #   any: true
 
-       ## Explicit list of namespace names to select
-       ##
-       # matchNames: []
-       # Eg- matchNames:
-       #     - openebs
-       #     - default
+    ## Example
+
+    # namespaceSelector:
+    #   any: true
+
+    ## Explicit list of namespace names to select
+    #   matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
     namespaceSelector:
       any: true
 
@@ -130,41 +168,59 @@ podMonitors:
   cstor:
     enabled: true
 
-    ## Endpoints of the selected pods to be monitored
+    ## 	Endpoints of the selected pods to be monitored
     ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
-    ## podMetricsEndpoints: []
-       ## Name or number of the endpoint's target port
-       ## Mutually exclusive with port
-       # - targetPort: ""
+    # podMetricsEndpoints: []
+    ## Name or number of the endpoint's target port
+    ## Mutually exclusive with port
+    #   - targetPort: ""
 
-       ## HTTP path to scrape for metrics
-       ##
-       #   path: /metrics
+    ## HTTP path to scrape for metrics
+    #     path: /metrics
+
+    ## Example
+
+    # podMetricsEndpoints:
+    #   - targetPort: 9500
+    #     path: /metrics
+
     podMetricsEndpoints:
       - targetPort: 9500
         path: /metrics
 
-    ## Label selector for pods to which this PodMonitor applies
-    ## selector: {}
-       # matchLabels: {}
-       # Eg- matchLabels:
-       #       app: cstor-pod
+    ## 	Label selector for pods to which this PodMonitor applies
+    # selector: {}
+    #   matchlabels: {}
+
+    ## Example
+
+    # selector: {}
+    #   matchLabels:
+    #       app: cstor-pod
+
     selector:
       matchLabels:
         app: cstor-pool
 
-    ## Namespaces from which services are selected
-    ##
+    ## 	Namespaces from which services are selected
     # namespaceSelector: []
-      ## Match any namespace
-      ##
-      # any: true
+    ## Match any namespace
+    #   any: true
 
-      ## Explicit list of namespace names to select
-      ##
-      # matchNames: []
-      # Eg- matchNames:
-      #     - openebs
-      #     - default
+    ## Example
+
+    # namespaceSelector:
+    #   any: true
+
+    ## Explicit list of namespace names to select using matchNames
+    # matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
     namespaceSelector:
       any: true
