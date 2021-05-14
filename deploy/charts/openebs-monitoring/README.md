@@ -87,8 +87,12 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 	--set kube-prometheus-stack.kubeProxy.enabled=false
 ```
 
-| Parameter                                   | Description                                   | Default                                   |
-| ------------------------------------------- | --------------------------------------------- | ----------------------------------------- |
+| Parameter                                           | Description                                   | Default                                   |
+| --------------------------------------------------- | --------------------------------------------- | ----------------------------------------- |
+| `kube-prometheus-stack.prometheus.service.type`     | Service type for Prometheus                   | `"NodePort"`                              |
+| `kube-prometheus-stack.prometheus.service.nodePort` | NodePort value for Prometheus service         | `32514`                                   |
+| `kube-prometheus-stack.grafana.service.type`        | Service type for Grafana                      | `"NodePort"`                              |
+| `kube-prometheus-stack.grafana.service.nodePort`    | NodePort value for Grafana service            | `32515`                                   |
 | `kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` | Enables prometheus to select every service monitors               | `false`                         |
 | `kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues`     | Enables prometheus to select every pod monitors          | `false`                          |
 | `kube-prometheus-stack.grafana.enabled`                    | Enables monitoring of grafana itself         | `true`                           |
