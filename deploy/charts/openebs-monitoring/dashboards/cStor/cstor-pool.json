@@ -153,7 +153,7 @@
 			"instant": false,
 			"interval": "",
 			"intervalFactor": 1,
-			"legendFormat": "{{`{{pod}}`}}",
+			"legendFormat": "{{pod}}",
 			"refId": "A"
 			}
 		],
@@ -307,7 +307,7 @@
 			"exemplar": true,
 			"expr": "(openebs_used_pool_capacity{pod=\"$cstor_pool\"})/(1024*1024*1024)",
 			"interval": "",
-			"legendFormat": "{{`{{pod}}`}}",
+			"legendFormat": "{{pod}}",
 			"refId": "A"
 			}
 		],
@@ -403,7 +403,7 @@
 			"exemplar": true,
 			"expr": "(openebs_free_pool_capacity{pod=\"$cstor_pool\"})/(1024*1024*1024)",
 			"interval": "",
-			"legendFormat": "{{`{{pod}}`}}",
+			"legendFormat": "{{pod}}",
 			"refId": "A"
 			}
 		],
