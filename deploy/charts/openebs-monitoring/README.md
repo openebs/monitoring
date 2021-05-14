@@ -78,7 +78,7 @@ The following table lists the configurable parameters of the OpenEBS monitoring 
 
 You can modify different parameters by specifying the desired value in the `helm install` command by using the `--set` and/or the `--set-string` flag(s). You can modify the parameters of the [kube-prometheus-stack chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) by adding `kube-prometheus-stack` before the desired parameter in the `helm install` command.
 
-In the following sample command we modify `serviceMonitors.cstor.enabled` from the openebs-monitoring chart and `kube-prometheus-stack.kubeProxy.enabled` from the kube-prometheus-stack chart to disable monitoring for cstor volumes and volumes and kube-proxy.
+In the following sample command we modify `serviceMonitors.cstor.enabled` from the openebs-monitoring chart and `kube-prometheus-stack.kubeProxy.enabled` from the kube-prometheus-stack chart to disable monitoring for cstor volumes and kube-proxy.
 
 
 ```console
