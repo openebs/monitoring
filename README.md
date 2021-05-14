@@ -23,8 +23,38 @@ helm repo add openebs-monitoring https://openebs.github.io/monitoring/
 
 You can then run `helm search repo openebs-monitoring` to see the charts.
 
+#### Install Chart
+
+Please visit the [link](https://openebs.github.io/monitoring/) for install instructions via helm3.
+
+```console
+# Helm
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [NAMESPACE] --create-namespace
+```
+
+_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+
+#### Accessing Grafana
+
+```console
+# Look at the grafana pod and note the node name on which this pod is running
+kubectl get pods -n [NAMESPACE] -o wide | grep grafana
+# Note the public IP of the node on which grafana pod is running
+kubectl get nodes -o wide
+# Open browser and visit http://<NodeIp>:<NodePort> (where <NodeIp> is the public IP address of your node, and default Grafana <NodePort> is 32515)
+# Default Grafana login credentials- [username: admin, password: admin]
+```
+**NOTE:** If public IP is not available then you can access it via port-forwarding
+
+```console
+# Perform port-forwarding
+kubectl port-forward --namespace [NAMESPACE] pods/[grafana-pod-name] 32515:3000
+# Open browser and visit http://127.0.0.1:32515
+# Default Grafana login credentials- [username: admin, password: admin]
+```
+
 <!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
-Chart documentation is available in [openebs-monitoring directory](https://github.com/openebs/monitoring/blob/develop/deploy/charts/openebs-monitoring/README.md).
+The detailed chart documentation is available in [openebs-monitoring directory](https://github.com/openebs/monitoring/blob/develop/deploy/charts/openebs-monitoring/README.md).
 
 ## Contributing
 

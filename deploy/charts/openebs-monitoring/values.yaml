@@ -17,6 +17,10 @@ fullnameOverride: ""
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
   prometheus:
+    service:
+      type: NodePort
+      nodePort: 32514
+
     prometheusSpec:
       ## If true, a nil or {} value for prometheus.prometheusSpec.serviceMonitorSelector will cause the
       ## prometheus resource to be created with selectors based on values in the helm deployment,
@@ -32,6 +36,10 @@ kube-prometheus-stack:
 
   grafana:
     enabled: true
+
+    service:
+      type: NodePort
+      nodePort: 32515
 
     ## Deploy default dashboards.
     ##
