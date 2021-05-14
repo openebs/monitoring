@@ -16,7 +16,7 @@ A Helm chart for openebs monitoring. This chart bootstraps OpenEBS monitoring st
 | ---- | ------ | --- |
 | kiranmova | kiran.mova@mayadata.io |  |
 | avishnu | vishnu.attur@mayadata.io |  |
-| Ab-hishek | vishnu.attur@mayadata.io |  |
+| Ab-hishek | abhishek.agarwal@mayadata.io |  |
 | rajaSahil | sahil.raja@mayadata.io |  |
 | Sanjay1611 | sanjay.nathani@mayadata.io |  |
 
