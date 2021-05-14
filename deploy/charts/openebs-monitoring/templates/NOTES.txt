@@ -14,7 +14,7 @@ To access the dashboards, form the Grafana URL and open it in the browser
 {{- end }}
 {{- else if contains "NodePort" (index $.Values "kube-prometheus-stack" "grafana" "service" "type") }}
   export NODE_PORT={{ index $.Values "kube-prometheus-stack" "grafana" "service" "nodePort" }}
-  export NODE_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name="grafana",app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].spec.nodeName}")
+  export NODE_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "call-nested" (list . "kube-prometheus-stack.grafana" "grafana.name") }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].spec.nodeName}")
   export NODE_IP=$(kubectl get node $NODE_NAME -o jsonpath='{$.status.addresses[?(@.type=="ExternalIP")].address}')
   echo http://$NODE_IP:$NODE_PORT
   NOTE: The above IP should be a public IP
