@@ -102,17 +102,17 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `kube-prometheus-stack.grafana.sidecar.dashboards.enabled` | Allows grafana sidecar container to provision dashboards  | `true`              |
 | `kube-prometheus-stack.grafana.sidecar.dashboards.label`   | Labels for configmaps to be collected by grafana sidecars | `"grafana_dashboard"`                      |
 | `serviceMonitors.cstor.enabled`                            | Enables monitoring of cStor volumes          | `true`                           |
-| `serviceMonitors.cstor.endpoints`                          | scrapeable cstor volume endpoint serving Prometheus metrics | `[port: exporter, path: /metrics]`         |
-| `serviceMonitors.cstor.selector`                           | Selector to select Endpoints objects         | `{matchLabels: {openebs.io/cas-type: cstor}}`                |
-| `serviceMonitors.cstor.namespaceSelector`                  | Selector to select which namespaces the Endpoints objects are discovered from                        | `[any: true]`                         |
+| `serviceMonitors.cstor.endpoints`                          | Scrapeable cstor volume endpoint serving Prometheus metrics | `[port: exporter, path: /metrics]`         |
+| `serviceMonitors.cstor.selector`                           | Selector to select endpoints objects         | `{matchLabels: {openebs.io/cas-type: cstor}}`                |
+| `serviceMonitors.cstor.namespaceSelector`                  | Selector to select which namespaces the endpoints objects are discovered from                        | `[any: true]`                         |
 | `serviceMonitors.jiva.enabled`                             | Enables monitoring of jiva volumes           | `true`                           |
-| `serviceMonitors.jiva.endpoints`                           | scrapeable jiva volume endpoint serving Prometheus metrics | `[port: exporter, path: /metrics]`         |
-| `serviceMonitors.jiva.selector`                            | Selector to select Endpoints objects                       | `{matchLabels: {openebs.io/cas-type: jiva}}`                |
-| `serviceMonitors.jiva.namespaceSelector`                   | Selector to select which namespaces the Endpoints objects are discovered from                        | `[any: true]`                         |
+| `serviceMonitors.jiva.endpoints`                           | Scrapeable jiva volume endpoint serving Prometheus metrics | `[port: exporter, path: /metrics]`         |
+| `serviceMonitors.jiva.selector`                            | Selector to select endpoints objects                       | `{matchLabels: {openebs.io/cas-type: jiva}}`                |
+| `serviceMonitors.jiva.namespaceSelector`                   | Selector to select which namespaces the endpoints objects are discovered from                        | `[any: true]`                         |
 | `podMonitors.cstor.enabled`                                | Enables monitoring of cStor pools             | `true`                          |
-| `podMonitors.cstor.podMetricsEndpoints`                    | scrapeable cstor pod endpoint serving Prometheus metrics   | `[targetPort: 9500, path: /metrics]`         |
-| `podMonitors.cstor.selector`                               | Selector to select Endpoints objects                       | `{matchLabels: {app: cstor-pool}}`                |
-| `podMonitors.cstor.namespaceSelector`                      | Selector to select which namespaces the Endpoints objects are discovered from                        | `[any: true]`                         |
+| `podMonitors.cstor.podMetricsEndpoints`                    | Scrapeable cstor pod endpoint serving Prometheus metrics   | `[targetPort: 9500, path: /metrics]`         |
+| `podMonitors.cstor.selector`                               | Selector to select endpoints objects                       | `{matchLabels: {app: cstor-pool}}`                |
+| `podMonitors.cstor.namespaceSelector`                      | Selector to select which namespaces the endpoints objects are discovered from                        | `[any: true]`                         |
 
 A YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
