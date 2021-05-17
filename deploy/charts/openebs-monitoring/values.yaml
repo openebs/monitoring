@@ -34,6 +34,61 @@ kube-prometheus-stack:
       ##
       podMonitorSelectorNilUsesHelmValues: false
 
+      ## Number of replicas of each shard to deploy for a Prometheus deployment.
+      ## Number of replicas multiplied by shards is the total number of Pods created.
+      ##
+      replicas: 1
+
+      ## Prometheus StorageSpec for persistent data
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
+      ##
+      storageSpec:
+        {}
+        # volumeClaimTemplate:
+        #   metadata:
+        #     name: prom
+        #   spec:
+        #     storageClassName: cstorsc-ooqun
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 10Gi
+        #   selector: {}
+
+  alertmanager:
+    ## Deploy alertmanager
+    ##
+    enabled: true
+
+    alertmanagerSpec:
+      ## Size is the expected size of the alertmanager cluster. The controller will eventually make the size of the
+      ## running cluster equal to the expected size.
+      replicas: 1
+
+      ## Storage is the definition of how storage will be used by the Alertmanager instances.
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
+      ##
+      storage:
+        {}
+        # volumeClaimTemplate:
+        #   metadata:
+        #     name: alert
+        #   spec:
+        #     storageClassName: cstorsc-ooqun
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 10Gi
+        #   selector: {}
+
+  prometheusOperator:
+    enabled: true
+
+    ## Prometheus-Operator v0.39.0 and later support TLS natively.
+    ##
+    # tls:
+    #   enabled: false
+
   grafana:
     enabled: true
 
@@ -68,6 +123,7 @@ serviceMonitors:
       #  path: /metrics
       path: /metrics
 
+<<<<<<< HEAD
       ## relabel configs to apply to samples before ingestion.
       ##
       #  relabelings: []
@@ -98,6 +154,16 @@ serviceMonitors:
         - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
           targetLabel: openebs_pvc
+=======
+    ## Example
+
+    # endpoints:
+    #   - port: exporter
+    #     path: /metrics
+    endpoints:
+      - port: exporter
+        path: /metrics
+>>>>>>> Added values in values.yaml for openebs-monitoring with persistence
 
     ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
