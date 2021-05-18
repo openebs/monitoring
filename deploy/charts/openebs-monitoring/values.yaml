@@ -97,7 +97,7 @@ serviceMonitors:
           targetLabel: openebs_pv
         - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
-          targetLabel: openebs_pvc 
+          targetLabel: openebs_pvc
 
     ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
