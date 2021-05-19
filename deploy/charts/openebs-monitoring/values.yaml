@@ -123,16 +123,15 @@ serviceMonitors:
       #  path: /metrics
       path: /metrics
 
-<<<<<<< HEAD
       ## relabel configs to apply to samples before ingestion.
       ##
-      #  relabelings: []
-      #    - sourceLabels: [__meta_kubernetes_service_name]
-      #      separator: ;
-      #      regex: (.*)
-      #      targetLabel: service
-      #      replacement: $1
-      #      action: replace
+      # relabelings: []
+      #   - sourceLabels: [__meta_kubernetes_service_name]
+      #     separator: ;
+      #     regex: (.*)
+      #     targetLabel: service
+      #     replacement: $1
+      #     action: replace
       relabelings:
         # RelabelConfigs to apply to samples before scraping.
         # More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
@@ -148,22 +147,14 @@ serviceMonitors:
         # Below entry is the correct entry. Though the above and below entries
         # are having same target_label as openebs_pv, only one of them will be
         # valid for any release.
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
           action: replace
           targetLabel: openebs_pv
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
           targetLabel: openebs_pvc
-=======
-    ## Example
-
-    # endpoints:
-    #   - port: exporter
-    #     path: /metrics
-    endpoints:
-      - port: exporter
-        path: /metrics
->>>>>>> Added values in values.yaml for openebs-monitoring with persistence
 
     ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
@@ -240,10 +231,12 @@ serviceMonitors:
         # Below entry is the correct entry. Though the above and below entries
         # are having same target_label as openebs_pv, only one of them will be
         # valid for any release.
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
           action: replace
           targetLabel: openebs_pv
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
           targetLabel: openebs_pvc
 
@@ -317,18 +310,27 @@ podMonitors:
           regex: pool_exporter_prometheus
           action: keep
           # Adding comma-separated source_labels below in order to fetch the metrics for pool claim instances of SPC and CSPC kind
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_storage_pool_claim, __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster]
+        - sourceLabels:
+            [
+              __meta_kubernetes_pod_label_openebs_io_storage_pool_claim,
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster,
+            ]
           action: replace
           # separator: Separator placed between concatenated source label values, default -> ;
-          separator: ''
+          separator: ""
           targetLabel: storage_pool_claim
           # Adding comma-separated source_labels below in order to fetch the metrics for pool instances of CSP and CSPI kind
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_cstor_pool, __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance]
+        - sourceLabels:
+            [
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool,
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance,
+            ]
           action: replace
           # separator: Separator placed between concatenated source label values, default -> ;
-          separator: ''
+          separator: ""
           targetLabel: cstor_pool
-        - sourceLabels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        - sourceLabels:
+            [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
           action: replace
           regex: ([^:]+)(?::\d+)?;(\d+)
           replacement: ${1}:${2}
