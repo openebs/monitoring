@@ -159,7 +159,27 @@ serviceMonitors:
       #      targetLabel: service
       #      replacement: $1
       #      action: replace
-      relabelings: []
+      relabelings:
+        # RelabelConfigs to apply to samples before scraping.
+        # More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+        # To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+        - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
+          regex: volume_exporter_prometheus
+          action: keep
+        # Below entry ending with vsm is deprecated and is maintained for
+        # backward compatibility purpose.
+        - sourceLabels: [__meta_kubernetes_pod_label_vsm]
+          action: replace
+          targetLabel: openebs_pv
+        # Below entry is the correct entry. Though the above and below entries
+        # are having same target_label as openebs_pv, only one of them will be
+        # valid for any release.
+        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+          action: replace
+          targetLabel: openebs_pv
+        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+          action: replace
+          targetLabel: openebs_pvc
 
     ## Label selector for services to which this ServiceMonitor applies
     # selector: {}

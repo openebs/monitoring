@@ -110,7 +110,7 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `serviceMonitors.jiva.enabled`                             | Enables monitoring of jiva volumes           | `true`                             |
 | `serviceMonitors.jiva.endpoints.ports`                     | Name of the service port jiva volume endpoint refers to  | `"exporter"`           |
 | `serviceMonitors.jiva.endpoints.path`                      | HTTP path to scrape for metrics from jiva volume         | `"/metrics"`           |
-| `serviceMonitors.jiva.endpoints.relabelings`               | RelabelConfigs to apply to jiva volumes before scraping  | `[]`                   |
+| `serviceMonitors.jiva.endpoints.relabelings`               | RelabelConfigs to apply to jiva volumes before scraping  | `[...]`                |
 | `serviceMonitors.jiva.selector`                            | Selector to select endpoints objects         | `{matchLabels: {openebs.io/cas-type: jiva}}`                |
 | `serviceMonitors.jiva.namespaceSelector`                   | Selector to select which namespaces the endpoints objects are discovered from                        | `[any: true]`                         |
 | `podMonitors.cstor.enabled`                                | Enables monitoring of cStor pools            | `true`                             |
