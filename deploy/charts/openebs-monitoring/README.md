@@ -87,31 +87,37 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 	--set kube-prometheus-stack.kubeProxy.enabled=false
 ```
 
-| Parameter                                           | Description                                   | Default                                   |
-| --------------------------------------------------- | --------------------------------------------- | ----------------------------------------- |
-| `kube-prometheus-stack.prometheus.service.type`     | Service type for Prometheus                   | `"NodePort"`                              |
-| `kube-prometheus-stack.prometheus.service.nodePort` | NodePort value for Prometheus service         | `32514`                                   |
-| `kube-prometheus-stack.grafana.service.type`        | Service type for Grafana                      | `"NodePort"`                              |
-| `kube-prometheus-stack.grafana.service.nodePort`    | NodePort value for Grafana service            | `32515`                                   |
+| Parameter                                                  | Description                                  | Default                            |
+| ---------------------------------------------------------- | -------------------------------------------- | ---------------------------------- |
+| `kube-prometheus-stack.prometheus.service.type`            | Service type for Prometheus                  | `"NodePort"`                       |
+| `kube-prometheus-stack.prometheus.service.nodePort`        | NodePort value for Prometheus service        | `32514`                            |
+| `kube-prometheus-stack.grafana.service.type`               | Service type for Grafana                     | `"NodePort"`                       |
+| `kube-prometheus-stack.grafana.service.nodePort`           | NodePort value for Grafana service           | `32515`                            |
 | `kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` | Enables prometheus to select every service monitors               | `false`                         |
 | `kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues`     | Enables prometheus to select every pod monitors          | `false`                          |
-| `kube-prometheus-stack.grafana.enabled`                    | Enables monitoring of grafana itself         | `true`                           |
-| `kube-prometheus-stack.grafana.defaultDashboardsEnabled`   | Deploys default dashboards                   | `true`                           |
-| `kube-prometheus-stack.grafana.customDashboardsEnabled`    | Deploys custom OpenEBS dashboards            | `true`                           |
-| `kube-prometheus-stack.grafana.adminPassword`              | Administrator password for Grafana           | `"admin"`                        |
-| `kube-prometheus-stack.grafana.sidecar.dashboards.enabled` | Allows grafana sidecar container to provision dashboards  | `true`              |
-| `kube-prometheus-stack.grafana.sidecar.dashboards.label`   | Labels for configmaps to be collected by grafana sidecars | `"grafana_dashboard"`                      |
-| `serviceMonitors.cstor.enabled`                            | Enables monitoring of cStor volumes          | `true`                           |
-| `serviceMonitors.cstor.endpoints`                          | Scrapeable cstor volume endpoint serving Prometheus metrics | `[port: exporter, path: /metrics]`         |
-| `serviceMonitors.cstor.selector`                           | Selector to select endpoints objects         | `{matchLabels: {openebs.io/cas-type: cstor}}`                |
+| `kube-prometheus-stack.grafana.enabled`                    | Enables monitoring of grafana itself         | `true`                             |
+| `kube-prometheus-stack.grafana.defaultDashboardsEnabled`   | Deploys default dashboards                   | `true`                             |
+| `kube-prometheus-stack.grafana.customDashboardsEnabled`    | Deploys custom OpenEBS dashboards            | `true`                             |
+| `kube-prometheus-stack.grafana.adminPassword`              | Administrator password for Grafana           | `"admin"`                          |
+| `kube-prometheus-stack.grafana.sidecar.dashboards.enabled` | Allows grafana sidecar container to provision dashboards  | `true`                |
+| `kube-prometheus-stack.grafana.sidecar.dashboards.label`   | Labels for configmaps to be collected by grafana sidecars | `"grafana_dashboard"` |
+| `serviceMonitors.cstor.enabled`                            | Enables monitoring of cStor volumes          | `true`                             |
+| `serviceMonitors.cstor.endpoints.ports`                    | Name of the service port cstor volume endpoint refers to  | `"exporter"`          |
+| `serviceMonitors.cstor.endpoints.path`                     | HTTP path to scrape for metrics from cstor volume         | `"/metrics"`          |
+| `serviceMonitors.cstor.endpoints.relabelings`              | RelabelConfigs to apply to cstor volumes before scraping  | `[...]`               |
+| `serviceMonitors.cstor.selector`                           | Selector to select endpoints objects         | `{matchLabels: {openebs.io/cas-type: cstor}}`               |
 | `serviceMonitors.cstor.namespaceSelector`                  | Selector to select which namespaces the endpoints objects are discovered from                        | `[any: true]`                         |
-| `serviceMonitors.jiva.enabled`                             | Enables monitoring of jiva volumes           | `true`                           |
-| `serviceMonitors.jiva.endpoints`                           | Scrapeable jiva volume endpoint serving Prometheus metrics | `[port: exporter, path: /metrics]`         |
-| `serviceMonitors.jiva.selector`                            | Selector to select endpoints objects                       | `{matchLabels: {openebs.io/cas-type: jiva}}`                |
+| `serviceMonitors.jiva.enabled`                             | Enables monitoring of jiva volumes           | `true`                             |
+| `serviceMonitors.jiva.endpoints.ports`                     | Name of the service port jiva volume endpoint refers to  | `"exporter"`           |
+| `serviceMonitors.jiva.endpoints.path`                      | HTTP path to scrape for metrics from jiva volume         | `"/metrics"`           |
+| `serviceMonitors.jiva.endpoints.relabelings`               | RelabelConfigs to apply to jiva volumes before scraping  | `[...]`                |
+| `serviceMonitors.jiva.selector`                            | Selector to select endpoints objects         | `{matchLabels: {openebs.io/cas-type: jiva}}`                |
 | `serviceMonitors.jiva.namespaceSelector`                   | Selector to select which namespaces the endpoints objects are discovered from                        | `[any: true]`                         |
-| `podMonitors.cstor.enabled`                                | Enables monitoring of cStor pools             | `true`                          |
-| `podMonitors.cstor.podMetricsEndpoints`                    | Scrapeable cstor pod endpoint serving Prometheus metrics   | `[targetPort: 9500, path: /metrics]`         |
-| `podMonitors.cstor.selector`                               | Selector to select endpoints objects                       | `{matchLabels: {app: cstor-pool}}`                |
+| `podMonitors.cstor.enabled`                                | Enables monitoring of cStor pools            | `true`                             |
+| `podMonitors.cstor.podMetricsEndpoints.targetPort`         | Name or number of the cstor pool endpoint's target port    | `9500`               |
+| `podMonitors.cstor.podMetricsEndpoints.path`               | HTTP path to scrape for metrics from cstor pool pod        | `"/metrics"`         |
+| `podMonitors.cstor.podMetricsEndpoints.relabelings`        | RelabelConfigs to apply to cstor pools before scraping     | `[...]`              |
+| `podMonitors.cstor.selector`                               | Selector to select endpoints objects                       | `{matchLabels: {app: cstor-pool}}`          |
 | `podMonitors.cstor.namespaceSelector`                      | Selector to select which namespaces the endpoints objects are discovered from                        | `[any: true]`                         |
 
 A YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
