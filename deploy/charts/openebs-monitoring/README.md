@@ -45,9 +45,9 @@ _See [helm install](https://helm.sh/docs/helm/helm_install/) for command documen
 
 By default this chart installs additional, dependent charts:
 
-| Repository                                                                                 | Name                  | Version |
-| ------------------------------------------------------------------------------------------ | --------------------- | ------- |
-| https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack | kube-prometheus-stack | 15.4.\* |
+| Repository                                                                                 | Name                  | Version  |
+| ------------------------------------------------------------------------------------------ | --------------------- | -------- |
+| https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack | kube-prometheus-stack | `15.4.*` |
 
 _See [helm dependency](https://helm.sh/docs/helm/helm_dependency/) for command documentation._
 
