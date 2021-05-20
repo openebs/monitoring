@@ -20,7 +20,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -160,7 +160,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -277,7 +277,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -392,7 +392,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -498,7 +498,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -602,7 +602,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -703,7 +703,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -802,7 +802,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -906,7 +906,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -1014,9 +1014,30 @@
   "templating": {
     "list": [
       {
+        "current": {
+          "selected": true,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "description": null,
         "error": null,
@@ -1040,7 +1061,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "description": null,
         "error": null,
@@ -1064,7 +1085,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "description": null,
         "error": null,
@@ -1088,7 +1109,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "description": null,
         "error": null,
@@ -1112,7 +1133,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "description": null,
         "error": null,
@@ -1136,7 +1157,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "description": null,
         "error": null,
@@ -1179,7 +1200,7 @@
     "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
   },
   "timezone": "",
-  "title": "OpenEBS Volume dashboard",
+  "title": "OpenEBS / Volume dashboard",
   "uid": "f46a2d03-c2af-4954-b2b3-307c4d77bcaf",
   "version": 1
 }
