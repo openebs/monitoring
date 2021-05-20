@@ -92,6 +92,12 @@ kube-prometheus-stack:
   grafana:
     enabled: true
 
+    # In order to render HTML and Javascript in a text panel without being sanitized
+    # enable the `disable_sanitize_html` settings in Grafana ini file
+    grafana.ini:
+      panels:
+        disable_sanitize_html: true
+
     service:
       type: NodePort
       nodePort: 32515
