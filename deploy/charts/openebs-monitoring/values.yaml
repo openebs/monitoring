@@ -34,6 +34,61 @@ kube-prometheus-stack:
       ##
       podMonitorSelectorNilUsesHelmValues: false
 
+      ## Number of replicas of each shard to deploy for a Prometheus deployment.
+      ## Number of replicas multiplied by shards is the total number of Pods created.
+      ##
+      replicas: 1
+
+      ## Prometheus StorageSpec for persistent data
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
+      ##
+      storageSpec:
+        {}
+        # volumeClaimTemplate:
+        #   metadata:
+        #     name: prom
+        #   spec:
+        #     storageClassName: cstorsc-ooqun
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 10Gi
+        #   selector: {}
+
+  alertmanager:
+    ## Deploy alertmanager
+    ##
+    enabled: true
+
+    alertmanagerSpec:
+      ## Size is the expected size of the alertmanager cluster. The controller will eventually make the size of the
+      ## running cluster equal to the expected size.
+      replicas: 1
+
+      ## Storage is the definition of how storage will be used by the Alertmanager instances.
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
+      ##
+      storage:
+        {}
+        # volumeClaimTemplate:
+        #   metadata:
+        #     name: alert
+        #   spec:
+        #     storageClassName: cstorsc-ooqun
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 10Gi
+        #   selector: {}
+
+  prometheusOperator:
+    enabled: true
+
+    ## Prometheus-Operator v0.39.0 and later support TLS natively.
+    ##
+    # tls:
+    #   enabled: false
+
   grafana:
     enabled: true
 
@@ -70,13 +125,13 @@ serviceMonitors:
 
       ## relabel configs to apply to samples before ingestion.
       ##
-      #  relabelings: []
-      #    - sourceLabels: [__meta_kubernetes_service_name]
-      #      separator: ;
-      #      regex: (.*)
-      #      targetLabel: service
-      #      replacement: $1
-      #      action: replace
+      # relabelings: []
+      #   - sourceLabels: [__meta_kubernetes_service_name]
+      #     separator: ;
+      #     regex: (.*)
+      #     targetLabel: service
+      #     replacement: $1
+      #     action: replace
       relabelings:
         # RelabelConfigs to apply to samples before scraping.
         # More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
@@ -92,10 +147,12 @@ serviceMonitors:
         # Below entry is the correct entry. Though the above and below entries
         # are having same target_label as openebs_pv, only one of them will be
         # valid for any release.
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
           action: replace
           targetLabel: openebs_pv
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
           targetLabel: openebs_pvc
 
@@ -174,10 +231,12 @@ serviceMonitors:
         # Below entry is the correct entry. Though the above and below entries
         # are having same target_label as openebs_pv, only one of them will be
         # valid for any release.
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
           action: replace
           targetLabel: openebs_pv
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
           targetLabel: openebs_pvc
 
@@ -251,18 +310,27 @@ podMonitors:
           regex: pool_exporter_prometheus
           action: keep
           # Adding comma-separated source_labels below in order to fetch the metrics for pool claim instances of SPC and CSPC kind
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_storage_pool_claim, __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster]
+        - sourceLabels:
+            [
+              __meta_kubernetes_pod_label_openebs_io_storage_pool_claim,
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster,
+            ]
           action: replace
           # separator: Separator placed between concatenated source label values, default -> ;
-          separator: ''
+          separator: ""
           targetLabel: storage_pool_claim
           # Adding comma-separated source_labels below in order to fetch the metrics for pool instances of CSP and CSPI kind
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_cstor_pool, __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance]
+        - sourceLabels:
+            [
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool,
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance,
+            ]
           action: replace
           # separator: Separator placed between concatenated source label values, default -> ;
-          separator: ''
+          separator: ""
           targetLabel: cstor_pool
-        - sourceLabels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        - sourceLabels:
+            [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
           action: replace
           regex: ([^:]+)(?::\d+)?;(\d+)
           replacement: ${1}:${2}
