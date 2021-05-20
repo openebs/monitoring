@@ -26,7 +26,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 3,
         "w": 24,
         "x": 0,
         "y": 0
@@ -1074,7 +1074,7 @@
         "multi": false,
         "name": "pool",
         "options": [],
-        "query": "label_values(openebs_replica_status{vol=~\"$openebs_Volume\"},pool)",
+        "query": "label_values(openebs_replica_status{vol=~\"$openebs_Volume\"},cstor_pool)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
