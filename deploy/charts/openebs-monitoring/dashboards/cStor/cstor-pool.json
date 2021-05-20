@@ -170,12 +170,12 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "openebs_pool_status{pod=\"$cstor_pool\"}",
+          "expr": "openebs_pool_status{cstor_pool=\"$cstor_pool\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{pod}}",
+          "legendFormat": "{{cstor_pool}}",
           "refId": "A"
         }
       ],
@@ -231,7 +231,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(openebs_pool_size{pod=\"$cstor_pool\"})/(1024*1024*1024)",
+          "expr": "sum(openebs_pool_size{cstor_pool=\"$cstor_pool\"})/(1024*1024*1024)",
           "interval": "",
           "legendFormat": "size",
           "refId": "A"
@@ -327,9 +327,9 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "(openebs_used_pool_capacity{pod=\"$cstor_pool\"})/(1024*1024*1024)",
+          "expr": "(openebs_used_pool_capacity{cstor_pool=\"$cstor_pool\"})/(1024*1024*1024)",
           "interval": "",
-          "legendFormat": "{{pod}}",
+          "legendFormat": "{{cstor_pool}}",
           "refId": "A"
         }
       ],
@@ -423,9 +423,9 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "(openebs_free_pool_capacity{pod=\"$cstor_pool\"})/(1024*1024*1024)",
+          "expr": "(openebs_free_pool_capacity{cstor_pool=\"$cstor_pool\"})/(1024*1024*1024)",
           "interval": "",
-          "legendFormat": "{{pod}}",
+          "legendFormat": "{{cstor_pool}}",
           "refId": "A"
         }
       ],
@@ -520,7 +520,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(openebs_total_read_count{pod=\"$cstor_pool\"})",
+          "expr": "sum(openebs_total_read_count{cstor_pool=\"$cstor_pool\"})",
           "interval": "",
           "legendFormat": "read iops",
           "refId": "A"
@@ -616,7 +616,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(openebs_total_write_count{pod=\"$cstor_pool\"})",
+          "expr": "sum(openebs_total_write_count{cstor_pool=\"$cstor_pool\"})",
           "interval": "",
           "legendFormat": "wrie_iops",
           "refId": "A"
@@ -706,7 +706,7 @@
         "multi": false,
         "name": "cstor_pool",
         "options": [],
-        "query": "label_values(openebs_pool_status, pod)",
+        "query": "label_values(openebs_pool_status, cstor_pool)",
         "refId": "StandardVariableQuery",
         "refresh": 2,
         "regex": "",
@@ -726,7 +726,7 @@
           "value": ";cstor-storage"
         },
         "datasource": null,
-        "definition": "label_values(openebs_pool_status{pod=\"$cstor_pool\"}, storage_pool_claim)",
+        "definition": "label_values(openebs_pool_status{cstor_pool=\"$cstor_pool\"}, storage_pool_claim)",
         "description": null,
         "error": null,
         "hide": 2,
@@ -735,7 +735,7 @@
         "multi": false,
         "name": "spc",
         "options": [],
-        "query": "label_values(openebs_pool_status{pod=\"$cstor_pool\"}, storage_pool_claim)",
+        "query": "label_values(openebs_pool_status{cstor_pool=\"$cstor_pool\"}, storage_pool_claim)",
         "refId": "StandardVariableQuery",
         "refresh": 0,
         "regex": "",
