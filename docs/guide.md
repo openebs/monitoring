@@ -78,3 +78,18 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 -  Verify `PodMonitors/ServiceMonitors` are installed
 
 	```console
+	kubectl get servicemonitors -n prometheus-operator -l  release="openebs-monitoring"                
+	NAME                              AGE
+	openebs-monitoring-openebs-cstor   33m
+	openebs-monitoring-openebs-jiva    33m
+	```
+
+-  Verify `dashboards configmaps` are installed
+ 
+    ```console
+	kubectl get cm -n prometheus-operator -l release="openebs-monitoring"
+	NAME                                                           DATA   AGE
+	openebs-monitoring-openebs-cstor-pool                           1      37m
+	```
+
+- To see the dashboards, form the Grafana URL and open it in the browser
