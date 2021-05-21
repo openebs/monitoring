@@ -16,7 +16,7 @@ fullnameOverride: ""
 
 ## Configuration for installing openebs-monitoring dashboards in already installed prometheus stack
 customPrometheusStack:
-  enabled: true
+  enabled: false
 
   grafana:
     ## Deploy custom openebs dashboards
@@ -31,7 +31,7 @@ customPrometheusStack:
 
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
-  enabled: false
+  enabled: true
   prometheus:
     service:
       type: NodePort
