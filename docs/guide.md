@@ -54,8 +54,20 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 		grafana-cli plugins install grafana-polystat-panel 
 		grafana-cli plugins install snuids-trafficlights-panel
 		```
+3. **Update grafana configuration**
+   
+   - Append the below configuration in grafana configmap to parse html in grafana dashboards
+		```console
+		grafana.ini:
+		--------------
+		...
+		[panels]
+		disable_sanitize_html = true
+		...
+		```
 
-3. **Install `openebs-monitoring` chart**
+
+4. **Install `openebs-monitoring` chart**
    
 	```console
 	# Helm
