@@ -54,18 +54,8 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 		grafana-cli plugins install grafana-polystat-panel 
 		grafana-cli plugins install snuids-trafficlights-panel
 		```
-3. **Update `kube-state-metrics` label**
-   
-   - If servicemonitor for kube-state-metrics is installed, then append the below configuration in `spec.enpoints`
-		```console
-		endpoints:
-        -  relabelings:
-		   - action: labelmap
-		   regex: __meta_kubernetes_pod_label_(.+)
-		```
 
-
-4. **Install `openebs-monitoring` chart**
+3. **Install `openebs-monitoring` chart**
    
 	```console
 	# Helm
