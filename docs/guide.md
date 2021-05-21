@@ -1,4 +1,4 @@
-# Install openebs-monitoring with custom Prometheus stack
+# Install openebs-monitoring Chart in already installed prometheus-stack
 
 ### Prerequisite
 
@@ -72,6 +72,12 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 	helm install -f values.yaml [RELEASE_NAME] openebs-monitoring/openebs-monitoring
 	```
 
+#### Helm Chart install with one line
+
+```console
+#Helm
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.enabled=false, customPrometheusStack.enabled=true, customPrometheusStack.grafana.sidecar.dashboards.label=[UPDATED_LABEL]
+```
 
 #### Verification
 
@@ -93,3 +99,4 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 	```
 
 - To see the dashboards, form the Grafana URL and open it in the browser
+
