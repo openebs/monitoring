@@ -1,5 +1,5 @@
-{{- if or (index .Values "kube-prometheus-stack" "grafana" "enabled") (.Values.customMonitoringStack.enabled ) }}
-{{- if or (index .Values "kube-prometheus-stack" "grafana" "customDashboardsEnabled") (.Values.customMonitoringStack.grafana.customDashboardsEnabled )}}
+{{- if or (index .Values "kube-prometheus-stack" "grafana" "enabled") (.Values.customPrometheusStack.enabled ) }}
+{{- if or (index .Values "kube-prometheus-stack" "grafana" "customDashboardsEnabled") (.Values.customPrometheusStack.grafana.customDashboardsEnabled )}}
 {{- $grafanaSidecarDashboardsLabel := ( include "grafana-sidecar-dashboards.label" $ ) }}
 {{- $files := .Files.Glob "dashboards/**.json" }}
 {{- if $files }}
