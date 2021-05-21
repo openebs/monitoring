@@ -108,6 +108,12 @@ kube-prometheus-stack:
         # ConfigMaps with label below will be added to Grafana as dashboards.
         label: grafana_dashboard
 
+    ## Pass the plugins you want installed as a list.
+    ##
+    plugins:
+      - grafana-polystat-panel
+      - snuids-trafficlights-panel
+
 serviceMonitors:
   cstor:
     enabled: true
