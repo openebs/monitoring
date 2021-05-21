@@ -24,6 +24,14 @@ helm repo add openebs-monitoring https://openebs.github.io/monitoring/
 
 You can then run `helm search repo openebs-monitoring` to see the charts.
 
+#### Install openebs-monitoring in already installed prometheus-stack
+
+```console
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  <prometheus-stack-namespace>  --set kube-prometheus-stack.enabled=false, customPrometheusStack.enabled=true
+```
+Please visit the [link](https://openebs.github.io/monitoring/docs/guide.md) for more detailed instructions.
+
+
 #### Install Chart
 
 Please visit the [link](https://openebs.github.io/monitoring/) for install instructions via helm3.
