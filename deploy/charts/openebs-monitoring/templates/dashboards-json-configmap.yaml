@@ -1,4 +1,6 @@
-{{- if and (index .Values "kube-prometheus-stack" "grafana" "enabled") (index .Values "kube-prometheus-stack" "grafana" "customDashboardsEnabled") }}
+{{- if or (index .Values "kube-prometheus-stack" "grafana" "enabled") (.Values.customMonitoringStack.enabled ) }}
+{{- if or (index .Values "kube-prometheus-stack" "grafana" "customDashboardsEnabled") (.Values.customMonitoringStack.grafana.customDashboardsEnabled )}}
+{{- $grafanaSidecarDashboardsLabel := ( include "grafana-sidecar-dashboards.label" $ ) }}
 {{- $files := .Files.Glob "dashboards/**.json" }}
 {{- if $files }}
 {{- range $fileName, $fileContents := $files }}
@@ -9,14 +11,13 @@ metadata:
   name: {{ lower (printf "%s-%s" (include "openebs-monitoring.fullname" $) $dashboardName) | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "openebs-monitoring.namespace" $ }}
   labels:
-    {{- if index $.Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}
-    {{ index $.Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}: "1"
-    {{- end }}
+    {{ $grafanaSidecarDashboardsLabel }}: "1"
     app: {{ template "openebs-monitoring.name" $ }}-grafana
 {{ include "openebs-monitoring.labels" $ | indent 4 }}
 data:
   {{ $dashboardName }}.json: {{ $.Files.Get $fileName | toPrettyJson }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

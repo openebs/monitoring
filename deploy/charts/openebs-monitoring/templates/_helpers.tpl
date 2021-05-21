@@ -81,3 +81,17 @@ Usage:
 {{- end }}
 {{- include $template (dict "Chart" (dict "Name" (last $subchart)) "Values" $values "Release" $dot.Release "Capabilities" $dot.Capabilities) }}
 {{- end }}
+
+
+{{/* 
+grafana sidecar dashboards label
+*/}}
+{{- define "grafana-sidecar-dashboards.label" }}
+{{- if and (index .Values "kube-prometheus-stack" "grafana" "enabled") (index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "enabled") }}
+{{- $grafanaSidecarDashboardsLabel:= index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}
+{{- printf $grafanaSidecarDashboardsLabel }}
+{{- else if and (.Values.customMonitoringStack.enabled) (.Values.customMonitoringStack.grafana.sidecar.dashboards.enabled )}}
+{{- $grafanaSidecarDashboardsLabel:= .Values.customMonitoringStack.grafana.sidecar.dashboards.label }}
+{{- printf $grafanaSidecarDashboardsLabel }}
+{{- end }}
+{{- end }}
