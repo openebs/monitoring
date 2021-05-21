@@ -24,14 +24,6 @@ helm repo add openebs-monitoring https://openebs.github.io/monitoring/
 
 You can then run `helm search repo openebs-monitoring` to see the charts.
 
-#### Install openebs-monitoring in already installed prometheus-stack
-
-```console
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  <prometheus-stack-namespace>  --set kube-prometheus-stack.enabled=false, customPrometheusStack.enabled=true
-```
-Please visit the [link](https://openebs.github.io/monitoring/docs/guide.md) for more detailed instructions.
-
-
 #### Install Chart
 
 Please visit the [link](https://openebs.github.io/monitoring/) for install instructions via helm3.
@@ -42,6 +34,15 @@ helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [N
 ```
 
 _See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+
+#### Install openebs-monitoring Chart in already installed prometheus-stack
+
+```console
+#Helm
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.enabled=false, customPrometheusStack.enabled=true
+```
+Please visit the [link](https://openebs.github.io/monitoring/docs/guide.md) for more detailed instructions.
+
 
 #### Accessing Grafana
 
