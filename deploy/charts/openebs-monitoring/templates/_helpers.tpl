@@ -61,6 +61,7 @@ Selector labels
 {{- define "openebs-monitoring.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "openebs-monitoring.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+release: {{ $.Release.Name | quote }}
 {{- end }}
 
 {{/*
