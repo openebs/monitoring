@@ -445,7 +445,7 @@
         {
           "expr": "irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])",
           "format": "time_series",
-          "intervalFactor": 1,
+          "intervalFactor": 2,
           "legendFormat": "Writes",
           "refId": "B"
         }
