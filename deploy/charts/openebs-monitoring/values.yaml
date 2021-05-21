@@ -89,22 +89,6 @@ kube-prometheus-stack:
     # tls:
     #   enabled: false
 
-  ## Component scraping kube state metrics
-  ##
-  kubeStateMetrics:
-    serviceMonitor:
-      # relabel configs to apply to samples before ingestion.
-      ##
-      # - sourceLabels: [__meta_kubernetes_pod_node_name]
-      #   separator: ;
-      #   regex: ^(.*)$
-      #   targetLabel: nodename
-      #   replacement: $1
-      #   action: replace
-      relabelings:
-        - action: labelmap
-          regex: __meta_kubernetes_pod_label_(.+)
-
   grafana:
     enabled: true
 
