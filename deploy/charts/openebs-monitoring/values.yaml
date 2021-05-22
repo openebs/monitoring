@@ -77,6 +77,18 @@ kube-prometheus-stack:
     enabled: true
 
     config:
+      global:
+        resolve_timeout: 5m
+      route:
+        group_by: ["alertname", "job", "volName"]
+        group_wait: 30s
+        group_interval: 5m
+        repeat_interval: 4h
+        receiver: "null"
+      receivers:
+        - name: "null"
+      templates:
+        - /etc/alertmanager/config/*.tmpl
 
     service:
       type: NodePort
