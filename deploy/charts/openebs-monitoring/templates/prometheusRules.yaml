@@ -1,6 +1,6 @@
-{{- if .Values.prometheusRules }}
+{{- if .Values.customPrometheusRules }}
 {{- $dict := dict -}}
-{{- range $dirName,$fields := .Values.prometheusRules }}
+{{- range $dirName,$fields := .Values.customPrometheusRules }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
 {{ $_ := set $dict $dirName "true" }}
 {{- end }}

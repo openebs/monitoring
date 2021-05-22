@@ -154,11 +154,7 @@ kube-prometheus-stack:
       - grafana-polystat-panel
       - snuids-trafficlights-panel
 
-customDashboards:
-  cStor:
-    enabled: true
-  Jiva:
-prometheusRules:
+customPrometheusRules:
   pool:
     enabled: true
   volume:
