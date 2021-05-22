@@ -76,6 +76,12 @@ kube-prometheus-stack:
     ##
     enabled: true
 
+    config:
+
+    service:
+      type: NodePort
+      nodePort: 30903
+
     alertmanagerSpec:
       ## Size is the expected size of the alertmanager cluster. The controller will eventually make the size of the
       ## running cluster equal to the expected size.
@@ -140,6 +146,10 @@ customDashboards:
   cStor:
     enabled: true
   Jiva:
+prometheusRules:
+  pool:
+    enabled: true
+  volume:
     enabled: true
 
 serviceMonitors:

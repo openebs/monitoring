@@ -1,0 +1,28 @@
+{{- if .Values.prometheusRules }}
+{{- $dict := dict -}}
+{{- range $dirName,$fields := .Values.prometheusRules }}
+{{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+{{ $_ := set $dict $dirName "true" }}
+{{- end }}
+{{- end }}
+{{- $files := .Files.Glob "rules/**.yaml" }}
+{{- if $files }}
+{{- range $fileName, $fileContents := $files }}
+{{- $dirName := split "/" $fileName }}
+{{- if (hasKey $dict $dirName._1 ) }}
+{{- $ruleName := regexReplaceAll "(^.*/)(.*)\\.yaml$" $fileName "${2}" }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ template "openebs-monitoring.name" $ }}-{{ $ruleName }}
+  namespace: {{ template "openebs-monitoring.namespace" $ }}
+  labels:
+    app: {{ template "openebs-monitoring.name" $ }}
+{{ include "openebs-monitoring.labels" $ | indent 4 }}
+spec:
+{{ $.Files.Get $fileName | indent 2 }}
+{{- end }}
+---
+{{- end }}
+{{- end }}
+{{- end }}
