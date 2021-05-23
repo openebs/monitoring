@@ -2,7 +2,7 @@
 {{- $customEnabledRules := dict -}}
 {{- range $dirName,$fields := .Values.customRules }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
-{{ $_ := set $customEnabledRules $dirName "true" }}
+{{ $_ := set $customEnabledRules $dirName $fields.enabled }}
 {{- end }}
 {{- end }}
 {{- $files := .Files.Glob "rules/**.yaml" }}
