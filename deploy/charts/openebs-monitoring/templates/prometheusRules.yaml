@@ -1,15 +1,15 @@
-{{- if .Values.customPrometheusRules }}
-{{- $dict := dict -}}
-{{- range $dirName,$fields := .Values.customPrometheusRules }}
+{{- if .Values.customRules }}
+{{- $customEnabledRules := dict -}}
+{{- range $dirName,$fields := .Values.customRules }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
-{{ $_ := set $dict $dirName "true" }}
+{{ $_ := set $customEnabledRules $dirName "true" }}
 {{- end }}
 {{- end }}
 {{- $files := .Files.Glob "rules/**.yaml" }}
 {{- if $files }}
 {{- range $fileName, $fileContents := $files }}
 {{- $dirName := split "/" $fileName }}
-{{- if (hasKey $dict $dirName._1 ) }}
+{{- if (hasKey $customEnabledRules $dirName._1 ) }}
 {{- $ruleName := regexReplaceAll "(^.*/)(.*)\\.yaml$" $fileName "${2}" }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
