@@ -1,9 +1,18 @@
 {{- if or (index .Values "kube-prometheus-stack" "grafana" "enabled") (.Values.openebsMonitoringAddon.enabled ) }}
 {{- if or (index .Values "kube-prometheus-stack" "grafana" "openebsDashboardsEnabled") (.Values.openebsMonitoringAddon.grafana.openebsDashboardsEnabled )}}
 {{- $grafanaSidecarDashboardsLabel := ( include "grafana-sidecar-dashboards.label" $ ) }}
+{{- if .Values.customDashboards }}
+{{- $customEnabledDashboards := dict -}}
+{{- range $dirName,$fields := .Values.customDashboards }}
+{{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+{{ $_ := set $customEnabledDashboards $dirName $fields.enabled }}
+{{- end }}
+{{- end }}
 {{- $files := .Files.Glob "dashboards/**.json" }}
 {{- if $files }}
 {{- range $fileName, $fileContents := $files }}
+{{- $dirName := split "/" $fileName }}
+{{- if (hasKey $customEnabledDashboards $dirName._1 ) }}
 {{- $dashboardName := regexReplaceAll "(^.*/)(.*)\\.json$" $fileName "${2}" }}
 apiVersion: v1
 kind: ConfigMap
@@ -17,6 +26,8 @@ metadata:
 data:
   {{ $dashboardName }}.json: {{ $.Files.Get $fileName | toPrettyJson }}
 ---
+{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

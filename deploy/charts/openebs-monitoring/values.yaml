@@ -136,6 +136,12 @@ kube-prometheus-stack:
       - grafana-polystat-panel
       - snuids-trafficlights-panel
 
+customDashboards:
+  cStor:
+    enabled: true
+  volumes:
+    enabled: true
+
 serviceMonitors:
   cstor:
     enabled: true
