@@ -161,9 +161,9 @@ kube-prometheus-stack:
       - snuids-trafficlights-panel
 
 customRules:
-  pool:
+  pools:
     enabled: true
-  volume:
+  volumes:
     enabled: true
 
 serviceMonitors:
