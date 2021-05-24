@@ -1,712 +1,1708 @@
 {
 	"annotations": {
-		"list": [
+	  "list": [
 		{
-			"builtIn": 1,
-			"datasource": "-- Grafana --",
-			"enable": true,
-			"hide": true,
-			"iconColor": "rgba(0, 211, 255, 1)",
-			"name": "Annotations & Alerts",
-			"type": "dashboard"
+		  "builtIn": 1,
+		  "datasource": "-- Grafana --",
+		  "enable": true,
+		  "hide": true,
+		  "iconColor": "rgba(0, 211, 255, 1)",
+		  "name": "Annotations & Alerts",
+		  "type": "dashboard"
 		}
-		]
+	  ]
 	},
+	"description": "This dashboard gives overview of OpenEBS installation in cluster.",
 	"editable": true,
-	"gnetId": null,
+	"gnetId": 12171,
 	"graphTooltip": 0,
-	"id": 21,
-	"iteration": 1620550941122,
+	"id": 27,
+	"iteration": 1621850478930,
 	"links": [],
 	"panels": [
-		{
-		"datasource": "$datasource",
-		"description": "",
+	  {
+		"cacheTimeout": null,
+		"datasource": "Prometheus",
+		"description": "This panel shows mem usage of  pods across $namespace in $cluster cluster.\n\nMemory utilization is easily tracked with container_memory_usage_bytes, however, this metric also includes cached (think filesystem cache) items that can be evicted under memory pressure. That's why we are using a  better metric: container_memory_working_set_bytes as this is what the OOM killer is watching for.\n",
 		"fieldConfig": {
-			"defaults": {
+		  "defaults": {
 			"color": {
-				"mode": "palette-classic"
+			  "mode": "palette-classic"
 			},
 			"custom": {
-				"axisLabel": "",
-				"axisPlacement": "auto",
-				"barAlignment": 0,
-				"drawStyle": "line",
-				"fillOpacity": 10,
-				"gradientMode": "opacity",
-				"hideFrom": {
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": -1,
+			  "drawStyle": "line",
+			  "fillOpacity": 80,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
 				"graph": false,
 				"legend": false,
 				"tooltip": false
-				},
-				"lineInterpolation": "linear",
-				"lineStyle": {
-				"fill": "solid"
-				},
-				"lineWidth": 1,
-				"pointSize": 5,
-				"scaleDistribution": {
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 2,
+			  "pointSize": 5,
+			  "scaleDistribution": {
 				"type": "linear"
-				},
-				"showPoints": "never",
-				"spanNulls": true
+			  },
+			  "showPoints": "never",
+			  "spanNulls": true
 			},
-			"mappings": [
-				{
-				"from": "",
-				"id": 1,
-				"text": "Offline",
-				"to": "",
-				"type": 1,
-				"value": "0"
-				},
-				{
-				"from": "",
-				"id": 2,
-				"text": "Online",
-				"to": "",
-				"type": 1,
-				"value": "1"
-				},
-				{
-				"from": "",
-				"id": 3,
-				"text": "Degraded",
-				"to": "",
-				"type": 1,
-				"value": "2"
-				},
-				{
-				"from": "",
-				"id": 4,
-				"text": "Faulted",
-				"to": "",
-				"type": 1,
-				"value": "3"
-				},
-				{
-				"from": "",
-				"id": 5,
-				"text": "Removed",
-				"to": "",
-				"type": 1,
-				"value": "4"
-				},
-				{
-				"from": "",
-				"id": 6,
-				"text": "Unavail",
-				"to": "",
-				"type": 1,
-				"value": "5"
-				},
-				{
-				"from": "",
-				"id": 7,
-				"text": "NoPoolsAvailable",
-				"to": "",
-				"type": 1,
-				"value": "6"
-				}
-			],
-			"max": 6,
-			"min": 0,
+			"decimals": 2,
+			"mappings": [],
 			"thresholds": {
-				"mode": "absolute",
-				"steps": [
+			  "mode": "absolute",
+			  "steps": [
 				{
-					"color": "green",
-					"value": null
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
 				}
-				]
+			  ]
 			},
-			"unit": "none"
-			},
-			"overrides": []
+			"unit": "decbytes"
+		  },
+		  "overrides": []
 		},
 		"gridPos": {
-			"h": 8,
-			"w": 12,
-			"x": 0,
-			"y": 0
+		  "h": 12,
+		  "w": 8,
+		  "x": 0,
+		  "y": 0
 		},
-		"id": 2,
+		"id": 14,
+		"links": [],
 		"options": {
-			"graph": {},
-			"legend": {
-			"calcs": [],
-			"displayMode": "list",
+		  "graph": {},
+		  "legend": {
+			"calcs": [
+			  "mean",
+			  "lastNotNull",
+			  "max",
+			  "min",
+			  "sum"
+			],
+			"displayMode": "table",
 			"placement": "bottom"
-			},
-			"tooltipOptions": {
+		  },
+		  "tooltipOptions": {
 			"mode": "single"
-			}
+		  }
 		},
-		"pluginVersion": "7.5.3",
-		"repeat": null,
-		"repeatDirection": "h",
+		"pluginVersion": "7.5.5",
 		"targets": [
-			{
+		  {
 			"exemplar": true,
-			"expr": "openebs_pool_status{pod=\"$cstor_pool\"}",
-			"format": "time_series",
+			"expr": " (sum(container_memory_working_set_bytes{image!=\"\",cluster=\"$cluster\", namespace=\"$namespace\"}))",
 			"instant": false,
 			"interval": "",
 			"intervalFactor": 1,
-			"legendFormat": "{{`{{pod}}`}}",
+			"legendFormat": "Memory",
 			"refId": "A"
-			}
+		  }
 		],
 		"timeFrom": null,
 		"timeShift": null,
-		"title": "cStor Pool Status",
+		"title": "Memory usage by Pods in $namespace  in $cluster cluster",
+		"transparent": true,
 		"type": "timeseries"
-		},
-		{
-		"aliasColors": {},
-		"bars": false,
-		"dashLength": 10,
-		"dashes": false,
-		"datasource": "$datasource",
+	  },
+	  {
+		"datasource": "Prometheus",
 		"fieldConfig": {
-			"defaults": {},
-			"overrides": []
+		  "defaults": {
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "semi-dark-red",
+				  "value": 300
+				}
+			  ]
+			},
+			"unit": "decbytes"
+		  },
+		  "overrides": []
 		},
-		"fill": 1,
-		"fillGradient": 0,
 		"gridPos": {
-			"h": 8,
-			"w": 12,
-			"x": 12,
-			"y": 0
+		  "h": 12,
+		  "w": 4,
+		  "x": 8,
+		  "y": 0
 		},
-		"hiddenSeries": false,
-		"id": 4,
-		"legend": {
-			"avg": false,
-			"current": false,
-			"max": false,
-			"min": false,
-			"show": true,
-			"total": false,
-			"values": false
-		},
-		"lines": true,
-		"linewidth": 1,
-		"nullPointMode": "null",
+		"id": 45,
 		"options": {
-			"alertThreshold": true
+		  "colorMode": "background",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "last"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "text": {},
+		  "textMode": "auto"
 		},
-		"percentage": false,
 		"pluginVersion": "7.5.5",
-		"pointradius": 2,
-		"points": false,
-		"renderer": "flot",
-		"seriesOverrides": [],
-		"spaceLength": 10,
-		"stack": false,
-		"steppedLine": false,
 		"targets": [
-			{
+		  {
 			"exemplar": true,
-			"expr": "sum(openebs_pool_size{pod=\"$cstor_pool\"})/(1024*1024*1024)",
+			"expr": "sum(container_memory_usage_bytes{namespace=\"openebs\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace)",
+			"hide": false,
 			"interval": "",
-			"legendFormat": "size",
+			"legendFormat": "Memory used by pod {{pod}}",
 			"refId": "A"
-			}
+		  },
+		  {
+			"expr": " (sum(kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}))",
+			"interval": "",
+			"legendFormat": "Memory requests",
+			"refId": "B"
+		  },
+		  {
+			"expr": " (sum(kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}))",
+			"hide": false,
+			"interval": "",
+			"legendFormat": "Memory limits",
+			"refId": "C"
+		  }
 		],
-		"thresholds": [],
 		"timeFrom": null,
-		"timeRegions": [],
 		"timeShift": null,
-		"title": "cStor Pool Size",
-		"tooltip": {
-			"shared": true,
-			"sort": 0,
-			"value_type": "individual"
+		"title": "Memory details in namespace $namespace",
+		"type": "stat"
+	  },
+	  {
+		"cacheTimeout": null,
+		"datasource": "Prometheus",
+		"description": "This panel shows mem usage of  pods across $namespace in $cluster cluster.\n\nMemory utilization is easily tracked with container_memory_usage_bytes, however, this metric also includes cached (think filesystem cache) items that can be evicted under memory pressure. That's why we are using a  better metric: container_memory_working_set_bytes as this is what the OOM killer is watching for.\n",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 69,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"graph": false,
+				"legend": false,
+				"tooltip": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 2,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "never",
+			  "spanNulls": true
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
 		},
-		"type": "graph",
-		"xaxis": {
-			"buckets": null,
-			"mode": "time",
-			"name": null,
-			"show": true,
-			"values": []
+		"gridPos": {
+		  "h": 12,
+		  "w": 8,
+		  "x": 12,
+		  "y": 0
 		},
-		"yaxes": [
+		"id": 41,
+		"links": [],
+		"options": {
+		  "graph": {},
+		  "legend": {
+			"calcs": [
+			  "mean",
+			  "lastNotNull",
+			  "max",
+			  "min",
+			  "sum"
+			],
+			"displayMode": "table",
+			"placement": "bottom"
+		  },
+		  "tooltipOptions": {
+			"mode": "single"
+		  }
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"exemplar": true,
+			"expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[1m])) * 100",
+			"instant": false,
+			"interval": "",
+			"intervalFactor": 1,
+			"legendFormat": "CPU usage",
+			"refId": "A"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "CPU usage by Pods in $namespace  in $cluster cluster",
+		"transparent": true,
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": "Prometheus",
+		"fieldConfig": {
+		  "defaults": {
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "semi-dark-red",
+				  "value": 300
+				}
+			  ]
+			},
+			"unit": "none"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 12,
+		  "w": 4,
+		  "x": 20,
+		  "y": 0
+		},
+		"id": 48,
+		"options": {
+		  "colorMode": "background",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "last"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "text": {},
+		  "textMode": "auto"
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"exemplar": true,
+			"expr": "sum(container_cpu_usage_seconds_total{namespace=\"openebs\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace)",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "CPU used by pod {{pod}}",
+			"refId": "A"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "sum(rate(kube_pod_container_resource_requests_cpu_cores{namespace=\"$namespace\"}[1m])) * 100 ",
+			"hide": false,
+			"interval": "",
+			"legendFormat": "CPU requests",
+			"refId": "B"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "sum(rate(kube_pod_container_resource_limits_cpu_cores{namespace=\"$namespace\"}[1m])) * 100 ",
+			"hide": false,
+			"interval": "",
+			"legendFormat": "CPU limits",
+			"refId": "C"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "CPU details in namespace $namespace",
+		"type": "stat"
+	  },
+	  {
+		"datasource": null,
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
 			{
-			"$$hashKey": "object:489",
-			"format": "decgbytes",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": true
+			  "matcher": {
+				"id": "byName",
+				"options": "Value #A"
+			  },
+			  "properties": [
+				{
+				  "id": "mappings",
+				  "value": [
+					{
+					  "from": "",
+					  "id": 1,
+					  "text": "Offline",
+					  "to": "",
+					  "type": 1,
+					  "value": "0"
+					},
+					{
+					  "from": "",
+					  "id": 2,
+					  "text": "Online",
+					  "to": "",
+					  "type": 1,
+					  "value": "1"
+					},
+					{
+					  "from": "",
+					  "id": 3,
+					  "text": "Degraded",
+					  "to": "",
+					  "type": 1,
+					  "value": "2"
+					}
+				  ]
+				},
+				{
+				  "id": "displayName",
+				  "value": "Status"
+				},
+				{
+				  "id": "custom.displayMode",
+				  "value": "color-background"
+				}
+			  ]
 			},
 			{
-			"$$hashKey": "object:490",
-			"format": "short",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": false
-			}
-		],
-		"yaxis": {
-			"align": false,
-			"alignLevel": null
-		}
-		},
-		{
-		"aliasColors": {},
-		"bars": false,
-		"dashLength": 10,
-		"dashes": false,
-		"datasource": "$datasource",
-		"fieldConfig": {
-			"defaults": {},
-			"overrides": []
-		},
-		"fill": 1,
-		"fillGradient": 0,
-		"gridPos": {
-			"h": 8,
-			"w": 12,
-			"x": 0,
-			"y": 8
-		},
-		"hiddenSeries": false,
-		"id": 6,
-		"legend": {
-			"avg": false,
-			"current": false,
-			"max": false,
-			"min": false,
-			"show": true,
-			"total": false,
-			"values": false
-		},
-		"lines": true,
-		"linewidth": 1,
-		"nullPointMode": "null",
-		"options": {
-			"alertThreshold": true
-		},
-		"percentage": false,
-		"pluginVersion": "7.5.5",
-		"pointradius": 2,
-		"points": false,
-		"renderer": "flot",
-		"seriesOverrides": [],
-		"spaceLength": 10,
-		"stack": false,
-		"steppedLine": false,
-		"targets": [
-			{
-			"exemplar": true,
-			"expr": "(openebs_used_pool_capacity{pod=\"$cstor_pool\"})/(1024*1024*1024)",
-			"interval": "",
-			"legendFormat": "{{`{{pod}}`}}",
-			"refId": "A"
-			}
-		],
-		"thresholds": [],
-		"timeFrom": null,
-		"timeRegions": [],
-		"timeShift": null,
-		"title": "Used Pool Capacity",
-		"tooltip": {
-			"shared": true,
-			"sort": 0,
-			"value_type": "individual"
-		},
-		"type": "graph",
-		"xaxis": {
-			"buckets": null,
-			"mode": "time",
-			"name": null,
-			"show": true,
-			"values": []
-		},
-		"yaxes": [
-			{
-			"$$hashKey": "object:575",
-			"format": "decgbytes",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": true
+			  "matcher": {
+				"id": "byName",
+				"options": "Value #B"
+			  },
+			  "properties": [
+				{
+				  "id": "unit",
+				  "value": "decbytes"
+				},
+				{
+				  "id": "displayName",
+				  "value": "Used Pool Capacity"
+				}
+			  ]
 			},
 			{
-			"$$hashKey": "object:576",
-			"format": "short",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": false
-			}
-		],
-		"yaxis": {
-			"align": false,
-			"alignLevel": null
-		}
-		},
-		{
-		"aliasColors": {},
-		"bars": false,
-		"dashLength": 10,
-		"dashes": false,
-		"datasource": "$datasource",
-		"fieldConfig": {
-			"defaults": {},
-			"overrides": []
-		},
-		"fill": 1,
-		"fillGradient": 0,
-		"gridPos": {
-			"h": 8,
-			"w": 12,
-			"x": 12,
-			"y": 8
-		},
-		"hiddenSeries": false,
-		"id": 8,
-		"legend": {
-			"avg": false,
-			"current": false,
-			"max": false,
-			"min": false,
-			"show": true,
-			"total": false,
-			"values": false
-		},
-		"lines": true,
-		"linewidth": 1,
-		"nullPointMode": "null",
-		"options": {
-			"alertThreshold": true
-		},
-		"percentage": false,
-		"pluginVersion": "7.5.5",
-		"pointradius": 2,
-		"points": false,
-		"renderer": "flot",
-		"seriesOverrides": [],
-		"spaceLength": 10,
-		"stack": false,
-		"steppedLine": false,
-		"targets": [
-			{
-			"exemplar": true,
-			"expr": "(openebs_free_pool_capacity{pod=\"$cstor_pool\"})/(1024*1024*1024)",
-			"interval": "",
-			"legendFormat": "{{`{{pod}}`}}",
-			"refId": "A"
-			}
-		],
-		"thresholds": [],
-		"timeFrom": null,
-		"timeRegions": [],
-		"timeShift": null,
-		"title": "Pool Free Capacity",
-		"tooltip": {
-			"shared": true,
-			"sort": 0,
-			"value_type": "individual"
-		},
-		"type": "graph",
-		"xaxis": {
-			"buckets": null,
-			"mode": "time",
-			"name": null,
-			"show": true,
-			"values": []
-		},
-		"yaxes": [
-			{
-			"$$hashKey": "object:661",
-			"decimals": 4,
-			"format": "decgbytes",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": true
+			  "matcher": {
+				"id": "byName",
+				"options": "Value #C"
+			  },
+			  "properties": [
+				{
+				  "id": "unit",
+				  "value": "percentunit"
+				},
+				{
+				  "id": "displayName",
+				  "value": "Used Pool Capacity ( % )"
+				},
+				{
+				  "id": "custom.displayMode",
+				  "value": "gradient-gauge"
+				},
+				{
+				  "id": "min",
+				  "value": 0
+				},
+				{
+				  "id": "max",
+				  "value": 1
+				}
+			  ]
 			},
 			{
-			"$$hashKey": "object:662",
-			"format": "short",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": false
+			  "matcher": {
+				"id": "byName",
+				"options": "Value #D"
+			  },
+			  "properties": [
+				{
+				  "id": "unit",
+				  "value": "decbytes"
+				},
+				{
+				  "id": "displayName",
+				  "value": "Free Pool Capacity"
+				}
+			  ]
 			}
-		],
-		"yaxis": {
-			"align": false,
-			"alignLevel": null
-		}
+		  ]
 		},
-		{
-		"aliasColors": {},
-		"bars": false,
-		"dashLength": 10,
-		"dashes": false,
-		"datasource": "$datasource",
-		"fieldConfig": {
-			"defaults": {},
-			"overrides": []
-		},
-		"fill": 1,
-		"fillGradient": 0,
 		"gridPos": {
-			"h": 8,
-			"w": 12,
-			"x": 0,
-			"y": 16
+		  "h": 6,
+		  "w": 24,
+		  "x": 0,
+		  "y": 12
 		},
-		"hiddenSeries": false,
-		"id": 11,
-		"legend": {
-			"avg": false,
-			"current": false,
-			"max": false,
-			"min": false,
-			"show": true,
-			"total": false,
-			"values": false
-		},
-		"lines": true,
-		"linewidth": 1,
-		"nullPointMode": "null",
+		"id": 51,
 		"options": {
-			"alertThreshold": true
-		},
-		"percentage": false,
-		"pluginVersion": "7.5.5",
-		"pointradius": 2,
-		"points": false,
-		"renderer": "flot",
-		"seriesOverrides": [],
-		"spaceLength": 10,
-		"stack": false,
-		"steppedLine": false,
-		"targets": [
+		  "showHeader": true,
+		  "sortBy": [
 			{
-			"exemplar": true,
-			"expr": "sum(openebs_total_read_count{pod=\"$cstor_pool\"})",
-			"interval": "",
-			"legendFormat": "read iops",
-			"refId": "A"
+			  "desc": true,
+			  "displayName": "Value #B"
 			}
+		  ]
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"exemplar": true,
+			"expr": "openebs_pool_status{namespace=\"$namespace\"}",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "A",
+			"refId": "A"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "openebs_used_pool_capacity{namespace=\"$namespace\"}",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "B",
+			"refId": "B"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "openebs_used_pool_capacity_percent{namespace=\"$namespace\"}",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "C",
+			"refId": "C"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "openebs_free_pool_capacity{namespace=\"$namespace\"}",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "D",
+			"refId": "D"
+		  }
 		],
-		"thresholds": [],
-		"timeFrom": null,
-		"timeRegions": [],
-		"timeShift": null,
-		"title": "Read IOPS",
-		"tooltip": {
-			"shared": true,
-			"sort": 0,
-			"value_type": "individual"
-		},
-		"type": "graph",
-		"xaxis": {
-			"buckets": null,
-			"mode": "time",
-			"name": null,
-			"show": true,
-			"values": []
-		},
-		"yaxes": [
+		"title": "Pool Status in namespace $namespace",
+		"transformations": [
+		  {
+			"id": "filterFieldsByName",
+			"options": {
+			  "include": {
+				"names": [
+				  "pod",
+				  "pool",
+				  "Value #A",
+				  "Value #B",
+				  "Value #C",
+				  "Value #D"
+				]
+			  }
+			}
+		  },
+		  {
+			"id": "merge",
+			"options": {}
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"datasource": "Prometheus",
+		"fieldConfig": {
+		  "defaults": {
+			"custom": {
+			  "align": "center",
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
 			{
-			"$$hashKey": "object:1223",
-			"format": "short",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": true
+			  "matcher": {
+				"id": "byName",
+				"options": "Memory usage"
+			  },
+			  "properties": [
+				{
+				  "id": "unit",
+				  "value": "decbytes"
+				}
+			  ]
 			},
 			{
-			"$$hashKey": "object:1224",
-			"format": "short",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": false
-			}
-		],
-		"yaxis": {
-			"align": false,
-			"alignLevel": null
-		}
-		},
-		{
-		"aliasColors": {},
-		"bars": false,
-		"dashLength": 10,
-		"dashes": false,
-		"datasource": "$datasource",
-		"fieldConfig": {
-			"defaults": {},
-			"overrides": []
-		},
-		"fill": 1,
-		"fillGradient": 0,
-		"gridPos": {
-			"h": 8,
-			"w": 12,
-			"x": 12,
-			"y": 16
-		},
-		"hiddenSeries": false,
-		"id": 12,
-		"legend": {
-			"avg": false,
-			"current": false,
-			"max": false,
-			"min": false,
-			"show": true,
-			"total": false,
-			"values": false
-		},
-		"lines": true,
-		"linewidth": 1,
-		"nullPointMode": "null",
-		"options": {
-			"alertThreshold": true
-		},
-		"percentage": false,
-		"pluginVersion": "7.5.5",
-		"pointradius": 2,
-		"points": false,
-		"renderer": "flot",
-		"seriesOverrides": [],
-		"spaceLength": 10,
-		"stack": false,
-		"steppedLine": false,
-		"targets": [
-			{
-			"exemplar": true,
-			"expr": "sum(openebs_total_write_count{pod=\"$cstor_pool\"})",
-			"interval": "",
-			"legendFormat": "wrie_iops",
-			"refId": "A"
-			}
-		],
-		"thresholds": [],
-		"timeFrom": null,
-		"timeRegions": [],
-		"timeShift": null,
-		"title": "Write IOPS",
-		"tooltip": {
-			"shared": true,
-			"sort": 0,
-			"value_type": "individual"
-		},
-		"type": "graph",
-		"xaxis": {
-			"buckets": null,
-			"mode": "time",
-			"name": null,
-			"show": true,
-			"values": []
-		},
-		"yaxes": [
-			{
-			"$$hashKey": "object:1625",
-			"format": "short",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": true
+			  "matcher": {
+				"id": "byName",
+				"options": "Status"
+			  },
+			  "properties": [
+				{
+				  "id": "mappings",
+				  "value": [
+					{
+					  "from": "",
+					  "id": 0,
+					  "operator": "",
+					  "text": "Online",
+					  "to": "",
+					  "type": 1,
+					  "value": "1"
+					},
+					{
+					  "from": "",
+					  "id": 1,
+					  "operator": "",
+					  "text": "Offline",
+					  "to": "",
+					  "type": 1,
+					  "value": "0"
+					}
+				  ]
+				},
+				{
+				  "id": "thresholds",
+				  "value": {
+					"mode": "absolute",
+					"steps": [
+					  {
+						"color": "dark-red",
+						"value": null
+					  },
+					  {
+						"color": "dark-red",
+						"value": 0
+					  },
+					  {
+						"color": "dark-green",
+						"value": 1
+					  }
+					]
+				  }
+				},
+				{
+				  "id": "custom.displayMode",
+				  "value": "color-background"
+				}
+			  ]
 			},
 			{
-			"$$hashKey": "object:1626",
-			"format": "short",
-			"label": null,
-			"logBase": 1,
-			"max": null,
-			"min": null,
-			"show": false
+			  "matcher": {
+				"id": "byName",
+				"options": "CPU Usage"
+			  },
+			  "properties": [
+				{
+				  "id": "unit",
+				  "value": "percent"
+				},
+				{
+				  "id": "min",
+				  "value": 0
+				},
+				{
+				  "id": "max",
+				  "value": 100
+				},
+				{
+				  "id": "custom.displayMode",
+				  "value": "lcd-gauge"
+				}
+			  ]
 			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 20,
+		  "x": 0,
+		  "y": 18
+		},
+		"id": 43,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"expr": " kube_pod_container_status_ready{namespace=\"$namespace\"} == 1",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "A"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "sum\n  by(pod) (container_memory_usage_bytes{container!=\"POD\",namespace=\"$namespace\"})",
+			"format": "table",
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "B"
+		  },
+		  {
+			"expr": "kube_pod_info{namespace=\"$namespace\"}",
+			"format": "table",
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "C"
+		  },
+		  {
+			"expr": "time() - kube_pod_start_time{namespace=\"$namespace\"}",
+			"format": "table",
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "D"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "sum\n  by(pod) (rate(container_cpu_usage_seconds_total{container!=\"POD\",namespace=\"$namespace\"}[5m])) * 100",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "E"
+		  }
 		],
-		"yaxis": {
-			"align": false,
-			"alignLevel": null
-		}
-		}
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Memory usage by pods in namespace $namespace and cluster $cluster",
+		"transformations": [
+		  {
+			"id": "seriesToColumns",
+			"options": {
+			  "byField": "pod"
+			}
+		  },
+		  {
+			"id": "filterFieldsByName",
+			"options": {
+			  "include": {
+				"names": [
+				  "pod",
+				  "Value #A",
+				  "Value #E",
+				  "Value #B"
+				]
+			  }
+			}
+		  },
+		  {
+			"id": "organize",
+			"options": {
+			  "excludeByName": {},
+			  "indexByName": {
+				"Value #A": 1,
+				"Value #B": 2,
+				"Value #D": 3,
+				"host_ip": 5,
+				"node": 4,
+				"pod": 0,
+				"pod_ip": 6
+			  },
+			  "renameByName": {
+				"Value #A": "Status",
+				"Value #B": "Memory usage",
+				"Value #D": "Age",
+				"Value #E": "CPU Usage",
+				"node": ""
+			  }
+			}
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"cacheTimeout": null,
+		"datasource": "Prometheus",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 80,
+			  "gradientMode": "none",
+			  "hideFrom": {
+				"graph": false,
+				"legend": false,
+				"tooltip": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 2,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "never",
+			  "spanNulls": true
+			},
+			"decimals": 0,
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "none"
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Total"
+			  },
+			  "properties": [
+				{
+				  "id": "color",
+				  "value": {
+					"fixedColor": "dark-red",
+					"mode": "fixed"
+				  }
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 4,
+		  "x": 20,
+		  "y": 18
+		},
+		"id": 32,
+		"links": [],
+		"options": {
+		  "graph": {},
+		  "legend": {
+			"calcs": [],
+			"displayMode": "list",
+			"placement": "bottom"
+		  },
+		  "tooltipOptions": {
+			"mode": "single"
+		  }
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"expr": "count by (node)(kube_pod_info{cluster=\"$cluster\",namespace=\"$namespace\"})",
+			"hide": false,
+			"legendFormat": "{{node}}",
+			"refId": "A"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "pod count by nodes of $namespace in $cluster cluster",
+		"transparent": true,
+		"type": "timeseries"
+	  },
+	  {
+		"cacheTimeout": null,
+		"datasource": "Prometheus",
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"custom": {
+			  "align": "center",
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Status"
+			  },
+			  "properties": [
+				{
+				  "id": "mappings",
+				  "value": [
+					{
+					  "from": "",
+					  "id": 1,
+					  "text": "Healthy",
+					  "to": "",
+					  "type": 1,
+					  "value": "3"
+					},
+					{
+					  "from": "-1",
+					  "id": 2,
+					  "text": "UnHelthy",
+					  "to": "2",
+					  "type": 2,
+					  "value": ""
+					}
+				  ]
+				},
+				{
+				  "id": "custom.displayMode",
+				  "value": "color-background"
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 5,
+		  "w": 17,
+		  "x": 0,
+		  "y": 26
+		},
+		"id": 30,
+		"links": [],
+		"options": {
+		  "showHeader": true,
+		  "sortBy": [
+			{
+			  "desc": false,
+			  "displayName": "persistentvolumeclaim"
+			}
+		  ]
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"exemplar": true,
+			"expr": "openebs_volume_status{cluster=\"$cluster\", namespace=\"$namespace\"}",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "A"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "openebs_actual_used{cluster=\"$cluster\", namespace=\"$namespace\"}",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "B"
+		  },
+		  {
+			"exemplar": true,
+			"expr": "openebs_size_of_volume{cluster=\"$cluster\", namespace=\"$namespace\"}",
+			"format": "table",
+			"hide": false,
+			"instant": true,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "C"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Persistent Volume in namespace $namespace",
+		"transformations": [
+		  {
+			"id": "filterFieldsByName",
+			"options": {
+			  "include": {
+				"names": [
+				  "openebs_pv",
+				  "Value #A",
+				  "Value #B",
+				  "Value #C"
+				]
+			  }
+			}
+		  },
+		  {
+			"id": "merge",
+			"options": {}
+		  },
+		  {
+			"id": "organize",
+			"options": {
+			  "excludeByName": {},
+			  "indexByName": {
+				"Value #A": 1,
+				"Value #B": 2,
+				"Value #C": 3,
+				"openebs_pv": 0
+			  },
+			  "renameByName": {
+				"Value #A": "Status",
+				"Value #B": "Actual Volume Used",
+				"Value #C": "Total Volume",
+				"openebs_pv": "Persistent Volume"
+			  }
+			}
+		  }
+		],
+		"transparent": true,
+		"type": "table"
+	  },
+	  {
+		"cacheTimeout": null,
+		"colorBackground": true,
+		"colorPostfix": false,
+		"colorValue": false,
+		"colors": [
+		  "#d44a3a",
+		  "#C4162A",
+		  "#299c46"
+		],
+		"datasource": "Prometheus",
+		"decimals": 2,
+		"description": "OpenEBS SLO is based on no. of running data plane OpenEBS pods over a period of time. Below pods have been taken into consideration which impacts data availability hosted on OpenEBS:\n\n1. cstor pods\n2. jiva ctrl and replica pods\n3. nfs provisioner\n",
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"format": "percentunit",
+		"gauge": {
+		  "maxValue": 100,
+		  "minValue": 0,
+		  "show": false,
+		  "thresholdLabels": false,
+		  "thresholdMarkers": true
+		},
+		"gridPos": {
+		  "h": 2,
+		  "w": 7,
+		  "x": 17,
+		  "y": 26
+		},
+		"hideTimeOverride": true,
+		"id": 2,
+		"interval": "",
+		"links": [
+		  {
+			"targetBlank": true,
+			"title": "$cluster Node link",
+			"url": "https://dashboard-$cluster.xyz.com/#!/node?namespace=default"
+		  }
+		],
+		"mappingType": 2,
+		"mappingTypes": [
+		  {
+			"name": "value to text",
+			"value": 1
+		  },
+		  {
+			"name": "range to text",
+			"value": 2
+		  }
+		],
+		"maxDataPoints": 100,
+		"nullPointMode": "connected",
+		"nullText": null,
+		"postfix": "",
+		"postfixFontSize": "50%",
+		"prefix": "",
+		"prefixFontSize": "50%",
+		"rangeMaps": [],
+		"sparkline": {
+		  "fillColor": "rgba(31, 118, 189, 0.18)",
+		  "full": false,
+		  "lineColor": "rgb(31, 120, 193)",
+		  "show": false,
+		  "ymax": null,
+		  "ymin": null
+		},
+		"tableColumn": "",
+		"targets": [
+		  {
+			"displayType": "Regular",
+			"expr": "avg(avg_over_time((sum without ()(kube_pod_container_status_ready{cluster=\"$cluster\",namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}) / count without ()(kube_pod_container_status_ready{cluster=\"$cluster\",namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}))[$duration:5m]))",
+			"hide": false,
+			"interval": "",
+			"legendFormat": "",
+			"refId": "C",
+			"valueHandler": "Number Threshold"
+		  },
+		  {
+			"expr": "",
+			"interval": "",
+			"legendFormat": "",
+			"refId": "A"
+		  }
+		],
+		"thresholds": "0.9,0.99",
+		"timeFrom": "1m",
+		"timeShift": null,
+		"title": "OpenEBS data plane availability over [$duration]",
+		"type": "singlestat",
+		"valueFontSize": "80%",
+		"valueMaps": [],
+		"valueName": "current"
+	  },
+	  {
+		"cacheTimeout": null,
+		"datasource": "Prometheus",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 3,
+		  "w": 3,
+		  "x": 17,
+		  "y": 28
+		},
+		"id": 22,
+		"interval": null,
+		"links": [],
+		"maxDataPoints": 100,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "text": {},
+		  "textMode": "auto"
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"exemplar": true,
+			"expr": "count(openebs_volume_status{cluster=\"$cluster\",namespace=\"$namespace\"} !=3 ) or vector(0)",
+			"hide": false,
+			"instant": false,
+			"interval": "",
+			"legendFormat": "{{pod}}",
+			"refId": "A"
+		  },
+		  {
+			"expr": "",
+			"hide": true,
+			"refId": "B"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Unbounded PV's",
+		"transparent": true,
+		"type": "stat"
+	  },
+	  {
+		"cacheTimeout": null,
+		"datasource": "Prometheus",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [
+			  {
+				"id": 0,
+				"op": "=",
+				"text": "N/A",
+				"type": 1,
+				"value": "null"
+			  }
+			],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "#299c46",
+				  "value": null
+				},
+				{
+				  "color": "#37872D",
+				  "value": 0
+				},
+				{
+				  "color": "#d44a3a",
+				  "value": 1
+				}
+			  ]
+			},
+			"unit": "none"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 3,
+		  "w": 3,
+		  "x": 21,
+		  "y": 28
+		},
+		"id": 24,
+		"interval": null,
+		"links": [],
+		"maxDataPoints": 100,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "text": {},
+		  "textMode": "auto"
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"expr": "count(kube_pod_container_status_terminated{cluster=\"$cluster\",namespace=\"$namespace\"} !=0 ) or vector(0)",
+			"hide": false,
+			"instant": false,
+			"legendFormat": "{{pod}}",
+			"refId": "A"
+		  },
+		  {
+			"expr": "",
+			"hide": true,
+			"refId": "B"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Terminated pods",
+		"transparent": true,
+		"type": "stat"
+	  },
+	  {
+		"datasource": "Prometheus",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 50,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"graph": false,
+				"legend": false,
+				"tooltip": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 2,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "auto",
+			  "spanNulls": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "super-light-orange",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "decbytes"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 24,
+		  "x": 0,
+		  "y": 31
+		},
+		"id": 46,
+		"options": {
+		  "legend": {
+			"calcs": [],
+			"displayMode": "list",
+			"placement": "bottom"
+		  },
+		  "tooltipOptions": {
+			"mode": "single"
+		  }
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"exemplar": true,
+			"expr": " (sum(container_memory_working_set_bytes{image!=\"\",cluster=\"$cluster\", namespace=\"$namespace\"}) by (pod))",
+			"hide": false,
+			"instant": false,
+			"interval": "",
+			"legendFormat": "{{pod}}",
+			"refId": "A"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Memory  details in namespace $namespace",
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": "Prometheus",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 50,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"graph": false,
+				"legend": false,
+				"tooltip": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 2,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "auto",
+			  "spanNulls": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "super-light-orange",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "hertz"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 24,
+		  "x": 0,
+		  "y": 39
+		},
+		"id": 49,
+		"options": {
+		  "legend": {
+			"calcs": [],
+			"displayMode": "list",
+			"placement": "bottom"
+		  },
+		  "tooltipOptions": {
+			"mode": "single"
+		  }
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"exemplar": true,
+			"expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (pod) * 100",
+			"hide": false,
+			"instant": false,
+			"interval": "",
+			"legendFormat": "{{pod}}",
+			"refId": "A"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "CPU  details in namespace $namespace",
+		"type": "timeseries"
+	  },
+	  {
+		"cacheTimeout": null,
+		"datasource": "Prometheus",
+		"description": "This panel shows container restarts in $cluster cluster per namespace during $duration.",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 0,
+			  "gradientMode": "none",
+			  "hideFrom": {
+				"graph": false,
+				"legend": false,
+				"tooltip": false
+			  },
+			  "lineInterpolation": "linear",
+			  "lineWidth": 1,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "never",
+			  "spanNulls": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "short"
+		  },
+		  "overrides": [
+			{
+			  "__systemRef": "hideSeriesFrom",
+			  "matcher": {
+				"id": "byNames",
+				"options": {
+				  "mode": "exclude",
+				  "names": [
+					"openebs-cstor-csi-controller-0"
+				  ],
+				  "prefix": "All except:",
+				  "readOnly": true
+				}
+			  },
+			  "properties": [
+				{
+				  "id": "custom.hideFrom",
+				  "value": {
+					"graph": true,
+					"legend": false,
+					"tooltip": false
+				  }
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 24,
+		  "x": 0,
+		  "y": 47
+		},
+		"id": 16,
+		"links": [],
+		"options": {
+		  "graph": {},
+		  "legend": {
+			"calcs": [
+			  "mean",
+			  "lastNotNull",
+			  "max",
+			  "min",
+			  "sum"
+			],
+			"displayMode": "table",
+			"placement": "bottom"
+		  },
+		  "tooltipOptions": {
+			"mode": "single"
+		  }
+		},
+		"pluginVersion": "7.5.5",
+		"targets": [
+		  {
+			"aggregation": "Last",
+			"decimals": 2,
+			"displayAliasType": "Warning / Critical",
+			"displayType": "Regular",
+			"displayValueWithAlias": "Never",
+			"expr": "increase(kube_pod_container_status_restarts_total{cluster=\"$cluster\",namespace=\"$namespace\"}[2m]) ",
+			"format": "time_series",
+			"interval": "",
+			"legendFormat": "{{pod}}",
+			"refId": "A",
+			"units": "none",
+			"valueHandler": "Number Threshold"
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "pod container restarts in OpenEBS in $duration",
+		"transparent": true,
+		"type": "timeseries"
+	  }
 	],
-	"refresh": "1m",
+	"refresh": false,
 	"schemaVersion": 27,
 	"style": "dark",
-	"tags": [
-		"OpenEBS"
-	],
+	"tags": [],
 	"templating": {
-		"list": [
+	  "list": [
 		{
-			"current": {
-			"selected": true,
-			"text": "Prometheus",
-			"value": "Prometheus"
-			},
-			"description": null,
-			"error": null,
-			"hide": 0,
-			"includeAll": false,
-			"label": null,
-			"multi": false,
-			"name": "datasource",
-			"options": [],
-			"query": "prometheus",
-			"queryValue": "",
-			"refresh": 1,
-			"regex": "",
-			"skipUrlSync": false,
-			"type": "datasource"
+		  "allValue": null,
+		  "current": {
+			"selected": false,
+			"text": "None",
+			"value": ""
+		  },
+		  "datasource": "Prometheus",
+		  "definition": "label_values(up,cluster)",
+		  "description": null,
+		  "error": null,
+		  "hide": 0,
+		  "includeAll": false,
+		  "label": "cluster",
+		  "multi": false,
+		  "name": "cluster",
+		  "options": [],
+		  "query": {
+			"query": "label_values(up,cluster)",
+			"refId": "Prometheus-cluster-Variable-Query"
+		  },
+		  "refresh": 1,
+		  "regex": "",
+		  "skipUrlSync": false,
+		  "sort": 0,
+		  "tagValuesQuery": "",
+		  "tags": [],
+		  "tagsQuery": "",
+		  "type": "query",
+		  "useTags": false
 		},
 		{
-			"allValue": null,
-			"current": {},
-			"datasource": "$datasource",
-			"definition": "",
-			"description": null,
-			"error": null,
-			"hide": 0,
-			"includeAll": false,
-			"label": null,
-			"multi": false,
-			"name": "cstor_pool",
-			"options": [],
-			"query": "label_values(openebs_pool_status, pod)",
-			"refId": "StandardVariableQuery",
-			"refresh": 2,
-			"regex": "",
-			"skipUrlSync": false,
-			"sort": 0,
-			"tagValuesQuery": "",
-			"tags": [],
-			"tagsQuery": "",
-			"type": "query",
-			"useTags": false
+		  "allValue": null,
+		  "current": {
+			"selected": false,
+			"text": "10m",
+			"value": "10m"
+		  },
+		  "description": null,
+		  "error": null,
+		  "hide": 0,
+		  "includeAll": false,
+		  "label": null,
+		  "multi": false,
+		  "name": "duration",
+		  "options": [
+			{
+			  "selected": true,
+			  "text": "10m",
+			  "value": "10m"
+			},
+			{
+			  "selected": false,
+			  "text": "20m",
+			  "value": "20m"
+			},
+			{
+			  "selected": false,
+			  "text": "30m",
+			  "value": "30m"
+			},
+			{
+			  "selected": false,
+			  "text": "1h",
+			  "value": "1h"
+			},
+			{
+			  "selected": false,
+			  "text": "2h",
+			  "value": "2h"
+			},
+			{
+			  "selected": false,
+			  "text": "5h",
+			  "value": "5h"
+			},
+			{
+			  "selected": false,
+			  "text": "1d",
+			  "value": "1d"
+			}
+		  ],
+		  "query": "10m,20m,30m,1h,2h,5h,1d",
+		  "queryValue": "",
+		  "skipUrlSync": false,
+		  "type": "custom"
+		},
+		{
+		  "allValue": null,
+		  "current": {
+			"selected": true,
+			"text": "openebs",
+			"value": "openebs"
+		  },
+		  "datasource": null,
+		  "definition": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
+		  "description": null,
+		  "error": null,
+		  "hide": 0,
+		  "includeAll": false,
+		  "label": "Namespace",
+		  "multi": false,
+		  "name": "namespace",
+		  "options": [],
+		  "query": {
+			"query": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
+			"refId": "StandardVariableQuery"
+		  },
+		  "refresh": 1,
+		  "regex": "/namespace=\\\"(.*?)(\\\")/",
+		  "skipUrlSync": false,
+		  "sort": 0,
+		  "tagValuesQuery": "",
+		  "tags": [],
+		  "tagsQuery": "",
+		  "type": "query",
+		  "useTags": false
 		}
-		]
+	  ]
 	},
 	"time": {
-		"from": "now-6h",
-		"to": "now"
+	  "from": "now-15m",
+	  "to": "now"
 	},
 	"timepicker": {
-		"refresh_intervals": [
-		"5s",
+	  "refresh_intervals": [
 		"10s",
 		"30s",
 		"1m",
@@ -716,21 +1712,10 @@
 		"1h",
 		"2h",
 		"1d"
-		],
-		"time_options": [
-		"5m",
-		"15m",
-		"1h",
-		"6h",
-		"12h",
-		"24h",
-		"2d",
-		"7d",
-		"30d"
-		]
+	  ]
 	},
 	"timezone": "",
-	"title": "OpenEBS / cStor / Pool dashboard",
-	"uid": "5a50cd9e-2013-4a58-8d06-669103eb9717",
-	"version": 1
-}
+	"title": "OpenEBS Dashboard",
+	"uid": "96KrOYewq",
+	"version": 13
+  }
