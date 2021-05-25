@@ -104,15 +104,12 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `kube-prometheus-stack.grafana.sidecar.dashboards.enabled`                                | Allows grafana sidecar container to provision dashboards                            | `true`                                                    |
 | `kube-prometheus-stack.grafana.sidecar.dashboards.label`                                  | Labels for configmaps to be collected by grafana sidecars                           | `"grafana_dashboard"`                                     |
 | `kube-prometheus-stack.grafana.plugins`                                                   | Adds Grafana plugin list to be installed                                            | `["grafana-polystat-panel","snuids-trafficlights-panel"]` |
-<<<<<<< HEAD
 | `openebsMonitoringAddon.enabled`                                                   | Enabled installation of  openebs-addon only                                            | `false` |
 | `openebsMonitoringAddon.grafana.openebsDashboardsEnabled`                                                   | Deploys openebs dashboards                                            | `true` |
 | `openebsMonitoringAddon.grafana.sidecar.dashboards.enabled`                                | Allows grafana sidecar container to provision dashboards                            | `true`                                                    |
 | `openebsMonitoringAddon.sidecar.dashboards.label`                                  | Updated labels for configmaps to be collected by grafana sidecars                           | `"grafana_dashboard"`                                     |
-=======
 | `customDashboards.cStor.enabled`                                                           | Enables dashboard installation of openebs cStor Storage engine                                                 | `true`                                                    |
 | `customDashboards.volumes.enabled`                                                           | Enables dashboard installation of openebs volumes                                                  | `true`                                                    |
->>>>>>> Added readme
 | `serviceMonitors.cstor.enabled`                                                           | Enables monitoring of cStor volumes                                                 | `true`                                                    |
 | `serviceMonitors.cstor.endpoints.ports`                                                   | Name of the service port cstor volume endpoint refers to                            | `"exporter"`                                              |
 | `serviceMonitors.cstor.endpoints.path`                                                    | HTTP path to scrape for metrics from cstor volume                                   | `"/metrics"`                                              |
