@@ -88,7 +88,7 @@ Usage:
 grafana sidecar dashboards label
 */}}
 {{- define "grafana-sidecar-dashboards.label" }}
-{{- if and (index .Values "kube-prometheus-stack" "grafana" "enabled") (index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "enabled") }}
+{{- if and (index .Values "kube-prometheus-stack" "install") (index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "enabled") }}
 {{- $grafanaSidecarDashboardsLabel:= index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}
 {{- printf $grafanaSidecarDashboardsLabel }}
 {{- else if and (.Values.customPrometheusStack.enabled) (.Values.customPrometheusStack.grafana.sidecar.dashboards.enabled )}}

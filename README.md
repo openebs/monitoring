@@ -35,11 +35,11 @@ helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [N
 
 _See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
 
-#### Install openebs-monitoring Chart in already installed prometheus-stack
+#### Install openebs-addon-only
 
 ```console
 #Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.enabled=false, customPrometheusStack.enabled=true
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, customPrometheusStack.enabled=true
 ```
 Please visit the [link](https://openebs.github.io/monitoring/docs/guide.md) for more detailed instructions.
 
