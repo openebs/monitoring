@@ -16,11 +16,11 @@ fullnameOverride: ""
 
 ## Configuration for installing openebs-monitoring dashboards in already installed prometheus stack
 openebsMonitoringComponents:
-  enabled: true
+  enabled: false
 
   grafana:
     ## Deploy custom openebs dashboards
-    customDashboardsEnabled: true
+    openebsDashboardsEnabled: true
 
     ## Sidecar container to load dashboard cm
     sidecar:
@@ -31,7 +31,7 @@ openebsMonitoringComponents:
 
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
-  install: false
+  install: true
   prometheus:
     service:
       type: NodePort
@@ -121,7 +121,7 @@ kube-prometheus-stack:
     ## Deploy default dashboards.
     ##
     defaultDashboardsEnabled: true
-    customDashboardsEnabled: true
+    openebsDashboardsEnabled: true
     adminPassword: admin
 
     sidecar:
