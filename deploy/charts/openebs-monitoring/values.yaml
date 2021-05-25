@@ -160,7 +160,7 @@ kube-prometheus-stack:
       - grafana-polystat-panel
       - snuids-trafficlights-panel
 
-customRules:
+alertRules:
   pools:
     enabled: true
   volumes:

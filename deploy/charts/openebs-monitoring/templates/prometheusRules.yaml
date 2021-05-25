@@ -1,6 +1,6 @@
-{{- if .Values.customRules }}
+{{- if .Values.alertRules }}
 {{- $customEnabledRules := dict -}}
-{{- range $dirName,$fields := .Values.customRules }}
+{{- range $dirName,$fields := .Values.alertRules }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
 {{ $_ := set $customEnabledRules $dirName $fields.enabled }}
 {{- end }}
