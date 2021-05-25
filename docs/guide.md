@@ -17,27 +17,27 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 1. **Update values.yaml**
    
    -  Disable dependent chart(kube-prometheus-stack) by updating `kube-prometheus-stack.install` to `false`
-   -  Set `customPrometheusStack.enabled` to `true` 
-   -  If you have updated the label for grafana sidecar container(`grafana-sc-dashboard`), then update `customPrometheusStack.grafana.sidecar.dashboards.label: <UPDATED_LABEL>`
+   -  Set `openebsMonitoringComponents.enabled` to `true` 
+   -  If you have updated the label for grafana sidecar container(`grafana-sc-dashboard`), then update `openebsMonitoringComponents.grafana.sidecar.dashboards.label: <UPDATED_LABEL>`
    -  Update `namespaceOverride` with the namespace name in which prometheus stack is installed
    -  After updating these specific values in values.yaml, these fields should look like this(example) :
 		```console
 		...
 		namespaceOverride: "prometheus-operator"
-		customMonitoringStack:
-		enabled: true
-		grafana:
-		  ## Deploy custom openebs dashboards
-		  customDashboardsEnabled: true
-		  ## Sidecar container to load dashboard cm
-		  sidecar:
-		    dashboards:
+		openebsMonitoringComponents:
+		  enabled: true
+		  grafana:
+		    ## Deploy custom openebs dashboards
+		    customDashboardsEnabled: true
+		    ## Sidecar container to load dashboard cm
+		    sidecar:
+			  dashboards:
 			  enabled: true
 			  # ConfigMaps with label below will be added to Grafana as dashboards.
 			  label: grafana_dashboard
 
 		kube-prometheus-stack:
-		  enabled: false
+		  install: false
 		...
 		```
 
@@ -56,7 +56,7 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 		```
 3. **Update grafana configuration**
    
-   - Append the below configuration in grafana configmap to parse html in grafana dashboards
+   - Append the below configuration in the configmap in which Grafana initialisation is done or cm in which grafana.ini file is declared.
 		```console
 		grafana.ini:
 		--------------
@@ -78,7 +78,7 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 
 ```console
 #Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, customPrometheusStack.enabled=true, customPrometheusStack.grafana.sidecar.dashboards.label=[UPDATED_LABEL]
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, openebsMonitoringComponents.enabled=true, openebsMonitoringComponents.grafana.sidecar.dashboards.label=[UPDATED_LABEL]
 ```
 
 #### Verification
