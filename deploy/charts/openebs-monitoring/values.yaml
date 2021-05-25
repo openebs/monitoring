@@ -15,7 +15,7 @@ namespaceOverride: ""
 fullnameOverride: ""
 
 ## Configuration for installing openebs-monitoring dashboards in already installed prometheus stack
-customPrometheusStack:
+openebsMonitoringComponents:
   enabled: true
 
   grafana:

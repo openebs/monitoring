@@ -91,8 +91,8 @@ grafana sidecar dashboards label
 {{- if and (index .Values "kube-prometheus-stack" "install") (index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "enabled") }}
 {{- $grafanaSidecarDashboardsLabel:= index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}
 {{- printf $grafanaSidecarDashboardsLabel }}
-{{- else if and (.Values.customPrometheusStack.enabled) (.Values.customPrometheusStack.grafana.sidecar.dashboards.enabled )}}
-{{- $grafanaSidecarDashboardsLabel:= .Values.customPrometheusStack.grafana.sidecar.dashboards.label }}
+{{- else if and (.Values.openebsMonitoringComponents.enabled) (.Values.openebsMonitoringComponents.grafana.sidecar.dashboards.enabled )}}
+{{- $grafanaSidecarDashboardsLabel:= .Values.openebsMonitoringComponents.grafana.sidecar.dashboards.label }}
 {{- printf $grafanaSidecarDashboardsLabel }}
 {{- end }}
 {{- end }}
