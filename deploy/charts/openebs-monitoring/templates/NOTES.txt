@@ -6,7 +6,7 @@ Use `kubectl get svc -n {{ .Release.Namespace }}` to list all the
 services in the `{{ .Release.Namespace }}` namespace.
 
 To access the dashboards, form the Grafana URL and open it in the browser 
-{{- if (index $.Values "kube-prometheus-stack" "enabled") }}
+{{- if (index $.Values "kube-prometheus-stack" "install") }}
 {{- if (index $.Values "kube-prometheus-stack" "grafana" "ingress" "enabled") }}
 {{- range $host := (index $.Values "kube-prometheus-stack" "grafana" "ingress" "hosts") }}
   {{- range .paths }}
