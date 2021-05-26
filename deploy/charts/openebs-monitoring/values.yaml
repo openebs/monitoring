@@ -161,9 +161,9 @@ kube-prometheus-stack:
       - snuids-trafficlights-panel
 
 alertRules:
-  pools:
+  cStor:
     enabled: true
-  volumes:
+  Jiva:
     enabled: true
 
 serviceMonitors:

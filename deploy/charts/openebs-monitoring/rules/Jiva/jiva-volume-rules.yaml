@@ -1,0 +1,126 @@
+groups:
+  - name: openebs-Jiva-volume
+    rules:
+      - alert: VolumeCapacityLow
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: |-
+            OpenEBS volume '{{$labels.openebs_pv}}' created for '{{$labels.openebs_pvc}}' is running low on capacity, you have already consumed {{ $value }}% of total capacity
+          summary: 'OpenEBS volume ''{{$labels.openebs_pv}}'' created for ''{{$labels.openebs_pvc}}'' has {{ with printf "openebs_size_of_volume{openebs_pv=''%s'',instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pvc=''%s''}-openebs_actual_used{openebs_pv=''%s'',instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pvc=''%s''}" $labels.openebs_pv $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pvc $labels.openebs_pv $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }}GB) space remaining.'
+        expr: |-
+          ((openebs_actual_used{openebs_jiva_label="jiva-controller"}/openebs_size_of_volume{openebs_jiva_label="jiva-controller"})*100 > 90)
+        for: 2m
+        labels:
+          severity: "warning"
+
+      - alert: VolumeDown
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: |-
+            OpenEBS volume '{{$labels.openebs_pv}}' created for '{{$labels.openebs_pvc}}' is unreachable since last 2 minutes and it needs to be brought up
+          summary: "OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is unreachable since last 2 minutes."
+        expr: |-
+          ((openebs_volume_uptime{openebs_jiva_label="jiva-controller"}) and (openebs_volume_uptime{openebs_jiva_label="jiva-controller"} > openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 2m)) unless ((openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 4m) and (openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 2m > openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 4m))
+        for: 2m
+        labels:
+          severity: "info"
+
+      - alert: VolumeUp
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: |-
+            OpenEBS volume '{{$labels.openebs_pv}}' is now up and running
+          summary: "OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is now up and running."
+        expr: |-
+          ((openebs_volume_uptime{openebs_jiva_label="jiva-controller"}) and (openebs_volume_uptime{openebs_jiva_label="jiva-controller"} > openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 2m)) unless ((openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 4m) and (openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 2m > openebs_volume_uptime{openebs_jiva_label="jiva-controller"} offset 4m))
+        for: 2m
+        labels:
+          severity: "info"
+
+      - alert: VolumeNotHealthy
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: |-
+            OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is offline, your application consuming the storage could be crashing
+          summary: "OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' has gone offline."
+        expr: |-
+          (openebs_volume_status{openebs_jiva_label="jiva-controller"} == 1 and (openebs_volume_status{openebs_jiva_label="jiva-controller"} offset 1m != 1))
+        for: 2m
+        labels:
+          severity: "error"
+
+      - alert: VolumeDegraded
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: |-
+            OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is degraded, check the replica statuses
+          summary: "OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is in a degraded state"
+        expr: |-
+          (openebs_volume_status{openebs_jiva_label="jiva-controller"} == 2 and (openebs_volume_status{openebs_jiva_label="jiva-controller"} offset 1m != 2))
+        for: 2m
+        labels:
+          severity: "warning"
+
+      - alert: VolumeHealthy
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: |-
+            OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is now healthy
+          summary: "OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is now healthy"
+        expr: |-
+          (openebs_volume_status{openebs_jiva_label="jiva-controller"} == 3 and (openebs_volume_status{openebs_jiva_label="jiva-controller"} offset 1m != 3))
+        for: 2m
+        labels:
+          severity: "info"
+
+      - alert: VolumeStatusUnknown
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: |-
+            OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' is in an unknown state, this happens when the jiva controller or the cstor target pod is not running
+          summary: "OpenEBS volume '{{$labels.openebs_pv}}' created for the claim '{{$labels.openebs_pvc}}' has gone in an unknown state"
+        expr: |-
+          (openebs_volume_status{openebs_jiva_label="jiva-controller"} == 4 and (openebs_volume_status{openebs_jiva_label="jiva-controller"} offset 1m != 4))
+        for: 2m
+        labels:
+          severity: "warning"
+
+      - alert: HealthyReplicaCount
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: 'Detected a change in the healthy replica count of your OpenEBS volume ''{{$labels.openebs_pv}}'' created for the claim ''{{$labels.openebs_pvc}}''. It has changed from {{ with printf "openebs_healthy_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''} offset 1m" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }} to {{ $value }}. Total replica count is {{ with printf "openebs_total_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }}, healthy replica count is {{ $value }} and degraded replica count is {{ with printf "openebs_degraded_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }}.'
+          summary: 'Healthy replica count of your OpenEBS volume ''{{$labels.openebs_pv}}'' created for the claim ''{{$labels.openebs_pvc}}'' has changed from {{ with printf "openebs_healthy_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''} offset 1m" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }} to {{ $value }}. Total replica count is {{ with printf "openebs_total_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }}, healthy replica count is {{ $value }} and degraded replica count is {{ with printf "openebs_degraded_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }}.'
+        expr: |-
+          (openebs_healthy_replica_count{openebs_jiva_label="jiva-controller"} != openebs_healthy_replica_count{openebs_jiva_label="jiva-controller"} offset 1m)
+        for: 2m
+        labels:
+          severity: "info"
+
+      - alert: DegradedReplicaCount
+        annotations:
+          componentType: "volume"
+          openebsVolume: "{{ $labels.openebs_pv }}"
+          openebsVolumeClaim: "{{ $labels.openebs_pvc }}"
+          description: 'Detected a change in the healthy replica count of your OpenEBS volume ''{{$labels.openebs_pv}}'' created for the claim ''{{$labels.openebs_pvc}}''. It has changed from {{ with printf "openebs_degraded_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''} offset 1m" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }} to {{ $value }}. Total replica count is {{ with printf "openebs_total_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }}, healthy replica count is {{ with printf "openebs_healthy_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }} and degraded replica count is {{ $value }}.'
+          summary: 'Degraded replica count of your OpenEBS volume ''{{$labels.openebs_pv}}'' created for the claim ''{{$labels.openebs_pvc}}'' has changed from {{ with printf "openebs_degraded_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''} offset 1m" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }} to {{ $value }}. Total replica count is {{ with printf "openebs_total_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }}, healthy replica count is {{ with printf "openebs_healthy_replica_count{instance=''%s'',job=''%s'',kubernetes_pod_name=''%s'',openebs_pv=''%s'',openebs_pvc=''%s''}" $labels.instance $labels.job $labels.kubernetes_pod_name $labels.openebs_pv $labels.openebs_pvc | query }} {{ . | first | value }} {{ end }} and degraded replica count is {{ $value }}.'
+        expr: |-
+          (openebs_degraded_replica_count{openebs_jiva_label="jiva-controller"} != openebs_degraded_replica_count{openebs_jiva_label="jiva-controller"} offset 1m)
+        for: 2m
+        labels:
+          severity: "info"
