@@ -17,14 +17,14 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 1. **Update values.yaml**
    
    -  Disable dependent chart(kube-prometheus-stack) by updating `kube-prometheus-stack.install` to `false`
-   -  Set `openebsMonitoringComponents.enabled` to `true` 
-   -  If you have updated the label for grafana sidecar container(`grafana-sc-dashboard`), then update `openebsMonitoringComponents.grafana.sidecar.dashboards.label: <UPDATED_LABEL>`
+   -  Set `openebsMonitoringAddon.enabled` to `true` 
+   -  If you have updated the label for grafana sidecar container(`grafana-sc-dashboard`), then update `openebsMonitoringAddon.grafana.sidecar.dashboards.label: <UPDATED_LABEL>`
    -  Update `namespaceOverride` with the namespace name in which prometheus stack is installed
    -  After updating these specific values in values.yaml, these fields should look like this(example) :
 		```console
 		...
 		namespaceOverride: "prometheus-operator"
-		openebsMonitoringComponents:
+		openebsMonitoringAddon:
 		  enabled: true
 		  grafana:
 		    ## Deploy custom openebs dashboards
@@ -78,7 +78,7 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 
 ```console
 #Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, openebsMonitoringComponents.enabled=true, openebsMonitoringComponents.grafana.sidecar.dashboards.label=[UPDATED_LABEL]
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, openebsMonitoringAddon.enabled=true, openebsMonitoringAddon.grafana.sidecar.dashboards.label=[UPDATED_LABEL]
 ```
 
 #### Verification
