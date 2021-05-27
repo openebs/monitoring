@@ -5,6 +5,8 @@
 These metrics are collected by cStor ServiceMonitor that describes the cStor service targets to be monitored by Prometheus which
 ultimately exposes the cStor volume endpoints where the below mentioned metrics are exposed.
 
+Refer to this [link](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) to get a better understanding of how ServiceMonitor works.
+
 ```
 openebs_actual_used # Actual volume size used
 openebs_connection_error_total # Total no of connection errors
@@ -31,6 +33,8 @@ openebs_writes # Write Input/Outputs on Volume
 ## Metrics supported by cStor to export the cStorStoragePool usage statistics as Prometheus metrics
 
 These metrics are collected are cStor podMonitor which declaratively specifies how groups of cStor pool pods should be monitored.
+
+Refer to this [link](https://docs.openshift.com/container-platform/4.5/rest_api/monitoring_apis/podmonitor-monitoring-coreos-com-v1.html#apismonitoring-coreos-comv1podmonitors) to get a better understanding of how PodMonitor works.
 
 ```
 openebs_volume_replica_available_size # Available size of volume replica on a pool

@@ -5,6 +5,8 @@
 These metrics are collected by jiva ServiceMonitor that describes the jiva service targets to be monitored by Prometheus which
 ultimately exposes the jiva volume endpoints where the below mentioned metrics are exposed.
 
+Refer to this [link](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) to get a better understanding of how ServiceMonitor works.
+
 ```
 openebs_actual_used # Actual volume size used
 openebs_connection_error_total # Total no of connection errors
