@@ -17,7 +17,7 @@
   "gnetId": 12171,
   "graphTooltip": 0,
   "id": 27,
-  "iteration": 1621850478930,
+  "iteration": 1622109784038,
   "links": [],
   "panels": [
     {
@@ -71,7 +71,7 @@
       },
       "gridPos": {
         "h": 12,
-        "w": 8,
+        "w": 7,
         "x": 0,
         "y": 0
       },
@@ -98,7 +98,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": " (sum(container_memory_working_set_bytes{image!=\"\",cluster=\"$cluster\", namespace=\"$namespace\"}))",
+          "expr": "sum(container_memory_usage_bytes{namespace=\"$namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status)",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -108,7 +108,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Memory usage by Pods in $namespace  in $cluster cluster",
+      "title": "Memory usage by all cstor Pools in $namespace  in $cluster cluster",
       "transparent": true,
       "type": "timeseries"
     },
@@ -136,8 +136,8 @@
       },
       "gridPos": {
         "h": 12,
-        "w": 4,
-        "x": 8,
+        "w": 5,
+        "x": 7,
         "y": 0
       },
       "id": 45,
@@ -145,7 +145,7 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "horizontal",
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -160,23 +160,25 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_memory_usage_bytes{namespace=\"openebs\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace)",
+          "expr": "sum(container_memory_usage_bytes{namespace=\"$namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace)",
           "hide": false,
           "interval": "",
           "legendFormat": "Memory used by pod {{pod}}",
           "refId": "A"
         },
         {
-          "expr": " (sum(kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}))",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_limits_memory_bytes{namespace=\"$namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_volume_status) by(pod,namespace) * 0.33",
           "interval": "",
-          "legendFormat": "Memory requests",
+          "legendFormat": "Memory limits by pod {{pod}}",
           "refId": "B"
         },
         {
-          "expr": " (sum(kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}))",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests_memory_bytes{namespace=\"$namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_volume_status) by(pod,namespace) * 0.33",
           "hide": false,
           "interval": "",
-          "legendFormat": "Memory limits",
+          "legendFormat": "Memory request by pv {{pod}}",
           "refId": "C"
         }
       ],
@@ -235,7 +237,7 @@
       },
       "gridPos": {
         "h": 12,
-        "w": 8,
+        "w": 7,
         "x": 12,
         "y": 0
       },
@@ -262,7 +264,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[1m])) * 100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[1m]) * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) * 100",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -272,7 +274,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "CPU usage by Pods in $namespace  in $cluster cluster",
+      "title": "CPU usage by all cstor Pools in $namespace  in $cluster cluster",
       "transparent": true,
       "type": "timeseries"
     },
@@ -294,14 +296,14 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 12,
-        "w": 4,
-        "x": 20,
+        "w": 5,
+        "x": 19,
         "y": 0
       },
       "id": 48,
@@ -309,7 +311,7 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "horizontal",
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -324,27 +326,29 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_cpu_usage_seconds_total{namespace=\"openebs\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[1m]) * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace) * 100",
           "hide": false,
-          "instant": true,
+          "instant": false,
           "interval": "",
           "legendFormat": "CPU used by pod {{pod}}",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(kube_pod_container_resource_requests_cpu_cores{namespace=\"$namespace\"}[1m])) * 100 ",
+          "expr": "sum(rate(kube_pod_container_resource_requests_cpu_cores{namespace=\"$namespace\"}[1m]) * on (name,pod)group_left(namespace) openebs_volume_status) by(pod,namespace) * 0.33 * 100",
           "hide": false,
+          "instant": false,
           "interval": "",
-          "legendFormat": "CPU requests",
+          "legendFormat": "CPU requests by pod {{pod}}",
           "refId": "B"
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(kube_pod_container_resource_limits_cpu_cores{namespace=\"$namespace\"}[1m])) * 100 ",
+          "expr": "sum(rate(kube_pod_container_resource_limits_cpu_cores{namespace=\"$namespace\"}[1m]) * on (name,pod)group_left(namespace) openebs_volume_status) by(pod,namespace) * 0.33 * 100",
           "hide": false,
+          "instant": false,
           "interval": "",
-          "legendFormat": "CPU limits",
+          "legendFormat": "CPU limits by pod {{pod}}",
           "refId": "C"
         }
       ],
@@ -887,7 +891,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "pod count by nodes of $namespace in $cluster cluster",
+      "title": "Pod count by nodes of $namespace in $cluster cluster",
       "transparent": true,
       "type": "timeseries"
     },
@@ -1566,12 +1570,12 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "pod container restarts in OpenEBS in $duration",
+      "title": "Pod container restarts in OpenEBS in $duration",
       "transparent": true,
       "type": "timeseries"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -1580,6 +1584,7 @@
       {
         "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
           "text": "None",
           "value": ""
@@ -1611,7 +1616,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "10m",
           "value": "10m"
         },
@@ -1698,7 +1703,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1717,5 +1722,5 @@
   "timezone": "",
   "title": "OpenEBS Dashboard",
   "uid": "96KrOYewq",
-  "version": 13
+  "version": 2
 }
