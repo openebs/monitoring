@@ -1179,11 +1179,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": " 1",
-          "value": " 1"
-        },
+        "current": {},
         "datasource": "$datasource",
         "definition": "",
         "description": null,
@@ -1237,11 +1233,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "pvc-72f0fc6b-0667-438a-84c6-b8f26f4bc756",
-          "value": "pvc-72f0fc6b-0667-438a-84c6-b8f26f4bc756"
-        },
+        "current": {},
         "datasource": "$datasource",
         "definition": "",
         "description": null,
