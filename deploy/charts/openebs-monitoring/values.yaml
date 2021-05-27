@@ -17,6 +17,10 @@ fullnameOverride: ""
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
   prometheus:
+    service:
+      type: NodePort
+      nodePort: 32514
+
     prometheusSpec:
       ## If true, a nil or {} value for prometheus.prometheusSpec.serviceMonitorSelector will cause the
       ## prometheus resource to be created with selectors based on values in the helm deployment,
@@ -30,8 +34,73 @@ kube-prometheus-stack:
       ##
       podMonitorSelectorNilUsesHelmValues: false
 
+      ## Number of replicas of each shard to deploy for a Prometheus deployment.
+      ## Number of replicas multiplied by shards is the total number of Pods created.
+      ##
+      replicas: 1
+
+      ## Prometheus StorageSpec for persistent data
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
+      ##
+      storageSpec:
+        {}
+        # volumeClaimTemplate:
+        #   metadata:
+        #     name: prom
+        #   spec:
+        #     storageClassName: cstorsc-ooqun
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 10Gi
+        #   selector: {}
+
+  alertmanager:
+    ## Deploy alertmanager
+    ##
+    enabled: true
+
+    alertmanagerSpec:
+      ## Size is the expected size of the alertmanager cluster. The controller will eventually make the size of the
+      ## running cluster equal to the expected size.
+      replicas: 1
+
+      ## Storage is the definition of how storage will be used by the Alertmanager instances.
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
+      ##
+      storage:
+        {}
+        # volumeClaimTemplate:
+        #   metadata:
+        #     name: alert
+        #   spec:
+        #     storageClassName: cstorsc-ooqun
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 10Gi
+        #   selector: {}
+
+  prometheusOperator:
+    enabled: true
+
+    ## Prometheus-Operator v0.39.0 and later support TLS natively.
+    ##
+    # tls:
+    #   enabled: false
+
   grafana:
     enabled: true
+
+    ## In order to render HTML and Javascript in a text panel without being sanitized
+    ## enable the `disable_sanitize_html` settings in Grafana ini file
+    grafana.ini:
+      panels:
+        disable_sanitize_html: true
+
+    service:
+      type: NodePort
+      nodePort: 32515
 
     ## Deploy default dashboards.
     ##
@@ -45,30 +114,61 @@ kube-prometheus-stack:
         # ConfigMaps with label below will be added to Grafana as dashboards.
         label: grafana_dashboard
 
+    ## Pass the plugins you want installed as a list.
+    ##
+    plugins:
+      - grafana-polystat-panel
+      - snuids-trafficlights-panel
+
 serviceMonitors:
   cstor:
     enabled: true
 
-    ## 	Endpoints of the selected service to be monitored
-    # endpoints: []
-
-    ## Name of the endpoint's service port
-    ## Mutually exclusive with targetPort
-    #   - port: ""
-
-    ## HTTP path to scrape for metrics
-    #     path: /metrics
-
-    ## Example
-
-    # endpoints:
-    #   - port: exporter
-    #     path: /metrics
+    ## Endpoints of the selected service to be monitored
     endpoints:
-      - port: exporter
-        path: /mertics
+      ## Name of the endpoint's service port
+      ## Mutually exclusive with targetPort
+      #  port: ""
+      port: exporter
 
-    ## 	Label selector for services to which this ServiceMonitor applies
+      ## HTTP path to scrape for metrics
+      #  path: /metrics
+      path: /metrics
+
+      ## relabel configs to apply to samples before ingestion.
+      ##
+      # relabelings: []
+      #   - sourceLabels: [__meta_kubernetes_service_name]
+      #     separator: ;
+      #     regex: (.*)
+      #     targetLabel: service
+      #     replacement: $1
+      #     action: replace
+      relabelings:
+        ## RelabelConfigs to apply to samples before scraping.
+        ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+        ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+        - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
+          regex: volume_exporter_prometheus
+          action: keep
+        ## Below entry ending with vsm is deprecated and is maintained for
+        ## backward compatibility purpose.
+        - sourceLabels: [__meta_kubernetes_pod_label_vsm]
+          action: replace
+          targetLabel: openebs_pv
+        ## Below entry is the correct entry. Though the above and below entries
+        ## are having same target_label as openebs_pv, only one of them will be
+        ## valid for any release.
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+          action: replace
+          targetLabel: openebs_pv
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+          action: replace
+          targetLabel: openebs_pvc
+
+    ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
     #   matchLabels: {}
 
@@ -82,7 +182,7 @@ serviceMonitors:
       matchLabels:
         openebs.io/cas-type: cstor
 
-    ## 	Namespaces from which services are selected
+    ## Namespaces from which services are selected
     # namespaceSelector: []
     ## Match any namespace
     #   any: true
@@ -108,26 +208,51 @@ serviceMonitors:
   jiva:
     enabled: true
 
-    ## 	Endpoints of the selected service to be monitored
-    # endpoints: []
-    ## Name of the endpoint's service port
-    ## Mutually exclusive with targetPort
-    #   - port: ""
-
-    ## HTTP path to scrape for metrics
-    #     path: /metrics
-
-    ## Example
-
-    # endpoints:
-    #   - port: exporter
-    #     path: /metrics
-
+    ## Endpoints of the selected service to be monitored
     endpoints:
-      - port: exporter
-        path: /metrics
+      ## Name of the endpoint's service port
+      ## Mutually exclusive with targetPort
+      #  port: ""
+      port: exporter
 
-    ## 	Label selector for services to which this ServiceMonitor applies
+      ## HTTP path to scrape for metrics
+      #  path: /metrics
+      path: /metrics
+
+      ## relabel configs to apply to samples before ingestion.
+      ##
+      #  relabelings: []
+      #    - sourceLabels: [__meta_kubernetes_service_name]
+      #      separator: ;
+      #      regex: (.*)
+      #      targetLabel: service
+      #      replacement: $1
+      #      action: replace
+      relabelings:
+        ## RelabelConfigs to apply to samples before scraping.
+        ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+        ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+        - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
+          regex: volume_exporter_prometheus
+          action: keep
+        ## Below entry ending with vsm is deprecated and is maintained for
+        ## backward compatibility purpose.
+        - sourceLabels: [__meta_kubernetes_pod_label_vsm]
+          action: replace
+          targetLabel: openebs_pv
+        ## Below entry is the correct entry. Though the above and below entries
+        ## are having same target_label as openebs_pv, only one of them will be
+        ## valid for any release.
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+          action: replace
+          targetLabel: openebs_pv
+        - sourceLabels:
+            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+          action: replace
+          targetLabel: openebs_pvc
+
+    ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
     #   matchLabels: {}
 
@@ -141,7 +266,7 @@ serviceMonitors:
       matchLabels:
         openebs.io/cas-type: jiva
 
-    ## 	Namespaces from which services are selected
+    ## Namespaces from which services are selected
     # namespaceSelector: []
     ## Match any namespace
     #   any: true
@@ -168,27 +293,62 @@ podMonitors:
   cstor:
     enabled: true
 
-    ## 	Endpoints of the selected pods to be monitored
+    ## Endpoints of the selected pods to be monitored
     ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
-    # podMetricsEndpoints: []
-    ## Name or number of the endpoint's target port
-    ## Mutually exclusive with port
-    #   - targetPort: ""
-
-    ## HTTP path to scrape for metrics
-    #     path: /metrics
-
-    ## Example
-
-    # podMetricsEndpoints:
-    #   - targetPort: 9500
-    #     path: /metrics
-
     podMetricsEndpoints:
-      - targetPort: 9500
-        path: /metrics
+      ## Name or number of the endpoint's target port
+      ## Mutually exclusive with port
+      #  targetPort: ""
+      targetPort: 9500
 
-    ## 	Label selector for pods to which this PodMonitor applies
+      ## HTTP path to scrape for metrics
+      #     path: /metrics
+      path: /metrics
+
+      ## relabel configs to apply to samples before ingestion.
+      ##
+      #     relabelings: []
+      #     - sourceLabels: [__meta_kubernetes_pod_node_name]
+      #       separator: ;
+      #       regex: ^(.*)$
+      #       targetLabel: nodename
+      #       replacement: $1
+      #       action: replace
+      relabelings:
+        ## RelabelConfigs to apply to samples before scraping.
+        ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+        ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+        - sourceLabels: [__meta_kubernetes_pod_annotation_openebs_io_monitoring]
+          regex: pool_exporter_prometheus
+          action: keep
+          ## Adding comma-separated source_labels below in order to fetch the metrics for pool claim instances of SPC and CSPC kind
+        - sourceLabels:
+            [
+              __meta_kubernetes_pod_label_openebs_io_storage_pool_claim,
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster,
+            ]
+          action: replace
+          ## separator: Separator placed between concatenated source label values, default -> ;
+          separator: ""
+          targetLabel: storage_pool_claim
+          ## Adding comma-separated source_labels below in order to fetch the metrics for pool instances of CSP and CSPI kind
+        - sourceLabels:
+            [
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool,
+              __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance,
+            ]
+          action: replace
+          ## separator: Separator placed between concatenated source label values, default -> ;
+          separator: ""
+          targetLabel: cstor_pool
+        - sourceLabels:
+            [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: ${1}:${2}
+          targetLabel: __address__
+
+    ## Label selector for pods to which this PodMonitor applies
     # selector: {}
     #   matchlabels: {}
 
@@ -202,7 +362,7 @@ podMonitors:
       matchLabels:
         app: cstor-pool
 
-    ## 	Namespaces from which services are selected
+    ## Namespaces from which services are selected
     # namespaceSelector: []
     ## Match any namespace
     #   any: true

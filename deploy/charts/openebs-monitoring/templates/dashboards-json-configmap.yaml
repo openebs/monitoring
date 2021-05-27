@@ -6,7 +6,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ printf "%s-%s" (include "openebs-monitoring.fullname" $) $dashboardName | trunc 63 | trimSuffix "-" }}
+  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.fullname" $) $dashboardName) | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "openebs-monitoring.namespace" $ }}
   labels:
     {{- if index $.Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}

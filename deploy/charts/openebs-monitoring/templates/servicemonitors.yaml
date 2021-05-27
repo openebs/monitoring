@@ -15,7 +15,12 @@ spec:
   namespaceSelector:
 {{ toYaml $fields.namespaceSelector | indent 4 }}
   endpoints:
-{{ toYaml $fields.endpoints | indent 2 }}
+    - port: {{ $fields.endpoints.port }}
+      path: {{ $fields.endpoints.path }}
+{{- if $fields.endpoints.relabelings }}
+      relabelings:
+{{ toYaml $fields.endpoints.relabelings | indent 8 }}
+{{- end }}
 ---
 {{- end }}
 {{- end }}
