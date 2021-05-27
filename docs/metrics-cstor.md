@@ -2,6 +2,9 @@
 
 ## Metrics supported by cStor volume as of the current release are
 
+These metrics are collected by cStor ServiceMonitor that describes the cStor service targets to be monitored by Prometheus which
+ultimately exposes the cStor volume endpoints where the below mentioned metrics are exposed.
+
 ```
 openebs_actual_used # Actual volume size used
 openebs_connection_error_total # Total no of connection errors
@@ -25,10 +28,9 @@ openebs_write_time # Write time on volume
 openebs_writes # Write Input/Outputs on Volume
 ```
 
-These metrics are collected by cStor ServiceMonitor that describes the cStor service targets to be monitored by Prometheus which
-ultimately exposes the cStor volume endpoints where the above mentioned metrics are exposed.
-
 ## Metrics supported by cStor to export the cStorStoragePool usage statistics as Prometheus metrics
+
+These metrics are collected are cStor podMonitor which declaratively specifies how groups of cStor pool pods should be monitored.
 
 ```
 openebs_volume_replica_available_size # Available size of volume replica on a pool
@@ -74,47 +76,4 @@ openebs_zpool_list_incomplete_stdout_error # Total number of incomplete stdout e
 openebs_zpool_list_no_pool_available_error  # Total number of no pool available errors
 openebs_zpool_list_parse_error_count # Total number of parsing errors
 openebs_zpool_list_reject_request_count # Total number of rejected requests of zpool command
-```
-
-These metrics are collected are cStor podMonitor which declaratively specifies how groups of cStor pool pods should be monitored.
-
-# Monitoring Jiva Engine
-
-## Metrics supported by Jiva volume as of the current release are
-
-```
-openebs_actual_used # Actual volume size used
-openebs_connection_error_total # Total no of connection errors
-openebs_connection_retry_total # Total no of connection retry requests
-openebs_degraded_replica_count # Total no of degraded/ro replicas
-openebs_healthy_replica_count # Total no of healthy replicas
-openebs_logical_size # Logical size of volume
-openebs_parse_error_total # Total no of parsing errors
-openebs_read_block_count # Read Block count of volume
-openebs_read_time # Read time on volume
-openebs_reads # Read Input/Outputs on Volume
-openebs_sector_size # sector size of volume
-openebs_size_of_volume # Size of the volume requested
-openebs_total_replica_count # Total no of replicas connected to cas
-openebs_volume_status # Status of volume: (1, 2, 3, 4) = {Offline, Degraded, Healthy, Unknown}
-openebs_volume_uptime # Time since volume has registered
-openebs_write_block_count # Write Block count of volume
-openebs_write_time # Write time on volume
-openebs_writes # Write Input/Outputs on Volume
-```
-
-These metrics are collected by jiva ServiceMonitor that describes the jiva service targets to be monitored by Prometheus which
-ultimately exposes the jiva volume endpoints where the above mentioned metrics are exposed.
-
-# CSI metrics exposed
-
-Here is the list of csi volume metrics exposed by k8s:-
-
-```
-kubelet_volume_stats_available_bytes
-kubelet_volume_stats_capacity_bytes
-kubelet_volume_stats_inodes
-kubelet_volume_stats_inodes_free
-kubelet_volume_stats_inodes_used
-kubelet_volume_stats_used_bytes
 ```
