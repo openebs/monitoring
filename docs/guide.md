@@ -8,7 +8,32 @@
 ---
 **NOTE**
 
-To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without applying label filtering, you have to set `prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues` and `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` to `false`
+- To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without applying label filtering, you have to set `prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues` and `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` to `false`  
+<br>
+- Install grafana plugin
+   
+   -   There are two plugins that we are using for openEBS dashboards.
+  
+       -  [grafana-polystat-panel]([https://link](https://grafana.com/grafana/plugins/grafana-polystat-panel/))
+
+       -  [snuids-trafficlights-panel]([https://link](https://grafana.com/grafana/plugins/snuids-trafficlights-panel/))
+       
+    -  To install these plugin, exec into the `grafana` container  and run
+		```
+		grafana-cli plugins install grafana-polystat-panel 
+		grafana-cli plugins install snuids-trafficlights-panel
+		```
+- Update grafana configuration
+   
+   - Append the below configuration in the configmap in which Grafana initialisation is done or cm in which `grafana.ini` file is declared.
+		```console
+		grafana.ini:
+		--------------
+		...
+		[panels]
+		disable_sanitize_html = true
+		...
+		```
 
 ---
 
@@ -41,33 +66,8 @@ To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without apply
 		...
 		```
 
-2. **Install grafana plugin**
-   
-   -   There are two plugins that we are using for openEBS dashboards.
-  
-       -  [grafana-polystat-panel]([https://link](https://grafana.com/grafana/plugins/grafana-polystat-panel/))
 
-       -  [snuids-trafficlights-panel]([https://link](https://grafana.com/grafana/plugins/snuids-trafficlights-panel/))
-       
-    -  To install these plugin, exec into the `grafana` container  and run
-		```
-		grafana-cli plugins install grafana-polystat-panel 
-		grafana-cli plugins install snuids-trafficlights-panel
-		```
-3. **Update grafana configuration**
-   
-   - Append the below configuration in the configmap in which Grafana initialisation is done or cm in which grafana.ini file is declared.
-		```console
-		grafana.ini:
-		--------------
-		...
-		[panels]
-		disable_sanitize_html = true
-		...
-		```
-
-
-4. **Install `openebs-monitoring` chart**
+2. **Install `openebs-monitoring` chart**
    
 	```console
 	# Helm
