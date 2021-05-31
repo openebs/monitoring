@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": 12171,
   "graphTooltip": 0,
-  "id": 27,
-  "iteration": 1622434330941,
+  "id": 29,
+  "iteration": 1622442752082,
   "links": [],
   "panels": [
     {
@@ -1111,7 +1111,8 @@
       "targets": [
         {
           "displayType": "Regular",
-          "expr": "avg(avg_over_time((sum without ()(kube_pod_container_status_ready{namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}) / count without ()(kube_pod_container_status_ready{namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}))[$duration:5m]))",
+          "exemplar": true,
+          "expr": "avg(avg_over_time((sum without ()(kube_pod_container_status_ready{namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}) / count without ()(kube_pod_container_status_ready{namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}))[1m:5m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "",
@@ -1128,7 +1129,7 @@
       "thresholds": "0.9,0.99",
       "timeFrom": "1m",
       "timeShift": null,
-      "title": "OpenEBS data plane availability over [$duration]",
+      "title": "OpenEBS data plane availability ",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
@@ -1299,11 +1300,10 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
-          "selected": false,
-          "text": "10m",
-          "value": "10m"
+          "selected": true,
+          "text": "Prometheus",
+          "value": "Prometheus"
         },
         "description": null,
         "error": null,
@@ -1311,48 +1311,14 @@
         "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "duration",
-        "options": [
-          {
-            "selected": true,
-            "text": "10m",
-            "value": "10m"
-          },
-          {
-            "selected": false,
-            "text": "20m",
-            "value": "20m"
-          },
-          {
-            "selected": false,
-            "text": "30m",
-            "value": "30m"
-          },
-          {
-            "selected": false,
-            "text": "1h",
-            "value": "1h"
-          },
-          {
-            "selected": false,
-            "text": "2h",
-            "value": "2h"
-          },
-          {
-            "selected": false,
-            "text": "5h",
-            "value": "5h"
-          },
-          {
-            "selected": false,
-            "text": "1d",
-            "value": "1d"
-          }
-        ],
-        "query": "10m,20m,30m,1h,2h,5h,1d",
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
         "queryValue": "",
+        "refresh": 1,
+        "regex": "",
         "skipUrlSync": false,
-        "type": "custom"
+        "type": "datasource"
       },
       {
         "allValue": null,
@@ -1406,6 +1372,6 @@
   },
   "timezone": "",
   "title": "OpenEBS / cStor / Overview Dashboard",
-  "uid": "96KrOYewq",
-  "version": 9
+  "uid": "96KrOYew1",
+  "version": 1
 }
