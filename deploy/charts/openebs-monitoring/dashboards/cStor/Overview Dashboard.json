@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "This dashboard gives overview of OpenEBS installation in cluster.",
+  "description": "This dashboard gives an overview of OpenEBS cStor status in the cluster.",
   "editable": true,
   "gnetId": 12171,
   "graphTooltip": 0,
