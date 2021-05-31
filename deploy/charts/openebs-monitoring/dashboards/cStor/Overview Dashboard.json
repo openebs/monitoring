@@ -887,7 +887,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pod count by nodes of $namespace ",
+      "title": "cStor Pod count by nodes of $namespace ",
       "transparent": true,
       "type": "timeseries"
     },
@@ -1273,7 +1273,7 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
-          "expr": "count(kube_pod_container_status_terminated{namespace=\"$namespace\"} !=0 ) or vector(0)",
+          "expr": "count(kube_pod_container_status_terminated{namespace=\"$namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status !=0 ) or vector(0)",
           "hide": false,
           "instant": false,
           "legendFormat": "{{pod}}",
