@@ -695,14 +695,6 @@
           "intervalFactor": 1,
           "legendFormat": "{{vol}}",
           "refId": "A"
-        },
-        {
-          "expr": "",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "Write IO",
-          "refId": "B"
         }
       ],
       "thresholds": [],
