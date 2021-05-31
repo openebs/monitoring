@@ -9,7 +9,7 @@
 **NOTE**
 
 - To allow Prometheus to discover all `PodMonitors/ServiceMonitors`, without applying label filtering, you have to set `prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues` and `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` to `false`  
-<br>
+
 - Install grafana plugin
    
    -   There are two plugins that we are using for openEBS dashboards.
@@ -18,7 +18,7 @@
 
        -  [snuids-trafficlights-panel]([https://link](https://grafana.com/grafana/plugins/snuids-trafficlights-panel/))
        
-    -  To install these plugin, exec into the `grafana` container  and run
+   -   To install these plugin, exec into the `grafana` container  and run
 		```
 		grafana-cli plugins install grafana-polystat-panel 
 		grafana-cli plugins install snuids-trafficlights-panel
