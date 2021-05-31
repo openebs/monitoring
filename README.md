@@ -1,10 +1,11 @@
 # OpenEBS Monitoring add-on
 
-This repository contains monitoring-related (like Prometheus, grafana, etc,) artifacts like helm charts/ YAMLs. The goal of this repository is to provide an easy to setup monitoring stack for OpenEBS. 
+This repository contains monitoring-related (like Prometheus, grafana, etc,) artifacts like helm charts/ YAMLs. The goal of this repository is to provide an easy to setup monitoring stack for OpenEBS.
 
 This repository will aggregate all the monitoring related artifacts that are currently spread across multiple repositories like:
-* https://github.com/openebs/openebs/tree/master/k8s
-* https://github.com/openebs/charts/tree/gh-pages/grafana-charts
+
+- https://github.com/openebs/openebs/tree/master/k8s
+- https://github.com/openebs/charts/tree/gh-pages/grafana-charts
 
 ## Status
 
@@ -37,13 +38,14 @@ _See [helm install](https://helm.sh/docs/helm/helm_install/) for command documen
 #### Accessing Grafana
 
 ```console
-# Look at the grafana pod and note the node name on which this pod is running
-kubectl get pods -n [NAMESPACE] -o wide | grep grafana
-# Note the public IP of the node on which grafana pod is running
+# Look at the grafana pod and check that the pod is in running state
+kubectl get pods -n [NAMESPACE] | grep -i grafana
+# Note the public IP of any one of the nodes
 kubectl get nodes -o wide
 # Open browser and visit http://<NodeIp>:<NodePort> (where <NodeIp> is the public IP address of your node, and default Grafana <NodePort> is 32515)
 # Default Grafana login credentials- [username: admin, password: admin]
 ```
+
 **NOTE:** If public IP is not available then you can access it via port-forwarding
 
 ```console
