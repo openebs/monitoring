@@ -1111,7 +1111,7 @@
       "targets": [
         {
           "displayType": "Regular",
-          "expr": "avg(avg_over_time((sum without ()(kube_pod_container_status_ready{cluster=\"$cluster\",namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}) / count without ()(kube_pod_container_status_ready{cluster=\"$cluster\",namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}))[$duration:5m]))",
+          "expr": "avg(avg_over_time((sum without ()(kube_pod_container_status_ready{namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}) / count without ()(kube_pod_container_status_ready{namespace=\"$namespace\",pod=~\"pvc.*.ctrl.*|pvc.*.rep.*|pvc.*.target.*\"}))[$duration:5m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "",
@@ -1188,7 +1188,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "count(openebs_volume_status{cluster=\"$cluster\",namespace=\"$namespace\"} !=3 ) or vector(0)",
+          "expr": "count(openebs_volume_status{namespace=\"$namespace\"} !=3 ) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -1273,7 +1273,7 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
-          "expr": "count(kube_pod_container_status_terminated{cluster=\"$cluster\",namespace=\"$namespace\"} !=0 ) or vector(0)",
+          "expr": "count(kube_pod_container_status_terminated{namespace=\"$namespace\"} !=0 ) or vector(0)",
           "hide": false,
           "instant": false,
           "legendFormat": "{{pod}}",
