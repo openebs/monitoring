@@ -17,7 +17,7 @@
   "gnetId": 12171,
   "graphTooltip": 0,
   "id": 29,
-  "iteration": 1622533213580,
+  "iteration": 1622539161639,
   "links": [],
   "panels": [
     {
@@ -665,7 +665,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "decgbytes"
+                "value": "gbytes"
               }
             ]
           },
@@ -677,7 +677,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "decgbytes"
+                "value": "gbytes"
               }
             ]
           }
@@ -807,8 +807,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "openebs",
-          "value": "openebs"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": null,
         "definition": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
@@ -856,5 +856,5 @@
   "timezone": "",
   "title": "OpenEBS / cStor / Overview Dashboard",
   "uid": "96KrOYew1",
-  "version": 8
+  "version": 11
 }
