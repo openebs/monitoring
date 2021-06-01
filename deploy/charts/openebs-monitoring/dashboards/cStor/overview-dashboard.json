@@ -805,17 +805,13 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": null,
         "definition": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
         "description": null,
         "error": null,
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
