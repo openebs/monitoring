@@ -35,6 +35,15 @@ helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [N
 
 _See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
 
+#### Install openebs-addon-only
+
+```console
+#Helm
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, openebsMonitoringAddon.enabled=true
+```
+Please visit the [link](https://openebs.github.io/monitoring/docs/guide.md) for more detailed instructions.
+
+
 #### Accessing Grafana
 
 ```console
