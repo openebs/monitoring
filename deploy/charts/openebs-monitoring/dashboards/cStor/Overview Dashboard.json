@@ -17,7 +17,7 @@
   "gnetId": 12171,
   "graphTooltip": 0,
   "id": 29,
-  "iteration": 1622520683970,
+  "iteration": 1622533213580,
   "links": [],
   "panels": [
     {
@@ -656,6 +656,30 @@
                 "value": "color-background"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Used Capacity"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decgbytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Capacity"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decgbytes"
+              }
+            ]
           }
         ]
       },
@@ -832,5 +856,5 @@
   "timezone": "",
   "title": "OpenEBS / cStor / Overview Dashboard",
   "uid": "96KrOYew1",
-  "version": 7
+  "version": 8
 }
