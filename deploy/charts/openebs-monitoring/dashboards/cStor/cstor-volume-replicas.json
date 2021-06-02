@@ -1014,7 +1014,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "bytes",
           "label": null,
           "labelMappings": [],
           "logBase": 1,
@@ -1114,7 +1114,7 @@
       "yaxes": [
         {
           "decimals": null,
-          "format": "short",
+          "format": "bytes",
           "label": null,
           "labelMappings": [],
           "logBase": 1,
