@@ -166,6 +166,12 @@ alertRules:
   Jiva:
     enabled: true
 
+customDashboards:
+  cStor:
+    enabled: true
+  Jiva:
+    enabled: true
+
 serviceMonitors:
   cstor:
     enabled: true
