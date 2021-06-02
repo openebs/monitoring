@@ -136,6 +136,12 @@ kube-prometheus-stack:
       - grafana-polystat-panel
       - snuids-trafficlights-panel
 
+customDashboards:
+  cStor:
+    enabled: true
+  Jiva:
+    enabled: true
+
 serviceMonitors:
   cstor:
     enabled: true
@@ -183,6 +189,9 @@ serviceMonitors:
             [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
           targetLabel: openebs_pvc
+        - sourceLabels: [__meta_kubernetes_pod_label_app]
+          action: replace
+          targetLabel: openebs_cstor_label
 
     ## Label selector for services to which this ServiceMonitor applies
     # selector: {}
@@ -267,6 +276,9 @@ serviceMonitors:
             [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
           action: replace
           targetLabel: openebs_pvc
+        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_controller]
+          action: replace
+          targetLabel: openebs_jiva_label
 
     ## Label selector for services to which this ServiceMonitor applies
     # selector: {}

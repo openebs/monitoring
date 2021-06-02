@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 26,
-  "iteration": 1621529330789,
+  "id": 38,
+  "iteration": 1622022928025,
   "links": [],
   "panels": [
     {
@@ -34,7 +34,7 @@
       "id": 55,
       "links": [],
       "options": {
-        "content": "<html>\n<head>\n\n<script>\nwindow.onload = load('$openebs_pvc', '$vol', '$pool', '$replica_count', '$uptime');\n\nfunction getCell(name, value) {\n  return \"<div class=\\\"col-lg\\\"><center><p>\"+name+\"</p><p>\"+value+\"</p></center></div>\";\n}\n\nfunction load(volClaimStr, volNameStr,poolsStr, replicaCount, uptime) {\nvar volClaim = volClaimStr.replace( /[{}]/g, '' );\nvar volName = volNameStr.replace( /[{}]/g, '' );\nvar pools = poolsStr.replace( /[{}]/g, '' );\nvar rc = replicaCount.replace( /[{}]/g, '' );\nif(!rc) {\n  rc = \"none\";\n}\nvar uptimes = uptime.replace( /[{}]/g, '' );\nif(uptimes) {\nvar seconds = parseInt(uptimes, 10);\n\nvar days = Math.floor(seconds / (3600*24));\nseconds  -= days*3600*24;\nvar hrs   = Math.floor(seconds / 3600);\nseconds  -= hrs*3600;\nvar mnts = Math.floor(seconds / 60);\nseconds  -= mnts*60;\nuptimes = days+\" days, \"+hrs+\" Hrs, \"+mnts+\" Mins\";\n}\nelse {\n  uptimes = \"No Data\";\n}\n\n\n\nz=\"\";\nz+=getCell(\"PVC\", volClaim);\n//z+=getCell(\"Name\", volName);\nz+=getCell(\"Pool Name\", pools);\nz+=getCell(\"No. of Replicas\", rc);\nz+=getCell(\"Uptime\", uptimes);\n//z+=getCell(\"\",\"\")\n\ndocument.getElementById(\"volume-info\").innerHTML = z;\n}\n</script>\n</head>\n\n<body>\n\n<div class=\"container\"><div id=\"volume-info\" class=\"row\"></div></div>\n\n</body>\n\n</html>",
+        "content": "<html>\n<head>\n\n<script>\nwindow.onload = load('$openebs_pvc', '$vol', '$openebs_Volume', '$replica_count', '$uptime');\n\nfunction getCell(name, value) {\n  return \"<div class=\\\"col-lg\\\"><center><p>\"+name+\"</p><p>\"+value+\"</p><center></div>\";\n}\n\nfunction load(volClaimStr, volNameStr,poolsStr, replicaCount, uptime) {\nvar volClaim = volClaimStr.replace( /[{}]/g, '' );\nvar volName = volNameStr.replace( /[{}]/g, '' );\n//var pools = poolsStr.replace( /[{}]/g, '' );\nvar rc = replicaCount.replace( /[{}]/g, '' );\nif(!rc) {\n  rc = \"none\";\n}\nvar uptimes = uptime.replace( /[{}]/g, '' );\nif(uptimes) {\nvar seconds = parseInt(uptimes, 10);\n\nvar days = Math.floor(seconds / (3600*24));\nseconds  -= days*3600*24;\nvar hrs   = Math.floor(seconds / 3600);\nseconds  -= hrs*3600;\nvar mnts = Math.floor(seconds / 60);\nseconds  -= mnts*60;\nuptimes = days+\" days, \"+hrs+\" Hrs, \"+mnts+\" Mins\";\n}\nelse {\n  uptimes = \"No Data\";\n}\n\n\n\nz=\"\";\nz+=getCell(\"PVC\", volClaim);\nz+=getCell(\"Name\", volName);\nz+=getCell(\"No. of Replicas\", rc);\nz+=getCell(\"Uptime\", uptimes);\n//z+=getCell(\"\",\"\")\n\ndocument.getElementById(\"volume-info\").innerHTML = z;\n}\n</script>\n</head>\n\n<body>\n\n<div class=\"container\"><div id=\"volume-info\" class=\"row\"></div></div>\n\n</body>\n\n</html>",
         "mode": "html"
       },
       "pluginVersion": "7.5.5",
@@ -125,7 +125,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 4
+        "y": 3
       },
       "id": 35,
       "links": [],
@@ -143,8 +143,11 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
-          "expr": "openebs_volume_status{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_volume_status{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "volume status",
           "refId": "A"
@@ -171,7 +174,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 4
+        "y": 3
       },
       "hiddenSeries": false,
       "id": 39,
@@ -202,23 +205,30 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "openebs_total_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_total_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "total",
           "refId": "A"
         },
         {
-          "expr": "openebs_healthy_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_healthy_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "healthy",
           "refId": "B"
         },
         {
-          "expr": "openebs_degraded_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_degraded_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"jiva-controller\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "degraded",
           "refId": "C"
@@ -288,7 +298,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 4
+        "y": 3
       },
       "hiddenSeries": false,
       "id": 53,
@@ -319,22 +329,28 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "openebs_parse_error_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_parse_error_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "total parse error",
           "refId": "A"
         },
         {
-          "expr": "openebs_connection_retry_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_connection_retry_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "total connection retry",
           "refId": "B"
         },
         {
-          "expr": "openebs_connection_error_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_connection_error_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "total connection error",
           "refId": "C"
@@ -403,7 +419,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 11
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 22,
@@ -434,7 +450,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])",
+          "exemplar": true,
+          "expr": "irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -443,8 +460,10 @@
           "refId": "A"
         },
         {
-          "expr": "irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])",
+          "exemplar": true,
+          "expr": "irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Writes",
           "refId": "B"
@@ -509,7 +528,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 11
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 23,
@@ -540,15 +559,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((irate(openebs_read_time{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))/(irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])))/1000000",
+          "exemplar": true,
+          "expr": "((irate(openebs_read_time{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m]))/(irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])))/1000000",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Read latency",
           "refId": "A"
         },
         {
-          "expr": "((irate(openebs_write_time{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))/(irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])))/1000000",
+          "exemplar": true,
+          "expr": "((irate(openebs_write_time{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m]))/(irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])))/1000000",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Write  latency",
           "refId": "B"
@@ -613,7 +636,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 11
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 57,
@@ -644,8 +667,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Total size",
           "refId": "A"
@@ -714,7 +739,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 19
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 28,
@@ -745,8 +770,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "openebs_actual_used{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}",
+          "exemplar": true,
+          "expr": "openebs_actual_used{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "used",
           "refId": "A"
@@ -813,7 +840,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 19
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 31,
@@ -844,15 +871,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(openebs_read_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])/(2048)",
+          "exemplar": true,
+          "expr": "irate(openebs_read_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(2048)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Read Throughput",
           "refId": "A"
         },
         {
-          "expr": "irate(openebs_write_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])/(2048)",
+          "exemplar": true,
+          "expr": "irate(openebs_write_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(2048)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Write Throughput",
           "refId": "B"
@@ -917,7 +948,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 19
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 26,
@@ -948,16 +979,20 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(irate(openebs_read_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])/(1024))*512/(irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))",
+          "exemplar": true,
+          "expr": "(irate(openebs_read_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(1024))*512/(irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Read block size",
           "refId": "A"
         },
         {
-          "expr": "(irate(openebs_write_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])/(1024))*512/(irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))",
+          "exemplar": true,
+          "expr": "(irate(openebs_write_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(1024))*512/(irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Write block size",
           "refId": "B"
@@ -1010,12 +1045,14 @@
   "refresh": "1m",
   "schemaVersion": 27,
   "style": "light",
-  "tags": ["OpenEBS"],
+  "tags": [
+    "OpenEBS"
+  ],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Prometheus",
           "value": "Prometheus"
         },
@@ -1037,8 +1074,35 @@
       {
         "allValue": null,
         "current": {},
+        "datasource": null,
+        "definition": "label_values(openebs_size_of_volume,openebs_jiva_label)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "openebs_jiva_label",
+        "multi": false,
+        "name": "openebs_jiva_label",
+        "options": [],
+        "query": {
+          "query": "label_values(openebs_size_of_volume,openebs_jiva_label)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
         "datasource": "$datasource",
-        "definition": "",
+        "definition": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\"}, openebs_pv)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -1047,7 +1111,10 @@
         "multi": false,
         "name": "openebs_Volume",
         "options": [],
-        "query": "label_values(openebs_size_of_volume, openebs_pv)",
+        "query": {
+          "query": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\"}, openebs_pv)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1071,31 +1138,10 @@
         "multi": false,
         "name": "openebs_pvc",
         "options": [],
-        "query": "label_values(openebs_size_of_volume{openebs_pv=~\"$openebs_Volume\"},openebs_pvc)",
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {},
-        "datasource": "$datasource",
-        "definition": "",
-        "description": null,
-        "error": null,
-        "hide": 2,
-        "includeAll": false,
-        "label": "pool",
-        "multi": false,
-        "name": "pool",
-        "options": [],
-        "query": "label_values(openebs_replica_status{vol=~\"$openebs_Volume\"},cstor_pool)",
+        "query": {
+          "query": "label_values(openebs_size_of_volume{openebs_pv=~\"$openebs_Volume\"},openebs_pvc)",
+          "refId": "Prometheus-openebs_pvc-Variable-Query"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1119,7 +1165,10 @@
         "multi": false,
         "name": "replica_count",
         "options": [],
-        "query": "query_result(openebs_total_replica_count{openebs_pv=~\"$openebs_Volume\"})",
+        "query": {
+          "query": "query_result(openebs_total_replica_count{openebs_pv=~\"$openebs_Volume\"})",
+          "refId": "Prometheus-replica_count-Variable-Query"
+        },
         "refresh": 2,
         "regex": "/.*}(.*) .*/",
         "skipUrlSync": false,
@@ -1143,7 +1192,10 @@
         "multi": false,
         "name": "uptime",
         "options": [],
-        "query": "query_result(openebs_volume_uptime{openebs_pv=~\"$openebs_Volume\"})",
+        "query": {
+          "query": "query_result(openebs_volume_uptime{openebs_pv=~\"$openebs_Volume\"})",
+          "refId": "Prometheus-uptime-Variable-Query"
+        },
         "refresh": 2,
         "regex": "/.*}(.*) .*/",
         "skipUrlSync": false,
@@ -1158,7 +1210,7 @@
         "allValue": null,
         "current": {},
         "datasource": "$datasource",
-        "definition": "",
+        "definition": "label_values(openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\"},openebs_pv)",
         "description": null,
         "error": null,
         "hide": 2,
@@ -1167,7 +1219,10 @@
         "multi": false,
         "name": "vol",
         "options": [],
-        "query": "label_values(openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\"},openebs_pv)",
+        "query": {
+          "query": "label_values(openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\"},openebs_pv)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1197,10 +1252,20 @@
       "2h",
       "1d"
     ],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
   },
   "timezone": "",
-  "title": "OpenEBS / Volume dashboard",
-  "uid": "f46a2d03-c2af-4954-b2b3-307c4d77bcaf",
+  "title": "OpenEBS / Jiva / Volume dashboard",
+  "uid": "75acc0e8-3731-4b73-b343-0759d70f734a",
   "version": 1
 }
