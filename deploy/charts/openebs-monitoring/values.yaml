@@ -50,6 +50,12 @@ kube-prometheus-stack:
       ##
       podMonitorSelectorNilUsesHelmValues: false
 
+      ## If true, a nil or {} value for prometheus.prometheusSpec.ruleSelector will cause the
+      ## prometheus resource to be created with selectors based on values in the helm deployment,
+      ## which will also match the PrometheusRule resources created
+      ##
+      ruleSelectorNilUsesHelmValues: false
+
       ## Number of replicas of each shard to deploy for a Prometheus deployment.
       ## Number of replicas multiplied by shards is the total number of Pods created.
       ##
@@ -75,6 +81,24 @@ kube-prometheus-stack:
     ## Deploy alertmanager
     ##
     enabled: true
+
+    config:
+      global:
+        resolve_timeout: 5m
+      route:
+        group_by: ["alertname", "job", "volName"]
+        group_wait: 30s
+        group_interval: 5m
+        repeat_interval: 4h
+        receiver: "null"
+      receivers:
+        - name: "null"
+      templates:
+        - /etc/alertmanager/config/*.tmpl
+
+    service:
+      type: NodePort
+      nodePort: 30903
 
     alertmanagerSpec:
       ## Size is the expected size of the alertmanager cluster. The controller will eventually make the size of the
@@ -135,6 +159,12 @@ kube-prometheus-stack:
     plugins:
       - grafana-polystat-panel
       - snuids-trafficlights-panel
+
+alertRules:
+  cStor:
+    enabled: true
+  Jiva:
+    enabled: true
 
 customDashboards:
   cStor:
