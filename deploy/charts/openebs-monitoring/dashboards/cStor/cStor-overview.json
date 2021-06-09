@@ -780,7 +780,7 @@
   "refresh": "",
   "schemaVersion": 27,
   "style": "dark",
-  "tags": [],
+  "tags": ["OpenEBS"],
   "templating": {
     "list": [
       {
@@ -877,7 +877,7 @@
     ]
   },
   "timezone": "",
-  "title": "OpenEBS / cStor / Overview Dashboard",
+  "title": "OpenEBS / cStor / Overview",
   "uid": "96KrOYew1",
   "version": 11
 }
