@@ -173,6 +173,8 @@ customDashboards:
     enabled: true
   Jiva:
     enabled: true
+  LocalPV:
+    enabled: true
 
 serviceMonitors:
   cstor:
