@@ -1045,9 +1045,7 @@
   "refresh": "1m",
   "schemaVersion": 27,
   "style": "light",
-  "tags": [
-    "OpenEBS"
-  ],
+  "tags": ["OpenEBS"],
   "templating": {
     "list": [
       {
@@ -1102,7 +1100,7 @@
         "allValue": null,
         "current": {},
         "datasource": "$datasource",
-        "definition": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\"}, openebs_pv)",
+        "definition": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\", openebs_cstor_label=\"\"}, openebs_pv)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -1112,7 +1110,7 @@
         "name": "openebs_Volume",
         "options": [],
         "query": {
-          "query": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\"}, openebs_pv)",
+          "query": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\", openebs_cstor_label=\"\"}, openebs_pv)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -1252,17 +1250,7 @@
       "2h",
       "1d"
     ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
   },
   "timezone": "",
   "title": "OpenEBS / Jiva / Volume dashboard",
