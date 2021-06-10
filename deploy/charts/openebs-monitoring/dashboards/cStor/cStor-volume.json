@@ -1044,7 +1044,8 @@
   "schemaVersion": 27,
   "style": "light",
   "tags": [
-    "OpenEBS"
+    "OpenEBS",
+    "cStor"
   ],
   "templating": {
     "list": [

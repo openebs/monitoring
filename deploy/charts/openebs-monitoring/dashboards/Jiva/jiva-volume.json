@@ -1046,7 +1046,8 @@
   "schemaVersion": 27,
   "style": "light",
   "tags": [
-    "OpenEBS"
+    "OpenEBS",
+    "Jiva"
   ],
   "templating": {
     "list": [
