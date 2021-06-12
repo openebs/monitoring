@@ -382,7 +382,7 @@ serviceMonitors:
 
     # selector:
     #   matchLabels:
-    #     cas-type: jiva
+    #     cas-type: localpv-lvm
 
     selector:
       matchLabels:
