@@ -2010,7 +2010,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "100 - ((node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=~\"(.*$uid.*/mount)\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {instance=~\"$node\",mountpoint=~\"(.*$uid.*/mount)\",fstype=~\"ext4|xfs\"})",
+				"expr": "100 - ((node_filesystem_avail_bytes{instance=~\"$node\",job=\"$job\",mountpoint=~\"(.*$uid.*/mount)\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {instance=~\"$node\",mountpoint=~\"(.*$uid.*/mount)\",fstype=~\"ext4|xfs\"})",
 				"interval": "10s",
 				"intervalFactor": 2,
 				"legendFormat": "",
@@ -2083,10 +2083,10 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "100 - ((node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=~\"(.*$uid.*/mount)\"} * 100) / node_filesystem_size_bytes {instance=~\"$node\",mountpoint=~\"(.*$uid.*/mount)\"})",
+				"expr": "100 - ((node_filesystem_avail_bytes{instance=~\"$node\",job=\"$job\",mountpoint=~\"(.*$uid.*/mount)\"} * 100) / node_filesystem_size_bytes {instance=~\"$node\",mountpoint=~\"(.*$uid.*/mount)\"})",
 				"interval": "10s",
 				"intervalFactor": 2,
-				"legendFormat": "{{mountpoint}}",
+				"legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}}",
 				"refId": "A"
 			  }
 			],
@@ -2191,7 +2191,7 @@
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "{{mountpoint}} ",
+				"legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}} ",
 				"metric": "",
 				"refId": "A",
 				"step": 240
@@ -2297,7 +2297,7 @@
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "{{mountpoint}} - Free file nodes",
+				"legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}} - Free file nodes",
 				"refId": "A",
 				"step": 240
 			  }
@@ -2402,7 +2402,7 @@
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "{{mountpoint}} - File nodes total",
+				"legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}} - File nodes total",
 				"refId": "A",
 				"step": 240
 			  }
@@ -2511,7 +2511,7 @@
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "{{mountpoint}} - ReadOnly",
+				"legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}} - ReadOnly",
 				"refId": "A",
 				"step": 240
 			  }
@@ -2756,7 +2756,7 @@
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "{{mountpoint}}",
+				"legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}}",
 				"refId": "A",
 				"step": 240
 			  }
@@ -2860,11 +2860,11 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "rate((node_disk_io_time_seconds_total{device=~\"$lvmDevice\"}  [5m]))",
+				"expr": "rate((node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\",device=~\"$lvmDevice\"}  [5m]))",
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath",
 				"refId": "A",
 				"step": 2
 			  }
@@ -2969,7 +2969,7 @@
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 4,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath- Read bytes",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath- Read bytes",
 				"refId": "A",
 				"step": 240
 			  },
@@ -2979,7 +2979,7 @@
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath - Written bytes",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath - Written bytes",
 				"refId": "B",
 				"step": 240
 			  }
@@ -3097,7 +3097,7 @@
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath - Write merged",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath - Write merged",
 				"refId": "B",
 				"step": 240
 			  }
@@ -3198,11 +3198,11 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "rate(node_disk_reads_completed_total{job=~'$job',instance='$node',device=\"$lvmDevice\"}[5m])",
+				"expr": "rate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\",device=\"$lvmDevice\"}[5m])",
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath",
 				"refId": "A",
 				"step": 2
 			  }
@@ -3305,11 +3305,11 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "rate(node_disk_writes_completed_total{job='$job',instance='$node',device=\"$lvmDevice\"}[5m])",
+				"expr": "rate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\",device=\"$lvmDevice\"}[5m])",
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath",
 				"refId": "A",
 				"step": 2
 			  }
@@ -3411,12 +3411,12 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "rate(node_disk_read_time_seconds_total{job='$job',instance='$node',device=\"$lvmDevice\"}[5m])/rate(node_disk_reads_completed_total{job='$job',instance='$node',device=\"$lvmDevice\"}[5m])",
+				"expr": "rate(node_disk_read_time_seconds_total{instance=\"$node\",job=\"$job\",device=\"$lvmDevice\"}[5m])/rate(node_disk_reads_completed_total{job='$job',instance='$node',device=\"$lvmDevice\"}[5m])",
 				"format": "time_series",
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "{{device}}Device: {{device}} ,Path: $devicePath",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath",
 				"refId": "A",
 				"step": 2
 			  }
@@ -3517,12 +3517,12 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "rate(node_disk_write_time_seconds_total{job='$job',instance='$node',device=\"$lvmDevice\"}[5m])/rate(node_disk_writes_completed_total{job='$job',instance='$node',device=\"$lvmDevice\"}[5m])",
+				"expr": "rate(node_disk_write_time_seconds_total{instance=\"$node\",job=\"$job\",device=\"$lvmDevice\"}[5m])/rate(node_disk_writes_completed_total{job='$job',instance='$node',device=\"$lvmDevice\"}[5m])",
 				"format": "time_series",
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath",
 				"refId": "A",
 				"step": 2
 			  }
@@ -3630,12 +3630,12 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "rate(node_disk_read_bytes_total{instance=~\"$node\",device=\"$lvmDevice\"}[5m]) + rate(node_disk_written_bytes_total{instance=~\"$node\",device=\"$lvmDevice\"}[5m])",
+				"expr": "rate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\",device=\"$lvmDevice\"}[5m]) + rate(node_disk_written_bytes_total{instance=~\"$node\",device=\"$lvmDevice\"}[5m])",
 				"format": "time_series",
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 1,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath",
 				"refId": "B"
 			  }
 			],
@@ -3769,7 +3769,7 @@
 				"hide": false,
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath - w_await",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath - w_await",
 				"refId": "B",
 				"step": 240
 			  }
@@ -3882,7 +3882,7 @@
 				"expr": "rate(node_disk_discards_merged_total{instance=\"$node\",job=\"$job\",device=\"$lvmDevice\"}[$__rate_interval])",
 				"interval": "",
 				"intervalFactor": 2,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath - Discards merged",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath - Discards merged",
 				"refId": "B",
 				"step": 240
 			  }
@@ -3989,7 +3989,7 @@
 				"instant": false,
 				"interval": "",
 				"intervalFactor": 4,
-				"legendFormat": "PVC name: $pvcname, Device: {{device}}, Path: $devicePath",
+				"legendFormat": "PVC name: $pvcName, Device: {{device}}, Path: $devicePath",
 				"refId": "A",
 				"step": 240
 			  }
@@ -4095,7 +4095,7 @@
 				"expr": "rate(node_disk_io_now{instance=\"$node\",job=\"$job\",device=\"$lvmDevice\"}[$__rate_interval])",
 				"interval": "",
 				"intervalFactor": 4,
-				"legendFormat": "Device: {{device}} ,Path: $devicePath - IO now",
+				"legendFormat": "Pvc: $pvcName, Device: {{device}} ,Path: $devicePath - IO now",
 				"refId": "A",
 				"step": 240
 			  }
@@ -4404,9 +4404,9 @@
 		  "error": null,
 		  "hide": 2,
 		  "includeAll": false,
-		  "label": "pvcname",
+		  "label": "pvcName",
 		  "multi": false,
-		  "name": "pvcname",
+		  "name": "pvcName",
 		  "options": [],
 		  "query": {
 			"query": "label_values(kube_pod_spec_volumes_persistentvolumeclaims_info{pod=~'$pod'},persistentvolumeclaim)",
@@ -4426,7 +4426,7 @@
 		  "allValue": null,
 		  "current": {},
 		  "datasource": null,
-		  "definition": "label_values(kube_persistentvolumeclaim_info{persistentvolumeclaim='$pvcname'},volumename)",
+		  "definition": "label_values(kube_persistentvolumeclaim_info{persistentvolumeclaim='$pvcName'},volumename)",
 		  "description": null,
 		  "error": null,
 		  "hide": 2,
@@ -4436,7 +4436,7 @@
 		  "name": "volName",
 		  "options": [],
 		  "query": {
-			"query": "label_values(kube_persistentvolumeclaim_info{persistentvolumeclaim='$pvcname'},volumename)",
+			"query": "label_values(kube_persistentvolumeclaim_info{persistentvolumeclaim='$pvcName'},volumename)",
 			"refId": "StandardVariableQuery"
 		  },
 		  "refresh": 0,
@@ -4453,7 +4453,7 @@
 		  "allValue": null,
 		  "current": {},
 		  "datasource": null,
-		  "definition": "label_values(node_lvm_size{instance=\"$node\",name='$volName'},device)",
+		  "definition": "label_values(lvm_lv_total_size{lv_name='$volName'},device)",
 		  "description": null,
 		  "error": null,
 		  "hide": 0,
@@ -4463,7 +4463,7 @@
 		  "name": "lvmDevice",
 		  "options": [],
 		  "query": {
-			"query": "label_values(node_lvm_size{instance=\"$node\",name='$volName'},device)",
+			"query": "label_values(lvm_lv_total_size{lv_name='$volName'},device)",
 			"refId": "StandardVariableQuery"
 		  },
 		  "refresh": 2,
@@ -4480,7 +4480,7 @@
 		  "allValue": null,
 		  "current": {},
 		  "datasource": null,
-		  "definition": "label_values(node_lvm_size{device='$lvmDevice'},path)",
+		  "definition": "label_values(lvm_lv_total_size{device='$lvmDevice'},lv_path)",
 		  "description": null,
 		  "error": null,
 		  "hide": 2,
@@ -4490,7 +4490,7 @@
 		  "name": "devicePath",
 		  "options": [],
 		  "query": {
-			"query": "label_values(node_lvm_size{device='$lvmDevice'},path)",
+			"query": "label_values(lvm_lv_total_size{device='$lvmDevice'},lv_path)",
 			"refId": "StandardVariableQuery"
 		  },
 		  "refresh": 0,
@@ -4537,5 +4537,5 @@
 	"timezone": "UTC",
 	"title": "OpenEBS / LVM Local PV / Stateful Workload",
 	"uid": "eb7ddb2e-9ef2-4a5a-8012-bfaeb7e84b00",
-	"version": 12
+	"version": 1
   }
