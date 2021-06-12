@@ -1046,7 +1046,8 @@
   "schemaVersion": 27,
   "style": "light",
   "tags": [
-    "OpenEBS"
+    "OpenEBS",
+    "Jiva"
   ],
   "templating": {
     "list": [
@@ -1265,7 +1266,7 @@
     ]
   },
   "timezone": "",
-  "title": "OpenEBS / Jiva / Volume dashboard",
+  "title": "OpenEBS / Jiva / Volume",
   "uid": "75acc0e8-3731-4b73-b343-0759d70f734a",
   "version": 1
 }

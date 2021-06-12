@@ -1044,7 +1044,8 @@
   "schemaVersion": 27,
   "style": "light",
   "tags": [
-    "OpenEBS"
+    "OpenEBS",
+    "cStor"
   ],
   "templating": {
     "list": [
@@ -1290,7 +1291,7 @@
     ]
   },
   "timezone": "",
-  "title": "OpenEBS / cStor/ Volume dashboard",
+  "title": "OpenEBS / cStor/ Volume",
   "uid": "f46a2d03-c2af-4954-b2b3-307c4d77bcaf",
   "version": 1
 }
