@@ -165,6 +165,8 @@ alertRules:
     enabled: true
   Jiva:
     enabled: true
+  volumes:
+    enabled: true
 
 customDashboards:
   cStor:
