@@ -30,6 +30,17 @@ Pre-alpha. Under active development.
   helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [NAMESPACE] --create-namespace
   ```
 
+### Install using generated YAML
+
+Generate YAMLs using [Helm](https://helm.sh) template.
+
+```
+git clone https://github.com/openebs/monitoring.git
+cd monitoring/deploy
+helm template -f ./charts/openebs-monitoring/values.yaml openebs-monitoring --namespace openebs ./charts/openebs-monitoring/ > openebs-monitoring.generated.yaml
+kubectl create -f openebs-monitoring.generated.yaml
+```
+
 ## Usage
 
 ### Accessing Grafana
