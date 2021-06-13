@@ -15,12 +15,12 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 32,
-  "iteration": 1622019315665,
+  "id": 38,
+  "iteration": 1622022928025,
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -31,18 +31,18 @@
         "x": 0,
         "y": 0
       },
-      "id": 44,
+      "id": 55,
       "links": [],
       "options": {
-        "content": "<html>\n<head>\n\n<script>\nwindow.onload = load('$Pool', '$spc');\n\nfunction getCell(name, value) {\n  return \"<div class=\\\"col-sm\\\"><center><p>\"+name+\"</p><p>\"+value+\"</p></center></div>\";\n}\n\nfunction load(poolNameStr, spcStr) {\nvar poolNameStr = poolNameStr.replace( /[{}]/g, '' );\nvar spcStr = spcStr.replace( /[{}]/g, '' );\n\nz=\"\";\nz+=getCell(\"Pool Name\", poolNameStr);\nz+=getCell(\"CStor pool Cluster\",spcStr);\n\ndocument.getElementById(\"volume-info\").innerHTML = z;\n}\n</script>\n</head>\n\n<body>\n<div class-\"container\">\n<div id=\"volume-info\" class=\"row\"></div>\n</div>\n</body>\n\n</html>",
+        "content": "<html>\n<head>\n\n<script>\nwindow.onload = load('$openebs_pvc', '$vol', '$openebs_Volume', '$replica_count', '$uptime');\n\nfunction getCell(name, value) {\n  return \"<div class=\\\"col-lg\\\"><center><p>\"+name+\"</p><p>\"+value+\"</p><center></div>\";\n}\n\nfunction load(volClaimStr, volNameStr,poolsStr, replicaCount, uptime) {\nvar volClaim = volClaimStr.replace( /[{}]/g, '' );\nvar volName = volNameStr.replace( /[{}]/g, '' );\n//var pools = poolsStr.replace( /[{}]/g, '' );\nvar rc = replicaCount.replace( /[{}]/g, '' );\nif(!rc) {\n  rc = \"none\";\n}\nvar uptimes = uptime.replace( /[{}]/g, '' );\nif(uptimes) {\nvar seconds = parseInt(uptimes, 10);\n\nvar days = Math.floor(seconds / (3600*24));\nseconds  -= days*3600*24;\nvar hrs   = Math.floor(seconds / 3600);\nseconds  -= hrs*3600;\nvar mnts = Math.floor(seconds / 60);\nseconds  -= mnts*60;\nuptimes = days+\" days, \"+hrs+\" Hrs, \"+mnts+\" Mins\";\n}\nelse {\n  uptimes = \"No Data\";\n}\n\n\n\nz=\"\";\nz+=getCell(\"PVC\", volClaim);\nz+=getCell(\"Name\", volName);\nz+=getCell(\"No. of Replicas\", rc);\nz+=getCell(\"Uptime\", uptimes);\n//z+=getCell(\"\",\"\")\n\ndocument.getElementById(\"volume-info\").innerHTML = z;\n}\n</script>\n</head>\n\n<body>\n\n<div class=\"container\"><div id=\"volume-info\" class=\"row\"></div></div>\n\n</body>\n\n</html>",
         "mode": "html"
       },
       "pluginVersion": "7.5.5",
-      "title": "Pool information",
+      "title": "Volume information",
       "type": "text"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -79,19 +79,11 @@
               "text": "Offline",
               "to": "",
               "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "Healthy",
-              "to": "",
-              "type": 1,
               "value": "1"
             },
             {
               "from": "",
-              "id": 3,
+              "id": 2,
               "text": "Degraded",
               "to": "",
               "type": 1,
@@ -99,275 +91,23 @@
             },
             {
               "from": "",
-              "id": 4,
-              "text": "Rebuilding",
-              "to": "",
-              "type": 1,
-              "value": "3"
-            }
-          ],
-          "max": 3,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": ["pvc-11c980a8-0f24-4065-870d-b831d277ba25"],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "graph": true,
-                  "legend": false,
-                  "tooltip": false
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 3
-      },
-      "id": 50,
-      "links": [],
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.5",
-      "targets": [
-        {
-          "expr": "openebs_replica_status{cstor_pool=~\"$Pool\", vol=~\"$Replicas\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Replica status",
-      "type": "timeseries"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 3
-      },
-      "hiddenSeries": false,
-      "id": 58,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": false
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "openebs_rebuild_count{cstor_pool=~\"$Pool\", vol=~\"$Replicas\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Replica rebuild count",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:885",
-          "decimals": 0,
-          "format": "short",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:886",
-          "format": "short",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "Init",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "Done",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
               "id": 3,
-              "text": "Snap rebuild in progress",
-              "to": "",
-              "type": 1,
-              "value": "2"
-            },
-            {
-              "from": "",
-              "id": 4,
-              "text": "Active dataset rebuild in progress",
+              "text": "Healthy",
               "to": "",
               "type": 1,
               "value": "3"
             },
             {
               "from": "",
-              "id": 5,
-              "text": "Errored",
-              "to": "",
-              "type": 1,
-              "value": "4"
-            },
-            {
-              "from": "",
-              "id": 6,
-              "text": "Failed",
-              "to": "",
-              "type": 1,
-              "value": "5"
-            },
-            {
-              "from": "",
-              "id": 7,
+              "id": 4,
               "text": "Unknown",
               "to": "",
               "type": 1,
-              "value": "6"
+              "value": "4"
             }
           ],
-          "max": 6,
-          "min": 0,
+          "max": 4,
+          "min": 1,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -377,40 +117,17 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "none"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": ["pvc-f0148084-11ea-49db-be34-b6844645b811"],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "graph": true,
-                  "legend": false,
-                  "tooltip": false
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 24,
+        "h": 7,
+        "w": 8,
         "x": 0,
-        "y": 11
+        "y": 3
       },
-      "id": 52,
+      "id": 35,
       "links": [],
       "options": {
         "graph": {},
@@ -426,16 +143,19 @@
       "pluginVersion": "7.5.5",
       "targets": [
         {
-          "expr": "openebs_rebuild_status{cstor_pool=~\"$Pool\", vol=~\"$Replicas\"}",
+          "exemplar": true,
+          "expr": "openebs_volume_status{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "hide": false,
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
+          "legendFormat": "volume status",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Replica rebuilding status",
+      "title": "Volume status",
       "type": "timeseries"
     },
     {
@@ -448,118 +168,17 @@
         "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 3,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 20
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 3
       },
       "hiddenSeries": false,
-      "id": 34,
+      "id": 39,
       "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "openebs_sync_count{cstor_pool=~\"$Pool\",vol=~\"$Replicas\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Sync count",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 20
-      },
-      "hiddenSeries": false,
-      "id": 46,
-      "legend": {
-        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
@@ -587,19 +206,39 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "increase(openebs_sync_latency{cstor_pool=~\"$Pool\",vol=~\"$Replicas\"}[2m])",
+          "expr": "openebs_total_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "total",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "openebs_healthy_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "healthy",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "openebs_degraded_replica_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"jiva-controller\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
-          "refId": "A"
+          "legendFormat": "degraded",
+          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Sync latency",
+      "title": "Replica count",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -615,9 +254,9 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:274",
-          "decimals": null,
-          "format": "ns",
+          "$$hashKey": "object:416",
+          "decimals": 0,
+          "format": "none",
           "label": null,
           "labelMappings": [],
           "logBase": 1,
@@ -627,7 +266,7 @@
           "show": true
         },
         {
-          "$$hashKey": "object:275",
+          "$$hashKey": "object:417",
           "format": "short",
           "label": null,
           "labelMappings": [],
@@ -635,7 +274,7 @@
           "mappedLabelOnly": false,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -653,214 +292,16 @@
         "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 3,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
-        "w": 8,
-        "x": 0,
-        "y": 28
-      },
-      "hiddenSeries": false,
-      "id": 32,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "openebs_total_read_count{cstor_pool=~\"$Pool\",vol=~\"$Replicas\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Read IO count",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 10,
-        "w": 8,
-        "x": 8,
-        "y": 28
-      },
-      "hiddenSeries": false,
-      "id": 40,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "openebs_total_read_bytes{cstor_pool=~\"$Pool\",vol=~\"$Replicas\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Read IO in bytes",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bytes",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "labelMappings": [],
-          "logBase": 1,
-          "mappedLabelOnly": false,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 10,
+        "h": 7,
         "w": 8,
         "x": 16,
-        "y": 28
+        "y": 3
       },
       "hiddenSeries": false,
-      "id": 48,
+      "id": 53,
       "legend": {
         "avg": false,
         "current": false,
@@ -888,18 +329,38 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(openebs_read_latency{cstor_pool=~\"$Pool\", vol=~\"$Replicas\"}[2m])",
+          "exemplar": true,
+          "expr": "openebs_parse_error_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
+          "legendFormat": "total parse error",
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "openebs_connection_retry_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "total connection retry",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "openebs_connection_error_total{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "total connection error",
+          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Read latency",
+      "title": "Errors",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -915,7 +376,8 @@
       },
       "yaxes": [
         {
-          "format": "ns",
+          "$$hashKey": "object:532",
+          "format": "short",
           "label": null,
           "labelMappings": [],
           "logBase": 1,
@@ -925,6 +387,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:533",
           "format": "short",
           "label": null,
           "labelMappings": [],
@@ -932,7 +395,7 @@
           "mappedLabelOnly": false,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -950,16 +413,16 @@
         "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 3,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
+        "h": 8,
         "w": 8,
         "x": 0,
-        "y": 38
+        "y": 10
       },
       "hiddenSeries": false,
-      "id": 64,
+      "id": 22,
       "legend": {
         "avg": false,
         "current": false,
@@ -987,18 +450,30 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "openebs_total_write_count{cstor_pool=~\"$Pool\",vol=~\"$Replicas\"}",
+          "exemplar": true,
+          "expr": "irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])",
           "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Reads",
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Writes",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Write IO count",
+      "title": "IOPS",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1014,24 +489,22 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:864",
           "format": "short",
           "label": null,
-          "labelMappings": [],
           "logBase": 1,
-          "mappedLabelOnly": false,
           "max": null,
           "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:865",
           "format": "short",
           "label": null,
-          "labelMappings": [],
           "logBase": 1,
-          "mappedLabelOnly": false,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -1049,16 +522,16 @@
         "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 3,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
+        "h": 8,
         "w": 8,
         "x": 8,
-        "y": 38
+        "y": 10
       },
       "hiddenSeries": false,
-      "id": 60,
+      "id": 23,
       "legend": {
         "avg": false,
         "current": false,
@@ -1071,7 +544,7 @@
       "lines": true,
       "linewidth": 2,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "null as zero",
       "options": {
         "alertThreshold": true
       },
@@ -1086,18 +559,29 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "openebs_total_write_bytes{cstor_pool=~\"$Pool\",vol=~\"$Replicas\"}",
+          "exemplar": true,
+          "expr": "((irate(openebs_read_time{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m]))/(irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])))/1000000",
           "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Read latency",
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "((irate(openebs_write_time{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m]))/(irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m])))/1000000",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Write  latency",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Write IO in bytes",
+      "title": "Latency",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1113,25 +597,22 @@
       },
       "yaxes": [
         {
-          "decimals": null,
-          "format": "short",
+          "$$hashKey": "object:783",
+          "format": "ms",
           "label": null,
-          "labelMappings": [],
           "logBase": 1,
-          "mappedLabelOnly": false,
           "max": null,
           "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:784",
           "format": "short",
           "label": null,
-          "labelMappings": [],
           "logBase": 1,
-          "mappedLabelOnly": false,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -1149,16 +630,119 @@
         "defaults": {},
         "overrides": []
       },
-      "fill": 1,
+      "fill": 3,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
+        "h": 8,
         "w": 8,
         "x": 16,
-        "y": 38
+        "y": 10
       },
       "hiddenSeries": false,
-      "id": 62,
+      "id": 57,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.5",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Total size",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Total capacity",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:593",
+          "format": "decgbytes",
+          "label": null,
+          "labelMappings": [],
+          "logBase": 1,
+          "mappedLabelOnly": false,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:594",
+          "format": "short",
+          "label": null,
+          "labelMappings": [],
+          "logBase": 1,
+          "mappedLabelOnly": false,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 3,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 28,
       "legend": {
         "avg": false,
         "current": false,
@@ -1186,10 +770,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(openebs_write_latency{cstor_pool=~\"$Pool\", vol=~\"$Replicas\"}[2m])",
+          "exemplar": true,
+          "expr": "openebs_actual_used{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}",
           "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{vol}}",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "used",
           "refId": "A"
         }
       ],
@@ -1197,7 +783,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Write latency",
+      "title": "Storage usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1213,24 +799,241 @@
       },
       "yaxes": [
         {
-          "format": "ns",
+          "$$hashKey": "object:702",
+          "format": "decgbytes",
           "label": null,
           "labelMappings": [],
           "logBase": 1,
-          "mappedLabelOnly": false,
           "max": null,
           "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:703",
           "format": "short",
           "label": null,
           "labelMappings": [],
           "logBase": 1,
-          "mappedLabelOnly": false,
           "max": null,
           "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 3,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 31,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.5",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "irate(openebs_read_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(2048)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Read Throughput",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "irate(openebs_write_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(2048)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Write Throughput",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Throughput",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1026",
+          "format": "MBs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
           "show": true
+        },
+        {
+          "$$hashKey": "object:1027",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 3,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 26,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.5",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "(irate(openebs_read_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(1024))*512/(irate(openebs_reads{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Read block size",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "(irate(openebs_write_block_count{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\",openebs_jiva_label=~\"$openebs_jiva_label\"}[2m])/(1024))*512/(irate(openebs_writes{openebs_pvc=~\"$openebs_pvc\",openebs_pv=~\"$openebs_Volume\"}[2m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Write block size",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Block size",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:945",
+          "format": "deckbytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:946",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
         }
       ],
       "yaxis": {
@@ -1239,10 +1042,10 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "1m",
   "schemaVersion": 27,
   "style": "light",
-  "tags": ["OpenEBS"],
+  "tags": ["OpenEBS", "Jiva"],
   "templating": {
     "list": [
       {
@@ -1269,18 +1072,47 @@
       {
         "allValue": null,
         "current": {},
+        "datasource": null,
+        "definition": "label_values(openebs_size_of_volume,openebs_jiva_label)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "openebs_jiva_label",
+        "multi": false,
+        "name": "openebs_jiva_label",
+        "options": [],
+        "query": {
+          "query": "label_values(openebs_size_of_volume,openebs_jiva_label)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
         "datasource": "$datasource",
-        "definition": "",
+        "definition": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\", openebs_cstor_label=\"\"}, openebs_pv)",
         "description": null,
         "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": "Pool",
+        "label": "Volume",
         "multi": false,
-        "name": "Pool",
+        "name": "openebs_Volume",
         "options": [],
-        "query": "label_values(openebs_pool_status,cstor_pool)",
-        "refId": "Prometheus-Pool-Variable-Query",
+        "query": {
+          "query": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\", openebs_cstor_label=\"\"}, openebs_pv)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1300,12 +1132,14 @@
         "error": null,
         "hide": 2,
         "includeAll": false,
-        "label": "spc",
+        "label": "Openebs pvc",
         "multi": false,
-        "name": "spc",
+        "name": "openebs_pvc",
         "options": [],
-        "query": "label_values(openebs_pool_status{cstor_pool=~\"$Pool\"},storage_pool_claim)",
-        "refId": "Prometheus-spc-Variable-Query",
+        "query": {
+          "query": "label_values(openebs_size_of_volume{openebs_pv=~\"$openebs_Volume\"},openebs_pvc)",
+          "refId": "Prometheus-openebs_pvc-Variable-Query"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1323,14 +1157,70 @@
         "definition": "",
         "description": null,
         "error": null,
-        "hide": 0,
-        "includeAll": true,
-        "label": "Replicas",
-        "multi": true,
-        "name": "Replicas",
+        "hide": 2,
+        "includeAll": false,
+        "label": "replica_count",
+        "multi": false,
+        "name": "replica_count",
         "options": [],
-        "query": "label_values(openebs_replica_status{cstor_pool=\"$Pool\"}, vol)",
-        "refId": "StandardVariableQuery",
+        "query": {
+          "query": "query_result(openebs_total_replica_count{openebs_pv=~\"$openebs_Volume\"})",
+          "refId": "Prometheus-replica_count-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "/.*}(.*) .*/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "$datasource",
+        "definition": "",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "uptime",
+        "multi": false,
+        "name": "uptime",
+        "options": [],
+        "query": {
+          "query": "query_result(openebs_volume_uptime{openebs_pv=~\"$openebs_Volume\"})",
+          "refId": "Prometheus-uptime-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "/.*}(.*) .*/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "$datasource",
+        "definition": "label_values(openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\"},openebs_pv)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": "vol",
+        "multi": false,
+        "name": "vol",
+        "options": [],
+        "query": {
+          "query": "label_values(openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\"},openebs_pv)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1363,7 +1253,7 @@
     "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
   },
   "timezone": "",
-  "title": "OpenEBS / cStor / Volume Replicas dashboard",
-  "uid": "644d0435-03e1-4da3-b768-7968f526cf681",
-  "version": 2
+  "title": "OpenEBS / Jiva / Volume",
+  "uid": "75acc0e8-3731-4b73-b343-0759d70f734a",
+  "version": 1
 }
