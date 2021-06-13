@@ -1,50 +1,38 @@
 # OpenEBS Monitoring add-on
 
-This repository contains monitoring-related (like Prometheus, grafana, etc,) artifacts like helm charts/ YAMLs. The goal of this repository is to provide an easy to setup monitoring stack for OpenEBS.
+A set of Grafana dashboards and Prometheus alerts for OpenEBS, packaged as helm chart.
 
-This repository will aggregate all the monitoring related artifacts that are currently spread across multiple repositories like:
-
-- https://github.com/openebs/openebs/tree/master/k8s
-- https://github.com/openebs/charts/tree/gh-pages/grafana-charts
+You have the following options for deploying OpenEBS monitoring dashboards
+- Install [OpenEBS Monitoring Add-on](#install) that includes Prometheus Operator and OpenEBS Mixins.
+- Install Only [OpenEBS Mixins](./docs/guide.md).
 
 ## Status
 
 Pre-alpha. Under active development.
 
+## Install
+
+### Install using Helm Chart
+
+- Step 1: [Helm](https://helm.sh) must be installed to use the charts. Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
+
+- Step 2: Add OpenEBS Monitoring chart to Helm using the following command:
+  ```console
+  helm repo add openebs-monitoring https://openebs.github.io/monitoring/
+  ```
+
+  You can then run `helm search repo openebs-monitoring` to see the charts.
+
+- Step 3: Install OpenEBS Monitoring add-on. 
+  Please visit the [link](./deploy/charts/openebs-monitoring/README.md) for install customizations.
+  ```console
+  # Helm
+  helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [NAMESPACE] --create-namespace
+  ```
+
 ## Usage
 
-[Helm](https://helm.sh) must be installed to use the charts.
-Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
-
-Once Helm is set up properly, add the repo as follows:
-
-```console
-helm repo add openebs-monitoring https://openebs.github.io/monitoring/
-```
-
-You can then run `helm search repo openebs-monitoring` to see the charts.
-
-#### Install Chart
-
-Please visit the [link](https://openebs.github.io/monitoring/) for install instructions via helm3.
-
-```console
-# Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [NAMESPACE] --create-namespace
-```
-
-_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
-
-#### Install openebs-addon-only
-
-```console
-#Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, openebsMonitoringAddon.enabled=true
-```
-Please visit the [link](https://openebs.github.io/monitoring/docs/guide.md) for more detailed instructions.
-
-
-#### Accessing Grafana
+### Accessing Grafana
 
 ```console
 # Look at the grafana pod and check that the pod is in running state
@@ -64,8 +52,6 @@ kubectl port-forward --namespace [NAMESPACE] pods/[grafana-pod-name] 32515:3000
 # Default Grafana login credentials- [username: admin, password: admin]
 ```
 
-<!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
-The detailed chart documentation is available in [openebs-monitoring directory](https://github.com/openebs/monitoring/blob/develop/deploy/charts/openebs-monitoring/README.md).
 
 ## Contributing
 
