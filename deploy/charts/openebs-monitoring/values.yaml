@@ -173,6 +173,23 @@ kube-prometheus-stack:
       - grafana-polystat-panel
       - snuids-trafficlights-panel
 
+## Configuration for node-problem-detector subchart
+node-problem-detector:
+  install: true
+  extraVolumes:
+  - name: kmsg
+    hostPath:
+      path: /dev/kmsg
+
+  extraVolumeMounts:
+    - name: kmsg
+      mountPath: /dev/kmsg
+      readOnly: true
+
+  metrics:
+    serviceMonitor:
+      enabled: true
+
 alertRules:
   cStor:
     enabled: true

@@ -5,4 +5,5 @@ chart-dirs:
   - deploy/charts
 chart-repos:
   - kube-prometheus-stack=https://prometheus-community.github.io/helm-charts
+  - node-problem-detector=https://charts.deliveryhero.io/
 helm-extra-args: --timeout=500s

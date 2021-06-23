@@ -2,5 +2,8 @@ dependencies:
 - name: kube-prometheus-stack
   repository: https://prometheus-community.github.io/helm-charts
   version: 16.5.0
-digest: sha256:3f089976c6d2865a11776b30c9acee90a82403ff49d56242a48f5a3182929f06
-generated: "2021-06-10T01:29:44.53240328+05:30"
+- name: node-problem-detector
+  repository: https://charts.deliveryhero.io/
+  version: 2.0.2
+digest: sha256:6b94602433578f88486ae01ed6fbfbb36436b2943f6770a8dee722ae34aeee2b
+generated: "2021-06-14T18:49:18.308261359+05:30"
