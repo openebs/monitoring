@@ -819,10 +819,7 @@
         "multi": false,
         "name": "openebs_cstor_label",
         "options": [],
-        "query": {
-          "query": "label_values(openebs_size_of_volume,openebs_cstor_label)",
-          "refId": "Prometheus-openebs_cstor_label-Variable-Query"
-        },
+        "query": "label_values(openebs_size_of_volume,openebs_cstor_label)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -846,10 +843,7 @@
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": {
-          "query": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
-          "refId": "StandardVariableQuery"
-        },
+        "query": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
         "refresh": 1,
         "regex": "/namespace=\\\"(.*?)(\\\")/",
         "skipUrlSync": false,
