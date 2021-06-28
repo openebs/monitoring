@@ -1082,10 +1082,7 @@
         "multi": false,
         "name": "openebs_jiva_label",
         "options": [],
-        "query": {
-          "query": "label_values(openebs_size_of_volume,openebs_jiva_label)",
-          "refId": "StandardVariableQuery"
-        },
+        "query": "label_values(openebs_size_of_volume,openebs_jiva_label)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1109,10 +1106,7 @@
         "multi": false,
         "name": "openebs_Volume",
         "options": [],
-        "query": {
-          "query": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\", openebs_cstor_label=\"\"}, openebs_pv)",
-          "refId": "StandardVariableQuery"
-        },
+        "query": "label_values(openebs_size_of_volume{openebs_jiva_label=\"$openebs_jiva_label\", openebs_cstor_label=\"\"}, openebs_pv)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1136,10 +1130,7 @@
         "multi": false,
         "name": "openebs_pvc",
         "options": [],
-        "query": {
-          "query": "label_values(openebs_size_of_volume{openebs_pv=~\"$openebs_Volume\"},openebs_pvc)",
-          "refId": "Prometheus-openebs_pvc-Variable-Query"
-        },
+        "query": "label_values(openebs_size_of_volume{openebs_pv=~\"$openebs_Volume\"},openebs_pvc)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1163,10 +1154,7 @@
         "multi": false,
         "name": "replica_count",
         "options": [],
-        "query": {
-          "query": "query_result(openebs_total_replica_count{openebs_pv=~\"$openebs_Volume\"})",
-          "refId": "Prometheus-replica_count-Variable-Query"
-        },
+        "query": "query_result(openebs_total_replica_count{openebs_pv=~\"$openebs_Volume\"})",
         "refresh": 2,
         "regex": "/.*}(.*) .*/",
         "skipUrlSync": false,
@@ -1190,10 +1178,7 @@
         "multi": false,
         "name": "uptime",
         "options": [],
-        "query": {
-          "query": "query_result(openebs_volume_uptime{openebs_pv=~\"$openebs_Volume\"})",
-          "refId": "Prometheus-uptime-Variable-Query"
-        },
+        "query": "query_result(openebs_volume_uptime{openebs_pv=~\"$openebs_Volume\"})",
         "refresh": 2,
         "regex": "/.*}(.*) .*/",
         "skipUrlSync": false,
@@ -1217,10 +1202,7 @@
         "multi": false,
         "name": "vol",
         "options": [],
-        "query": {
-          "query": "label_values(openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\"},openebs_pv)",
-          "refId": "StandardVariableQuery"
-        },
+        "query": "label_values(openebs_size_of_volume{openebs_pvc=~\"$openebs_pvc\"},openebs_pv)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
