@@ -32,6 +32,19 @@ openebsMonitoringAddon:
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
   install: true
+  prometheus-node-exporter:
+    ## privilege and access control settings for node-exporter
+    securityContext:
+      fsGroup: 65534
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+
+    ## Additional container arguments
+    extraArgs:
+      - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+)($|/)
+      - --collector.filesystem.ignored-fs-types=^(tmpfs|autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
+
   prometheus:
     service:
       type: NodePort
@@ -172,6 +185,8 @@ customDashboards:
   cStor:
     enabled: true
   Jiva:
+    enabled: true
+  LocalPV:
     enabled: true
 
 serviceMonitors:
