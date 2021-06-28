@@ -386,7 +386,7 @@ serviceMonitors:
 
     # selector:
     #   matchLabels:
-    #     cas-type: jiva
+    #     name: openebs-lvm-node
 
     selector:
       matchLabels:
