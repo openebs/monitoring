@@ -4209,7 +4209,7 @@
 	  ]
 	},
 	"timezone": "UTC",
-	"title": "OpenEBS / LVM Local PV / Stateful Workload",
+	"title": "OpenEBS / Local PV / Stateful Workload",
 	"uid": "eb7ddb2e-9ef2-4a5a-8012-bfaeb7e84b00",
 	"version": 1
   }
