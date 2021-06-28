@@ -14,7 +14,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: {{ template "openebs-monitoring.name" $ }}-{{ $ruleName }}
+  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.name" $) $ruleName) | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "openebs-monitoring.namespace" $ }}
   labels:
     app: {{ template "openebs-monitoring.name" $ }}

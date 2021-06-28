@@ -364,6 +364,57 @@ serviceMonitors:
     namespaceSelector:
       any: true
 
+  lvm-LocalPV:
+    enabled: true
+
+    ## Endpoints of the selected service to be monitored
+    endpoints:
+      ## Name of the endpoint's service port
+      ## Mutually exclusive with targetPort
+      #  port: ""
+      port: metrics
+
+      ## HTTP path to scrape for metrics
+      #  path: /metrics
+      path: /metrics
+
+    ## Label selector for services to which this ServiceMonitor applies
+    # selector: {}
+    #   matchLabels: {}
+
+    ## Example
+
+    # selector:
+    #   matchLabels:
+    #     cas-type: jiva
+
+    selector:
+      matchLabels:
+        name: openebs-lvm-node
+
+    ## Namespaces from which services are selected
+    # namespaceSelector: []
+    ## Match any namespace
+    #   any: true
+
+    ## Example
+
+    # namespaceSelector:
+    #   any: true
+
+    ## Explicit list of namespace names to select
+    #   matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
+    namespaceSelector:
+      any: true
+
 podMonitors:
   cstor:
     enabled: true
