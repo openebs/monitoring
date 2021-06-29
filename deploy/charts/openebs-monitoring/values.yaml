@@ -188,6 +188,8 @@ customDashboards:
     enabled: true
   LocalPV:
     enabled: true
+  LVM:
+    enabled: true
 
 serviceMonitors:
   cstor:
