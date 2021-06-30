@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 34,
-  "iteration": 1624995855838,
+  "id": 30,
+  "iteration": 1624996506300,
   "links": [],
   "panels": [
     {
@@ -123,14 +123,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "lvm_vg_total_bytes{name=\"$volume_group\"}",
+          "expr": "lvm_vg_total_size_bytes{name=\"$volume_group\"}",
           "interval": "",
           "legendFormat": "Total size",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "lvm_vg_free_bytes{name=\"$volume_group\"}",
+          "expr": "lvm_vg_free_size_bytes{name=\"$volume_group\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Free size",
@@ -138,7 +138,7 @@
         },
         {
           "exemplar": true,
-          "expr": "lvm_vg_total_bytes{name=\"$volume_group\"}-lvm_vg_free_bytes{name=\"$volume_group\"}",
+          "expr": "lvm_vg_total_size_bytes{name=\"$volume_group\"}-lvm_vg_free_size_bytes{name=\"$volume_group\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Used size",
@@ -247,7 +247,7 @@
         },
         {
           "exemplar": true,
-          "expr": "lvm_vg_mda_free_bytes{name=~\"$volume_group\"}",
+          "expr": "lvm_vg_mda_free_size_bytes{name=~\"$volume_group\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Metadata free size",
@@ -255,7 +255,7 @@
         },
         {
           "exemplar": true,
-          "expr": "lvm_vg_mda_total_size_bytes{name=~\"$volume_group\"}-lvm_vg_mda_free_bytes{name=~\"$volume_group\"}",
+          "expr": "lvm_vg_mda_total_size_bytes{name=~\"$volume_group\"}-lvm_vg_mda_free_size_bytes{name=~\"$volume_group\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Metadata used size",
@@ -1042,7 +1042,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "lvm_lv_used_size_percent{vg=~\"$volume_group\",segtype!=\"$thinPool\"}",
+          "expr": "lvm_lv_used_size_percent{vg=~\"$volume_group\",segtype=\"$thinVolume\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1073,9 +1073,9 @@
                 "host",
                 "name",
                 "path",
+                "segtype",
                 "Value #A",
-                "Value #B",
-                "segtype"
+                "Value #B"
               ]
             }
           }
@@ -1116,7 +1116,7 @@
       },
       "id": 52,
       "panels": [],
-      "title": "Volume Group Performance",
+      "title": "Volume Group Performance Stats",
       "type": "row"
     },
     {
@@ -1751,6 +1751,8 @@
           "refId": "A"
         }
       ],
+      "timeFrom": null,
+      "timeShift": null,
       "title": "Behaviour when full",
       "type": "timeseries"
     },
@@ -1921,7 +1923,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "lvm_lv_mda_size_bytes{name=~\"$thin_pool\"}",
+          "expr": "lvm_lv_mda_total_size_bytes{name=~\"$thin_pool\"}",
           "interval": "",
           "legendFormat": "Metadata size",
           "refId": "A"
@@ -2317,7 +2319,7 @@
       },
       "id": 62,
       "panels": [],
-      "title": "Thin Pool Performance",
+      "title": "Thin Pool Performance Stats",
       "type": "row"
     },
     {
@@ -2868,7 +2870,7 @@
         },
         {
           "exemplar": true,
-          "expr": "lvm_pv_used_bytes{vg=~\"$volume_group\"}",
+          "expr": "lvm_pv_used_size_bytes{vg=~\"$volume_group\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -2878,7 +2880,7 @@
         },
         {
           "exemplar": true,
-          "expr": "lvm_pv_free_bytes{vg=~\"$volume_group\"}",
+          "expr": "lvm_pv_free_size_bytes{vg=~\"$volume_group\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -3067,6 +3069,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "LVM Pool",
-  "uid": "F0b6Kmknk3",
-  "version": 2
+  "uid": "F0b6Kmknk",
+  "version": 8
 }
