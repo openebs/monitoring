@@ -1034,7 +1034,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "lvm_lv_used_size_percent{active_status=\"active\", container=\"lvm-exporter\", device=\"dm-4\", dm_path=\"/dev/mapper/vg_thin-thin_vol_client1\", endpoint=\"exporter\", host=\"pallavi-w3\", instance=\"10.52.2.43:9101\", job=\"lvm-exporter-service\", name=\"thin_vol_client1\", namespace=\"exporter\", path=\"/dev/vg_thin/thin_vol_client1\", pod=\"lvm-exporter-j6vfv\", pool=\"lvm_thin_pool\", segtype=\"thin\", service=\"lvm-exporter-service\", vg=\"vg_thin\"}"
+            "displayName": "lvm_lv_used_percent{active_status=\"active\", container=\"lvm-exporter\", device=\"dm-4\", dm_path=\"/dev/mapper/vg_thin-thin_vol_client1\", endpoint=\"exporter\", host=\"pallavi-w3\", instance=\"10.52.2.43:9101\", job=\"lvm-exporter-service\", name=\"thin_vol_client1\", namespace=\"exporter\", path=\"/dev/vg_thin/thin_vol_client1\", pod=\"lvm-exporter-j6vfv\", pool=\"lvm_thin_pool\", segtype=\"thin\", service=\"lvm-exporter-service\", vg=\"vg_thin\"}"
           }
         ]
       },
@@ -1042,7 +1042,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "lvm_lv_used_size_percent{vg=~\"$volume_group\",segtype=\"$thinVolume\"}",
+          "expr": "lvm_lv_used_percent{vg=~\"$volume_group\",segtype=~\"$thinVolume\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -2246,7 +2246,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "lvm_lv_used_size_percent{pool=~\"$thin_pool\",segtype=~\"$thinVolume\"}",
+          "expr": "lvm_lv_used_percent{pool=~\"$thin_pool\",segtype=~\"$thinVolume\"}",
           "format": "table",
           "instant": true,
           "interval": "",
