@@ -4,7 +4,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "openebs-monitoring.fullname" $ }}-{{ $openebsEngine }}
+  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.fullname" $) $openebsEngine) | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "openebs-monitoring.namespace" $ }}
   labels:
     app: {{ template "openebs-monitoring.name" $ }}-{{ $openebsEngine }}
