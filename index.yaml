@@ -3,6 +3,37 @@ entries:
   openebs-monitoring:
   - apiVersion: v2
     appVersion: 2.9.0
+    created: "2021-06-30T09:31:23.049446213Z"
+    dependencies:
+    - condition: kube-prometheus-stack.install
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 16.5.*
+    description: A Helm chart for monitoring OpenEBS
+    digest: 45bb4d32efb3a9cffef8a687d293e16f8b4d30f307c590de0007435b3e7436a2
+    keywords:
+    - openebs
+    - monitoring
+    maintainers:
+    - email: kiran.mova@mayadata.io
+      name: kiranmova
+    - email: vishnu.attur@mayadata.io
+      name: avishnu
+    - email: abhishek.agarwal@mayadata.io
+      name: Ab-hishek
+    - email: sahil.raja@mayadata.io
+      name: rajaSahil
+    - email: sanjay.nathani@mayadata.io
+      name: Sanjay1611
+    name: openebs-monitoring
+    sources:
+    - https://github.com/openebs/monitoring
+    type: application
+    urls:
+    - https://github.com/openebs/monitoring/releases/download/openebs-monitoring-0.2.2/openebs-monitoring-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 2.9.0
     created: "2021-06-28T07:01:26.152445617Z"
     dependencies:
     - condition: kube-prometheus-stack.install
@@ -520,4 +551,4 @@ entries:
     urls:
     - https://github.com/openebs/monitoring/releases/download/openebs-monitoring-0.1.3/openebs-monitoring-0.1.3.tgz
     version: 0.1.3
-generated: "2021-06-28T07:01:26.152571419Z"
+generated: "2021-06-30T09:31:23.049578115Z"
