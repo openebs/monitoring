@@ -1837,7 +1837,7 @@
         },
         {
           "exemplar": true,
-          "expr": "lvm_lv_used_size_percent{name=~\"$thin_pool\"}",
+          "expr": "lvm_lv_used_percent{name=~\"$thin_pool\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Used %",
