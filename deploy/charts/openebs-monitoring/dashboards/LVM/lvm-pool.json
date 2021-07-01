@@ -2996,7 +2996,7 @@
         "allValue": null,
         "current": {},
         "datasource": "$datasource",
-        "definition": "label_values(lvm_vg_total_bytes{instance=~\"$node.*\"}, name)",
+        "definition": "label_values(lvm_vg_total_size_bytes{instance=~\"$node.*\"}, name)",
         "description": null,
         "error": null,
         "hide": 0,
