@@ -176,6 +176,8 @@ kube-prometheus-stack:
 ## Configuration for node-problem-detector subchart
 node-problem-detector:
   install: true
+
+  ## Volume for storing logs
   extraVolumes:
   - name: kmsg
     hostPath:
@@ -185,7 +187,7 @@ node-problem-detector:
     - name: kmsg
       mountPath: /dev/kmsg
       readOnly: true
-
+  ## Enabling service monitors of npd
   metrics:
     serviceMonitor:
       enabled: true
