@@ -1,0 +1,45 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  annotations: {}
+  labels:
+    name: cstor
+  name: cstor
+  namespace: openebs-monitoring
+spec:
+  namespaceSelector:
+    any: true
+  podMetricsEndpoints:
+  - path: /metrics
+    port: exporter
+    relabelings:
+    - action: keep
+      regex: pool_exporter_prometheus
+      sourceLabels:
+      - __meta_kubernetes_pod_label_monitoring
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_pod_label_vsm
+      targetLabel: openebs_pv
+    - action: replace
+      separator: ""
+      sourceLabels:
+      - __meta_kubernetes_pod_label_openebs_io_storage_pool_claim
+      - __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster
+      targetLabel: storage_pool_claim
+    - action: replace
+      separator: ""
+      sourceLabels:
+      - __meta_kubernetes_pod_label_openebs_io_cstor_pool
+      - __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance
+      targetLabel: cstor_pool
+    - action: replace
+      regex: ([^:]+)(?::\d+)?;(\d+)
+      replacement: ${1}:${2}
+      sourceLabels:
+      - __address__
+      - __meta_kubernetes_pod_annotation_prometheus_io_port
+      targetLabel: __address__
+  selector:
+    matchLabels:
+      app: cstor-pool

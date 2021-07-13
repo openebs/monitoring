@@ -2,6 +2,7 @@ local rules = (import '../mixin.libsonnet');
 local config = import '../config.libsonnet';
 
 {
-  [if config._config.alertRules[name] then std.asciiLower(name) + '-rules.json']: rules.prometheusRules[name]
+  // To generate rules json
+  [if config._config.alertRules[name] then std.asciiLower(name) + '-rules.json']: rules.rules[name]
   for name in std.objectFields(config._config.alertRules)
 }

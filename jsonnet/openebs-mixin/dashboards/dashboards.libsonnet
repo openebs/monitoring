@@ -1,6 +1,7 @@
+// Populate grafanaDashboards object
 function(param) {
   local dashboard = self,
-  _config+:: param + dashboard,
+  _config+:: param,
   grafanaDashboards+:: {
     [if dashboard._config.dashboards.Jiva then 'jiva-volume.json']: import 'jiva-volume.json',
     [if dashboard._config.dashboards.cStor then 'cstor-overview.json']: import 'cstor-overview.json',

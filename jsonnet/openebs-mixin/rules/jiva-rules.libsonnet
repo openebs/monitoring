@@ -4,7 +4,7 @@ function(param) {
   _config+:: param,
   prometheusRules+:: {
     Jiva: {
-      groups+:
+      [if rules._config.alertRules.Jiva then 'groups']+:
         jivaVolume(rules._config).prometheusRules.JivaVolume.groups,
     },
   },

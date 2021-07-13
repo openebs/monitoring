@@ -7,7 +7,7 @@ function(param) {
   _config+:: param,
   prometheusRules+:: {
     cStor: {
-      groups+: cstorPool(rules._config).prometheusRules.cStorPool.groups + cstorVolume(rules._config).prometheusRules.cStorVolume.groups,
+      [if rules._config.alertRules.cStor then 'groups']+: cstorPool(rules._config).prometheusRules.cStorPool.groups + cstorVolume(rules._config).prometheusRules.cStorVolume.groups,
     },
   },
 }

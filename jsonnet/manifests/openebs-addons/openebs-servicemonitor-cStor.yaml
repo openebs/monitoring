@@ -1,0 +1,38 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations: {}
+  labels:
+    name: cstor
+  name: cstor
+  namespace: openebs-monitoring
+spec:
+  endpoints:
+  - path: /metrics
+    port: exporter
+    relabelings:
+    - action: keep
+      regex: volume_exporter_prometheus
+      sourceLabels:
+      - __meta_kubernetes_pod_label_monitoring
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_pod_label_vsm
+      targetLabel: openebs_pv
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_pod_label_openebs_io_persistent_volume
+      targetLabel: openebs_pv
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_pod_label_openebs_io_persistent_volume_claim
+      targetLabel: openebs_pvc
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_pod_label_app
+      targetLabel: openebs_cstor_label
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      openebs.io/cas-type: cstor

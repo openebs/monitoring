@@ -1,5 +1,5 @@
 function(param) {
-  local rules = self,
+  //local rules = self,
   _config+:: param,
   prometheusRules+:: {
     cStorVolume: {

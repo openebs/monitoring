@@ -7,7 +7,7 @@ set -x
 set -o pipefail
 
 dashboardsDirPath=../../deploy/charts/openebs-monitoring/dashboards
-rulessDirPath=../../deploy/charts/openebs-monitoring/rules
+rulesDirPath=../../deploy/charts/openebs-monitoring/rules
 
 generateDashboards(){
 	rm -rf $dashboardsDirPath
@@ -17,21 +17,21 @@ generateDashboards(){
 	for i in ${dashboardsFolder[@]}
 	do
 	    x=`echo $i | awk '{print tolower($0)}'`
-		mkdir $dashboardsDirPath/$i
+		mkdir -p $dashboardsDirPath/$i
 		find ./$dashboardsDirPath  -name "*$x*" |xargs -I{} sh -c "mv {} $dashboardsDirPath/$i/"
 	done
 }
 
 generateRules(){
-	rm -rf $rulessDirPath
-	mkdir -p  $rulessDirPath
-	jsonnet -J vendor -m $rulessDirPath lib/rules.jsonnet
+	rm -rf $rulesDirPath
+	mkdir -p  $rulesDirPath
+	jsonnet -J vendor -m $rulesDirPath lib/rules.jsonnet
 	rulesFolder=(cStor Jiva Volume)
 	for i in ${rulesFolder[@]}
 	do
 	    x=`echo $i | awk '{print tolower($0)}'`
-		mkdir $rulessDirPath/$i
-		find ./$rulessDirPath  -name "*$x*" |xargs -I{} sh -c "mv {} $rulessDirPath/$i/"
+		mkdir -p $rulesDirPath/$i
+		find ./$rulesDirPath  -name "*$x*" |xargs -I{} sh -c "mv {} $rulesDirPath/$i/"
 	done
 }
 
