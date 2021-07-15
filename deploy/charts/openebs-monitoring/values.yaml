@@ -187,6 +187,7 @@ node-problem-detector:
     - name: kmsg
       mountPath: /dev/kmsg
       readOnly: true
+      
   ## Enabling service monitors of npd
   metrics:
     serviceMonitor:
