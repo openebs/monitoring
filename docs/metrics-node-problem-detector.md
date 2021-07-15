@@ -4,6 +4,7 @@ Here is a list of metrics exported by node-probl3em-detector metrics when kernel
 
 ## Metrics by enabling kernel-monitor
 
+```
 problem_counter{reason="OOMKilling"} # system logs with pattern- "Killed process \\d+ (.+) total-vm:\\d+kB, anon-rss:\\d+kB, file-rss:\\d+kB._"
 problem_counter{reason="TaskHung"} # system logs with pattern- "task [\\S ]+:\\w+ blocked for more than \\w+ seconds\\."
 problem_counter{reason="UnregisterNetDevice"} # system logs with pattern- "unregister_netdevice: waiting for \\w+ to become free. Usage count = \\d+"
@@ -16,9 +17,12 @@ problem_counter{reason="MemoryReadError"} # system logs with pattern- "CE memory
 problem_counter{reason="AUFSUmountHung"} # system logs with pattern- "task umount\\.aufs:\\w+ blocked for more than \\w+ seconds\\."
 problem_counter{reason="DockerHung"} # system logs with pattern- "task docker:\\w+ blocked for more than \\w+ seconds\\."
 problem_counter{reason="FilesystemIsReadOnly"} # system logs with pattern- "Remounting filesystem read-only"
+```
 
 ## Metrics by enabling docker-monitor
 
+```
 problem_counter{reason="CorruptDockerImage"} # system logs with pattern- "Error trying v2 registry: failed to register layer: rename /var/lib/docker/image/(.+) /var/lib/docker/image/(.+): directory not empty._"
 problem_counter{reason="CorruptDockerOverlay2"} # system logs with pattern- "returned error: readlink /var/lib/docker/overlay2._: invalid argument.\*"
 problem_counter{reason="DockerContainerStartupFailure"} # system logs with pattern- "OCI runtime start failed: container process is already dead: unknown"
+```
