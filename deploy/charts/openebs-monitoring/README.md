@@ -144,6 +144,9 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `podMonitors.cstor.selector`                                                              | Selector to select endpoints objects                                                | `{matchLabels: {app: cstor-pool}}`                        |
 | `podMonitors.cstor.namespaceSelector`                                                     | Selector to select which namespaces the endpoints objects are discovered from       | `[any: true]`                                             |
 
+
+We can edit the npd parameters too accordingly from [here](https://artifacthub.io/packages/helm/deliveryhero/node-problem-detector)
+
 A YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
