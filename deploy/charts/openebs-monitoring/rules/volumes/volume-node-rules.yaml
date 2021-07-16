@@ -1,10 +1,10 @@
 groups:
   - name: volume-node
     rules:
-      # Alert for pv's fileystem getting into read-only state while re-mounting on a particular node.
+      # Alert for pv's fileystem getting into read-only state.
       - alert: VolumeNodeFileSystemIsReadOnly
         annotations:
-          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' is having read-only filesystem while re-mounting'
+          summary: 'Volume mount failed for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' on node ''{{ $labels.node }}'' due to read-only file-system'
           description: |-
             Persistent Volume's filesystem on node '{{ $labels.node }}' for persistent volume claim '{{ $labels.persistentvolumeclaim }}' has become read-only
         expr: |-
@@ -12,10 +12,10 @@ groups:
         for: 5m
         labels:
           severity: "critical"
-      # Alert for pv's facing issues with ext4 filesystem on a particular nodes.
+      # Alert for pv's facing issues with ext4 filesystem on a particular node.
       - alert: VolumeNodeExt4Error
         annotations:
-          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' is having issues with ext4 filesystem'
+          summary: 'Node ''{{ $labels.node }}'' has encountered errors on ext4 file-system on volume having claim ''{{ $labels.persistentvolumeclaim }}'''
           description: |-
             Persistent Volume's on node '{{ $labels.node }}' persistent volume claim '{{ $labels.persistentvolumeclaim }}' encountering ext4 filesystem error
         expr: |-
@@ -26,7 +26,7 @@ groups:
       # Alert for pv's facing issues with I/O on a particular node.
       - alert: VolumeNodeIOError
         annotations:
-          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' is having trouble with I/O'
+          summary: 'IO errors encountered on volume having persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' on node ''{{ $labels.node }}'''
           description: |-
             Persistent Volume on node '{{ $labels.node }}' for persistent volume claim '{{ $labels.persistentvolumeclaim }}' encountering errors w.r.t buffer I/O 
         expr: |-
@@ -37,7 +37,7 @@ groups:
       # Alert for pv's having some warning issued w.r.t ext4 filesystem.
       - alert: VolumeNodeExt4Warning
         annotations:
-          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' receiving ext4 filesystem warning'
+          summary: 'Node ''{{ $labels.node }}'' has encountered warning on ext4 file-system on volume having claim ''{{ $labels.persistentvolumeclaim }}'''
           description: |-
             Persistent Volume on node '{{ $labels.node }}' receiving ext4 filesystem warning for persistent volume claim '{{ $labels.persistentvolumeclaim }}'
         expr: |-
