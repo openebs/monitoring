@@ -1,4 +1,6 @@
 # OpenEBS Monitoring add-on
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring?ref=badge_shield)
+
 
 This repository contains monitoring-related (like Prometheus, grafana, etc,) artifacts like helm charts/ YAMLs. The goal of this repository is to provide an easy to setup monitoring stack for OpenEBS.
 
@@ -87,3 +89,7 @@ Want to raise an issue or help with fixes and features?
 ## Code of conduct
 
 Participation in the OpenEBS community is governed by the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring?ref=badge_large)
