@@ -1,6 +1,6 @@
 # node-problem-detector metrics
 
-Here is a list of metrics exported by node-probl3em-detector metrics when kernel-monitor and docker-monitor is only enabled. Other rules can also be monitored by adding them to the `log_monitors` field in the values.yaml used by [node-problem-detector](https://git.app.uib.no/caleno/helm-charts/-/blob/master/stable/node-problem-detector/values.yaml). Accordingly the metrics will also appear.
+Here is a list of metrics exported by node-problem-detector metrics when kernel-monitor and docker-monitor is only enabled. Other rules can also be monitored by adding them to the `log_monitors` field in the values.yaml used by [node-problem-detector](https://git.app.uib.no/caleno/helm-charts/-/blob/master/stable/node-problem-detector/values.yaml). Accordingly the metrics will also appear.
 
 ## Metrics by enabling kernel-monitor
 
