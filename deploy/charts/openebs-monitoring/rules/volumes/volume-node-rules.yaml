@@ -1,10 +1,10 @@
 groups:
   - name: volume-node
     rules:
-      # Alert for pv's fileystem getiing into read-only state while remounting on a particular node.
+      # Alert for pv's fileystem getting into read-only state while re-mounting on a particular node.
       - alert: VolumeNodeFileSystemIsReadOnly
         annotations:
-          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' is having read-only fielsystem while remounting'
+          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' is having read-only filesystem while re-mounting'
           description: |-
             Persistent Volume's filesystem on node '{{ $labels.node }}' for persistent volume claim '{{ $labels.persistentvolumeclaim }}' has become read-only
         expr: |-
@@ -15,7 +15,7 @@ groups:
       # Alert for pv's facing issues with ext4 filesystem on a particular nodes.
       - alert: VolumeNodeExt4Error
         annotations:
-          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' is having issues with ext4 fielsystem'
+          summary: 'Persistent Volume on node ''{{ $labels.node }}'' for persistent volume claim ''{{ $labels.persistentvolumeclaim }}'' is having issues with ext4 filesystem'
           description: |-
             Persistent Volume's on node '{{ $labels.node }}' persistent volume claim '{{ $labels.persistentvolumeclaim }}' encountering ext4 filesystem error
         expr: |-
