@@ -475,7 +475,7 @@ podMonitors:
             ]
           action: replace
           ## separator: Separator placed between concatenated source label values, default -> ;
-          separator: ""
+          separator: " "
           targetLabel: storage_pool_claim
           ## Adding comma-separated source_labels below in order to fetch the metrics for pool instances of CSP and CSPI kind
         - sourceLabels:
@@ -485,7 +485,7 @@ podMonitors:
             ]
           action: replace
           ## separator: Separator placed between concatenated source label values, default -> ;
-          separator: ""
+          separator: " "
           targetLabel: cstor_pool
         - sourceLabels:
             [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
