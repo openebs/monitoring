@@ -198,6 +198,8 @@ alertRules:
     enabled: true
   Jiva:
     enabled: true
+  LocalPV:
+    enabled: true
   volumes:
     enabled: true
 
