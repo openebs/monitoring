@@ -13,6 +13,7 @@
       Jiva: true,
       lvmLocalPV: false,
       volume: true,
+      npd: true,
     },
   },
 }

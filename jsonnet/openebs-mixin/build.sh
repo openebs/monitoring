@@ -26,7 +26,7 @@ generateRules(){
 	rm -rf $rulesDirPath
 	mkdir -p  $rulesDirPath
 	jsonnet -J vendor -m $rulesDirPath lib/rules.jsonnet
-	rulesFolder=(cStor Jiva Volume)
+	rulesFolder=(cStor Jiva Volume NPD)
 	for i in ${rulesFolder[@]}
 	do
 	    x=`echo $i | awk '{print tolower($0)}'`

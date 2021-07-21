@@ -1,8 +1,8 @@
 function(param) {
-  local rules = self,
+  //local rules = self,
   _config+:: param,
   prometheusRules+:: {
-    volumeNode: {
+    npd: {
       groups+: [
         {
           name: 'volume-node',
