@@ -3,11 +3,11 @@ function(param) {
   local dashboard = self,
   _config+:: param,
   grafanaDashboards+:: {
-    [if dashboard._config.dashboards.Jiva then 'jiva-volume.json']: import 'jiva-volume.json',
-    [if dashboard._config.dashboards.cStor then 'cstor-overview.json']: import 'cstor-overview.json',
-    [if dashboard._config.dashboards.cStor then 'cstor-volume.json']: import 'cstor-volume.json',
-    [if dashboard._config.dashboards.cStor then 'cstor-volume-replica.json']: import 'cstor-volume-replica.json',
-    [if dashboard._config.dashboards.cStor then 'cstor-pool.json']: import 'cstor-pool.json',
-    [if dashboard._config.dashboards.LocalPV then 'localpv-workload.json']: import 'localpv-workload.json',
+    [if dashboard._config.dashboards.jiva then 'jiva-volume.json']: import './openebs/jiva-volume.json',
+    [if dashboard._config.dashboards.cStor then 'cstor-overview.json']: import './openebs/cstor-overview.json',
+    [if dashboard._config.dashboards.cStor then 'cstor-volume.json']: import './openebs/cstor-volume.json',
+    [if dashboard._config.dashboards.cStor then 'cstor-volume-replica.json']: import './openebs/cstor-volume-replica.json',
+    [if dashboard._config.dashboards.cStor then 'cstor-pool.json']: import './openebs/cstor-pool.json',
+    [if dashboard._config.dashboards.localPV then 'localpv-workload.json']: import './openebs/localpv-workload.json',
   },
 }

@@ -1,8 +1,9 @@
+// alert rules for volume-pvc
 function(param) {
   //local rules = self,
   _config+:: param,
   prometheusRules+:: {
-    volumePVC: {
+    volume: {
       groups+: [
         {
           name: 'persistent-volume-claim',

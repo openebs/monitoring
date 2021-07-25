@@ -18,7 +18,7 @@ generateDashboards(){
 	do
 	    x=`echo $i | awk '{print tolower($0)}'`
 		mkdir -p $dashboardsDirPath/$i
-		find ./$dashboardsDirPath  -name "*$x*" |xargs -I{} sh -c "mv {} $dashboardsDirPath/$i/"
+		find ./$dashboardsDirPath -type f -name "*$x*" |xargs -I{} sh -c "mv {} $dashboardsDirPath/$i/"
 	done
 }
 
@@ -26,12 +26,12 @@ generateRules(){
 	rm -rf $rulesDirPath
 	mkdir -p  $rulesDirPath
 	jsonnet -J vendor -m $rulesDirPath lib/rules.jsonnet
-	rulesFolder=(cStor Jiva Volume NPD)
+	rulesFolder=(cStor Jiva Volume npd)
 	for i in ${rulesFolder[@]}
 	do
 	    x=`echo $i | awk '{print tolower($0)}'`
 		mkdir -p $rulesDirPath/$i
-		find ./$rulesDirPath  -name "*$x*" |xargs -I{} sh -c "mv {} $rulesDirPath/$i/"
+		find ./$rulesDirPath -type f -name "*$x*" |xargs -I{} sh -c "mv {} $rulesDirPath/$i/"
 	done
 }
 

@@ -22,14 +22,14 @@
     _config+:: {
       dashboards+: {
         cStor: $._config.casType.cStor.dashboards,
-        Jiva: $._config.casType.Jiva.dashboards,
-        LocalPV: $._config.casType.lvmLocalPV.dashboards,
+        jiva: $._config.casType.jiva.dashboards,
+        localPV: $._config.casType.lvmLocalPV.dashboards,
         lvmLocalPV: $._config.casType.lvmLocalPV.dashboards,
         deviceLocalPV: $._config.casType.lvmLocalPV.dashboards,
       },
       alertRules+: {
         cStor: $._config.casType.cStor.alertRules,
-        Jiva: $._config.casType.Jiva.alertRules,
+        jiva: $._config.casType.jiva.alertRules,
         lvmLocalPV: $._config.casType.lvmLocalPV.alertRules,
         deviceLocalPV: $._config.casType.lvmLocalPV.alertRules,
       },
@@ -169,7 +169,7 @@
           },
         },
       },
-      Jiva: {
+      jiva: {
         // To generate manifests for cstor. If set, manifests will be generated for Jiva.
         enabled: true,
         // To generate dashboards configMap yamls. If set, dashboards will be appended in grafana-dashboardDefinition yaml.

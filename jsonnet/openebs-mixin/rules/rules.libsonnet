@@ -1,9 +1,25 @@
-local cstor = (import 'cstor-rules.libsonnet');
-local jiva = (import 'jiva-rules.libsonnet');
-local volume = (import 'volume-rules.libsonnet');
-local npd = (import 'npd-rules.libsonnet');
+local cstor = (import './openebs/cstor-rules.libsonnet');
+local jiva = (import './openebs/jiva-rules.libsonnet');
+local volume = (import './volume/volume-rules.libsonnet');
+local npd = (import './npd/npd-rules.libsonnet');
 
-// Populate prometheusRules object from cstor, jiva and volume rules.
+// Alert rules for different CAS types and others(as defined in config.libsonnet under alertRules) are stored separately in prometheusRules object.
+// prometheusRules : {
+//    cStor:{
+//      groups:[
+//        {alert-1},
+//        {alert-2}
+//          .
+//          .
+//        {alert-n}
+//        ]
+//    },
+//    Jiva: {
+//      ...
+//    },
+//      ...
+//    }
+
 function(param) {
   local prometheusRules = self,
   _config+:: param,

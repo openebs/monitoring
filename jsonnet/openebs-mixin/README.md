@@ -11,7 +11,7 @@ You can manually generate the alerts, dashboards and rules files.
 1. Install `jsonnet` and `jb`
 	```
 	$ go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb
-	$ brew install jsonnet
+	$ sudo apt-get install jsonnet
 	```
 
 2. Then, grab the mixin and its dependencies:
@@ -34,11 +34,12 @@ You can manually generate the alerts, dashboards and rules files.
 	$ make generate
 	```
 
-The  files in `rulesDirPath` are the alert rules defined for openebs which has to be used to create prometheusRule yaml then need to passed to your Prometheus server, and the files in `dashboardsDirPath` need to be imported into you Grafana server. 
+The files in `rulesDirPath` contain Prometheus-based alert rules for OpenEBS. These files will be aggregated to form a prometheusRule yaml that need to be imported into your Prometheus instance.
+Similarly, the files in `dashboardsDirPath` are dashboard json files that need to be imported into your Grafana instance.
 
 ## Configuration
 
-The available fields and their default values can be seen in `config.libsonnet`. 
+The available fields and their default values are present in `config.libsonnet`. 
 
 ```
 {

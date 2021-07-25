@@ -1,3 +1,4 @@
+// npd alert rules
 function(param) {
   //local rules = self,
   _config+:: param,

@@ -201,6 +201,8 @@ alertRules:
     enabled: true
   Volume:
     enabled: true
+  npd:
+    enabled: true
 
 customDashboards:
   cStor:

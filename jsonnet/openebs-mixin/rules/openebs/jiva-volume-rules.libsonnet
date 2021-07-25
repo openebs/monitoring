@@ -2,7 +2,7 @@ function(param) {
   //local rules = self,
   _config+:: param,
   prometheusRules+:: {
-    JivaVolume: {
+    jivaVolume: {
       groups+: [
         {
           name: 'openebs-Jiva-volume',

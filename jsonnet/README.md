@@ -18,19 +18,18 @@ The content of this project is written in jsonnet. This project could both be de
 	```
 	$ make generate
 	```
+	
+	The  files in `manifests/` are the yamls that have to be applied on the kubernetes cluster.  
 
-The  files in `manifests/` are the yamls that has to be applied on the kubernetes cluster.
+3. Apply the kube-prometheus stack and openebs monitoring addons:  
+   The previous step has generated a bunch of manifest files in the `manifests/` directory. Now simply use kubectl to install Prometheus and Grafana as per your configuration:
 
-### Apply the kube-prometheus stack and openebs monitoring addons
-The previous steps (Generate manifests) has created a bunch of manifest files in the manifests/ folder. Now simply use kubectl to install Prometheus and Grafana as per your configuration:
+	```
+	# Apply kube-prometheus stack yamls
+	$ kubectl apply -f manifests/setup
+	$ kubectl apply -f manifests/
 
-```
-# Apply kube-prometheus stack yamls
-$ kubectl apply -f manifests/setup
-$ kubectl apply -f manifests/
+	# Apply the openebs monitoring addons
+	$ kubectl apply -f manifests/openebs-addons
 
-# Apply the openebs monitoring addons
-$ kubectl apply -f manifests/openebs-addons
-
-```
-
+	```
