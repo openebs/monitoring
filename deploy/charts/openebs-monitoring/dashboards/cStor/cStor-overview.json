@@ -816,7 +816,7 @@
         "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": "openebs namespace",
+        "label": "OpenEBS namespace",
         "multi": false,
         "name": "openebs_namespace",
         "options": [],
