@@ -22,8 +22,8 @@
    "panels": [
       {
          "cacheTimeout": null,
-         "datasource": "Prometheus",
-         "description": "This panel shows the memory usage of cStor Pool across $namespace",
+         "datasource": "$datasource",
+         "description": "This panel shows the memory usage of cStor Pool across $openebs_namespace",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -98,7 +98,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(container_memory_usage_bytes{namespace=\"$namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status)",
+               "expr": "sum(container_memory_usage_bytes{namespace=\"$openebs_namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status)",
                "instant": false,
                "interval": "",
                "intervalFactor": 1,
@@ -108,12 +108,12 @@
          ],
          "timeFrom": null,
          "timeShift": null,
-         "title": "Memory usage in namespace $namespace",
+         "title": "Memory usage in namespace $openebs_namespace",
          "transparent": true,
          "type": "timeseries"
       },
       {
-         "datasource": "Prometheus",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "mappings": [ ],
@@ -160,7 +160,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(container_memory_usage_bytes{namespace=\"$namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace)",
+               "expr": "sum(container_memory_usage_bytes{namespace=\"$openebs_namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace)",
                "hide": false,
                "interval": "",
                "legendFormat": "Memory used by pod {{pod}}",
@@ -169,13 +169,13 @@
          ],
          "timeFrom": null,
          "timeShift": null,
-         "title": "Memory details in namespace $namespace",
+         "title": "Memory details in namespace $openebs_namespace",
          "type": "stat"
       },
       {
          "cacheTimeout": null,
-         "datasource": "Prometheus",
-         "description": "This panel shows CPU usage of cStor Pools across $namespace \n",
+         "datasource": "$datasource",
+         "description": "This panel shows CPU usage of cStor Pools across $openebs_namespace \n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -249,7 +249,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[1m]) * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) * 100",
+               "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$openebs_namespace\"}[1m]) * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) * 100",
                "instant": false,
                "interval": "",
                "intervalFactor": 1,
@@ -259,12 +259,12 @@
          ],
          "timeFrom": null,
          "timeShift": null,
-         "title": "CPU usage in namespace $namespace ",
+         "title": "CPU usage in namespace $openebs_namespace ",
          "transparent": true,
          "type": "timeseries"
       },
       {
-         "datasource": "Prometheus",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "mappings": [ ],
@@ -311,7 +311,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[1m]) * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace) * 100",
+               "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$openebs_namespace\"}[1m]) * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by(pod,namespace) * 100",
                "hide": false,
                "instant": false,
                "interval": "",
@@ -321,11 +321,11 @@
          ],
          "timeFrom": null,
          "timeShift": null,
-         "title": "CPU details in namespace $namespace",
+         "title": "CPU details in namespace $openebs_namespace",
          "type": "stat"
       },
       {
-         "datasource": null,
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -498,7 +498,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "openebs_pool_status{namespace=\"$namespace\"}",
+               "expr": "openebs_pool_status{namespace=\"$openebs_namespace\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -508,7 +508,7 @@
             },
             {
                "exemplar": true,
-               "expr": "openebs_used_pool_capacity{namespace=\"$namespace\"}",
+               "expr": "openebs_used_pool_capacity{namespace=\"$openebs_namespace\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -518,7 +518,7 @@
             },
             {
                "exemplar": true,
-               "expr": "openebs_used_pool_capacity_percent{namespace=\"$namespace\"}",
+               "expr": "openebs_used_pool_capacity_percent{namespace=\"$openebs_namespace\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -528,7 +528,7 @@
             },
             {
                "exemplar": true,
-               "expr": "openebs_free_pool_capacity{namespace=\"$namespace\"}",
+               "expr": "openebs_free_pool_capacity{namespace=\"$openebs_namespace\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -538,7 +538,7 @@
             },
             {
                "exemplar": true,
-               "expr": "sum(container_memory_usage_bytes{namespace=\"openebs\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by (cstor_pool)",
+               "expr": "sum(container_memory_usage_bytes{namespace=\"$openebs_namespace\"} * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by (cstor_pool)",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -548,7 +548,7 @@
             },
             {
                "exemplar": true,
-               "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"openebs\"}[1m])  * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by (cstor_pool) * 100",
+               "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$openebs_namespace\"}[1m])  * on (name,pod)group_left(cstor_pool,namespace) openebs_pool_status) by (cstor_pool) * 100",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -557,7 +557,7 @@
                "refId": "F"
             }
          ],
-         "title": "Pool Status in namespace $namespace",
+         "title": "Pool Status in namespace $openebs_namespace",
          "transformations": [
             {
                "id": "filterFieldsByName",
@@ -600,7 +600,7 @@
       },
       {
          "cacheTimeout": null,
-         "datasource": "Prometheus",
+         "datasource": "$datasource",
          "description": "",
          "fieldConfig": {
             "defaults": {
@@ -704,7 +704,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "openebs_volume_status{namespace=\"$namespace\",openebs_cstor_label=~\"$openebs_cstor_label\"}",
+               "expr": "openebs_volume_status{namespace=\"$openebs_namespace\",openebs_cstor_label=~\"$openebs_cstor_label\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -714,7 +714,7 @@
             },
             {
                "exemplar": true,
-               "expr": "openebs_actual_used{namespace=\"$namespace\",openebs_cstor_label=~\"$openebs_cstor_label\"}",
+               "expr": "openebs_actual_used{namespace=\"$openebs_namespace\",openebs_cstor_label=~\"$openebs_cstor_label\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -724,7 +724,7 @@
             },
             {
                "exemplar": true,
-               "expr": "openebs_size_of_volume{namespace=\"$namespace\",openebs_cstor_label=~\"$openebs_cstor_label\"}",
+               "expr": "openebs_size_of_volume{namespace=\"$openebs_namespace\",openebs_cstor_label=~\"$openebs_cstor_label\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -735,7 +735,7 @@
          ],
          "timeFrom": null,
          "timeShift": null,
-         "title": "Persistent Volume in namespace $namespace",
+         "title": "Persistent Volume in namespace $openebs_namespace",
          "transformations": [
             {
                "id": "filterFieldsByName",
@@ -798,9 +798,10 @@
             "includeAll": false,
             "label": null,
             "multi": false,
-            "name": "Datasource",
+            "name": "datasource",
             "options": [ ],
             "query": "prometheus",
+            "queryValue": "",
             "refresh": 1,
             "regex": "",
             "skipUrlSync": false,
@@ -809,7 +810,7 @@
          {
             "allValue": null,
             "current": { },
-            "datasource": null,
+            "datasource": "$datasource",
             "definition": "label_values(openebs_size_of_volume,openebs_cstor_label)",
             "description": null,
             "error": null,
@@ -833,19 +834,18 @@
          {
             "allValue": null,
             "current": { },
-            "datasource": null,
-            "definition": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
+            "datasource": "$datasource",
+            "definition": "label_values(openebs_pool_status, namespace)",
             "description": null,
             "error": null,
             "hide": 0,
-            "includeAll": true,
-            "label": "Namespace",
+            "includeAll": false,
+            "label": "OpenEBS namespace",
             "multi": false,
-            "name": "namespace",
+            "name": "openebs_namespace",
             "options": [ ],
-            "query": "query_result(sum(container_memory_working_set_bytes{namespace!=\"\"}) by (namespace))",
+            "query": "label_values(openebs_pool_status, namespace)",
             "refresh": 1,
-            "regex": "/namespace=\\\"(.*?)(\\\")/",
             "skipUrlSync": false,
             "sort": 0,
             "tagValuesQuery": "",
