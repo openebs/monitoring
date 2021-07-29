@@ -44,6 +44,7 @@ kube-prometheus-stack:
     extraArgs:
       - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+)($|/)
       - --collector.filesystem.ignored-fs-types=^(tmpfs|autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
+      - --collector.diskstats.ignored-devices=^(ram|loop|fd|(h|s|v|xv)d[a-z]+|nvme\\d+n\\d+p)\\d+$
 
   prometheus:
     service:
@@ -179,9 +180,9 @@ node-problem-detector:
 
   ## Volume for storing logs
   extraVolumes:
-  - name: kmsg
-    hostPath:
-      path: /dev/kmsg
+    - name: kmsg
+      hostPath:
+        path: /dev/kmsg
 
   extraVolumeMounts:
     - name: kmsg
@@ -411,6 +412,57 @@ serviceMonitors:
     selector:
       matchLabels:
         name: openebs-lvm-node
+
+    ## Namespaces from which services are selected
+    # namespaceSelector: []
+    ## Match any namespace
+    #   any: true
+
+    ## Example
+
+    # namespaceSelector:
+    #   any: true
+
+    ## Explicit list of namespace names to select
+    #   matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
+    namespaceSelector:
+      any: true
+
+  device-LocalPV:
+    enabled: true
+
+    ## Endpoints of the selected service to be monitored
+    endpoints:
+      ## Name of the endpoint's service port
+      ## Mutually exclusive with targetPort
+      #  port: ""
+      port: metrics
+
+      ## HTTP path to scrape for metrics
+      #  path: /metrics
+      path: /metrics
+
+    ## Label selector for services to which this ServiceMonitor applies
+    # selector: {}
+    #   matchLabels: {}
+
+    ## Example
+
+    # selector:
+    #   matchLabels:
+    #     name: openebs-device-node
+
+    selector:
+      matchLabels:
+        name: openebs-device-node
 
     ## Namespaces from which services are selected
     # namespaceSelector: []
