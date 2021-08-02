@@ -1842,7 +1842,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "node_filesystem_size_bytes {fstype=~\"ext4|xfs\",mountpoint=~\"(.*$pvName.*/mount)\"}",
+				"expr": "node_filesystem_size_bytes {fstype=~\"ext4|xfs\",mountpoint=~\"(.+/($pvName/mount))\"}",
 				"instant": true,
 				"interval": "",
 				"intervalFactor": 2,
@@ -1934,7 +1934,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.*$pvName.*/mount)\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(.*$pvName.*/mount)\",fstype=~\"ext4|xfs\"})",
+				"expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(.+/($pvName/mount))\",fstype=~\"ext4|xfs\"})",
 				"interval": "10s",
 				"intervalFactor": 2,
 				"legendFormat": "",
@@ -2007,7 +2007,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.*$pvName.*/mount)\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(.*$pvName.*/mount)\"})",
+				"expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(.+/($pvName/mount))\"})",
 				"interval": "10s",
 				"intervalFactor": 2,
 				"legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}}",
@@ -2110,7 +2110,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "node_filesystem_avail_bytes{mountpoint=~\"(.*$pvName.*/mount)\"}",
+				"expr": "node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\"}",
 				"format": "time_series",
 				"hide": false,
 				"interval": "",
@@ -2216,7 +2216,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "node_filesystem_files_free{mountpoint=~\"(.*$pvName.*/mount)\"}",
+				"expr": "node_filesystem_files_free{mountpoint=~\"(.+/($pvName/mount))\"}",
 				"format": "time_series",
 				"hide": false,
 				"interval": "",
@@ -2321,7 +2321,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "node_filesystem_files{mountpoint=~\"(.*$pvName.*/mount)\"}",
+				"expr": "node_filesystem_files{mountpoint=~\"(.+/($pvName/mount))\"}",
 				"format": "time_series",
 				"hide": false,
 				"interval": "",
@@ -2431,7 +2431,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "node_filesystem_readonly{mountpoint=~\"(.*$pvName.*/mount)\"}",
+				"expr": "node_filesystem_readonly{mountpoint=~\"(.+/($pvName/mount))\"}",
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
@@ -2541,7 +2541,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "node_filesystem_device_error{mountpoint=~\"(.*$pvName.*/mount)\"} ",
+				"expr": "node_filesystem_device_error{mountpoint=~\"(.+/($pvName/mount))\"} ",
 				"format": "time_series",
 				"hide": false,
 				"interval": "",
@@ -2676,7 +2676,7 @@
 			"targets": [
 			  {
 				"exemplar": true,
-				"expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.*$pvName.*/mount)\"} * 100) / node_filesystem_size_bytes{mountpoint=~\"(.*$pvName.*/mount)\"})",
+				"expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\"} * 100) / node_filesystem_size_bytes{mountpoint=~\"(.+/($pvName/mount))\"})",
 				"format": "time_series",
 				"interval": "",
 				"intervalFactor": 2,
@@ -4048,7 +4048,7 @@
 		  "name": "workload",
 		  "options": [],
 		  "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\"}, workload)",
-		  "refresh": 1,
+		  "refresh": 2,
 		  "regex": "",
 		  "skipUrlSync": false,
 		  "sort": 1,
@@ -4072,7 +4072,7 @@
 			"name": "type",
 			"options": [],
 			"query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{workload=\"$workload\"}, workload_type)",
-			"refresh": 1,
+			"refresh": 2,
 			"regex": "",
 			"skipUrlSync": false,
 			"sort": 1,
