@@ -188,7 +188,7 @@ customDashboards:
     enabled: true
   LocalPV:
     enabled: true
-  LVM:
+  lvm-LocalPV:
     enabled: true
 
 serviceMonitors:

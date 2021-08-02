@@ -123,14 +123,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "lvm_vg_total_size_bytes{name=\"$volume_group\"}",
+          "expr": "lvm_vg_total_size_bytes{name=~\"$volume_group\"}",
           "interval": "",
           "legendFormat": "Total size",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "lvm_vg_free_size_bytes{name=\"$volume_group\"}",
+          "expr": "lvm_vg_free_size_bytes{name=~\"$volume_group\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Free size",
@@ -138,7 +138,7 @@
         },
         {
           "exemplar": true,
-          "expr": "lvm_vg_total_size_bytes{name=\"$volume_group\"}-lvm_vg_free_size_bytes{name=\"$volume_group\"}",
+          "expr": "lvm_vg_total_size_bytes{name=~\"$volume_group\"}-lvm_vg_free_size_bytes{name=~\"$volume_group\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Used size",
@@ -1034,7 +1034,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "lvm_lv_used_percent{active_status=\"active\", container=\"lvm-exporter\", device=\"dm-4\", dm_path=\"/dev/mapper/vg_thin-thin_vol_client1\", endpoint=\"exporter\", host=\"pallavi-w3\", instance=\"10.52.2.43:9101\", job=\"lvm-exporter-service\", name=\"thin_vol_client1\", namespace=\"exporter\", path=\"/dev/vg_thin/thin_vol_client1\", pod=\"lvm-exporter-j6vfv\", pool=\"lvm_thin_pool\", segtype=\"thin\", service=\"lvm-exporter-service\", vg=\"vg_thin\"}"
+            "displayName": ""
           }
         ]
       },
@@ -2978,7 +2978,7 @@
         "hide": 0,
         "includeAll": false,
         "label": "node",
-        "multi": false,
+        "multi": true,
         "name": "node",
         "options": [],
         "query": "label_values(node_uname_info, instance)",
