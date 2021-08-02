@@ -118,7 +118,7 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `customDashboards.cStor.enabled`                                                          | Enables dashboard installation of openebs cStor Storage engine                      | `true`                                                    |
 | `customDashboards.Jiva.enabled`                                                           | Enables dashboard installation of openebs Jiva Storage engine                       | `true`                                                    |
 | `customDashboards.LocalPV.enabled`                                                        | Enables dashboard installation of openebs Local PV Storage engine                   | `true`                                                    |
-| `customDashboards.lvm-LocalPV.enabled`                                                    | Enables dashboard installation of openebs lvm-localpv storage engine                | `true`                                                    |
+| `customDashboards.lvmLocalPV.enabled`                                                     | Enables dashboard installation of openebs lvm-localpv storage engine                | `true`                                                    |
 | `customDashboards.npd.enabled`                                                            | Enables dashboard installation related to node problems                             | `true`                                                    |
 | `serviceMonitors.cstor.enabled`                                                           | Enables monitoring of cStor volumes                                                 | `true`                                                    |
 | `node-problem-detector.extraVolumes`                                                      | Volumes needed by node problem detector                                             | `[...]`                                                   |
@@ -143,22 +143,17 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `serviceMonitors.lvm-LocalPV.endpoints.path`                                              | HTTP path to scrape for metrics from lvm localPV node                               | `"/metrics"`                                              |
 | `serviceMonitors.lvm-LocalPV.selector`                                                    | Selector to select endpoints objects                                                | `{matchLabels: {name: openebs-lvm-node}}`                 |
 | `serviceMonitors.lvm-LocalPV.namespaceSelector`                                           | Selector to select which namespaces the endpoints objects are discovered from       | `[any: true]`                                             |
-
-# <<<<<<< HEAD
-
-| `serviceMonitors.device-LocalPV.enabled` | Enables monitoring of device localPV | `true` |
-| `serviceMonitors.device-LocalPV.endpoints.ports` | Name of the service port device localPV node endpoint refers to | `"metrics"` |
-| `serviceMonitors.device-LocalPV.endpoints.path` | HTTP path to scrape for metrics from device localPV node | `"/metrics"` |
-| `serviceMonitors.device-LocalPV.selector` | Selector to select endpoints objects | `{matchLabels: {name: openebs-device-node}}` |
-| `serviceMonitors.device-LocalPV.namespaceSelector` | Selector to select which namespaces the endpoints objects are discovered from | `[any: true]` |
-
-> > > > > > > origin
-> > > > > > > | `podMonitors.cstor.enabled` | Enables monitoring of cStor pools | `true` |
-> > > > > > > | `podMonitors.cstor.podMetricsEndpoints.targetPort` | Name or number of the cstor pool endpoint's target port | `9500` |
-> > > > > > > | `podMonitors.cstor.podMetricsEndpoints.path` | HTTP path to scrape for metrics from cstor pool pod | `"/metrics"` |
-> > > > > > > | `podMonitors.cstor.podMetricsEndpoints.relabelings` | RelabelConfigs to apply to cstor pools before scraping | `[...]` |
-> > > > > > > | `podMonitors.cstor.selector` | Selector to select endpoints objects | `{matchLabels: {app: cstor-pool}}` |
-> > > > > > > | `podMonitors.cstor.namespaceSelector` | Selector to select which namespaces the endpoints objects are discovered from | `[any: true]` |
+| `serviceMonitors.device-LocalPV.enabled`                                                  | Enables monitoring of device localPV                                                | `true`                                                    |
+| `serviceMonitors.device-LocalPV.endpoints.ports`                                          | Name of the service port device localPV node endpoint refers to                     | `"metrics"`                                               |
+| `serviceMonitors.device-LocalPV.endpoints.path`                                           | HTTP path to scrape for metrics from device localPV node                            | `"/metrics"`                                              |
+| `serviceMonitors.device-LocalPV.selector`                                                 | Selector to select endpoints objects                                                | `{matchLabels: {name: openebs-device-node}}`              |
+| `serviceMonitors.device-LocalPV.namespaceSelector`                                        | Selector to select which namespaces the endpoints objects are discovered from       | `[any: true]`                                             |
+| `podMonitors.cstor.enabled`                                                               | Enables monitoring of cStor pools                                                   | `true`                                                    |
+| `podMonitors.cstor.podMetricsEndpoints.targetPort`                                        | Name or number of the cstor pool endpoint's target port                             | `9500`                                                    |
+| `podMonitors.cstor.podMetricsEndpoints.path`                                              | HTTP path to scrape for metrics from cstor pool pod                                 | `"/metrics"`                                              |
+| `podMonitors.cstor.podMetricsEndpoints.relabelings`                                       | RelabelConfigs to apply to cstor pools before scraping                              | `[...]`                                                   |
+| `podMonitors.cstor.selector`                                                              | Selector to select endpoints objects                                                | `{matchLabels: {app: cstor-pool}}`                        |
+| `podMonitors.cstor.namespaceSelector`                                                     | Selector to select which namespaces the endpoints objects are discovered from       | `[any: true]`                                             |
 
 We can edit the npd parameters too accordingly from [here](https://artifacthub.io/packages/helm/deliveryhero/node-problem-detector)
 
