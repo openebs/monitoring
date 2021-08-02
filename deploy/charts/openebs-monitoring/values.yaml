@@ -44,6 +44,7 @@ kube-prometheus-stack:
     extraArgs:
       - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+)($|/)
       - --collector.filesystem.ignored-fs-types=^(tmpfs|autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
+      - --collector.diskstats.ignored-devices=^(ram|loop|fd|(h|s|v|xv)d[a-z]+|nvme\\d+n\\d+p)\\d+$
 
   prometheus:
     service:
@@ -173,6 +174,26 @@ kube-prometheus-stack:
       - grafana-polystat-panel
       - snuids-trafficlights-panel
 
+## Configuration for node-problem-detector subchart
+node-problem-detector:
+  install: true
+
+  ## Volume for storing logs
+  extraVolumes:
+    - name: kmsg
+      hostPath:
+        path: /dev/kmsg
+
+  extraVolumeMounts:
+    - name: kmsg
+      mountPath: /dev/kmsg
+      readOnly: true
+
+  ## Enabling service monitors of npd
+  metrics:
+    serviceMonitor:
+      enabled: true
+
 alertRules:
   cStor:
     enabled: true
@@ -189,6 +210,8 @@ customDashboards:
   LocalPV:
     enabled: true
   lvm-LocalPV:
+    enabled: true
+  npd:
     enabled: true
 
 serviceMonitors:
@@ -417,6 +440,57 @@ serviceMonitors:
     namespaceSelector:
       any: true
 
+  device-LocalPV:
+    enabled: true
+
+    ## Endpoints of the selected service to be monitored
+    endpoints:
+      ## Name of the endpoint's service port
+      ## Mutually exclusive with targetPort
+      #  port: ""
+      port: metrics
+
+      ## HTTP path to scrape for metrics
+      #  path: /metrics
+      path: /metrics
+
+    ## Label selector for services to which this ServiceMonitor applies
+    # selector: {}
+    #   matchLabels: {}
+
+    ## Example
+
+    # selector:
+    #   matchLabels:
+    #     name: openebs-device-node
+
+    selector:
+      matchLabels:
+        name: openebs-device-node
+
+    ## Namespaces from which services are selected
+    # namespaceSelector: []
+    ## Match any namespace
+    #   any: true
+
+    ## Example
+
+    # namespaceSelector:
+    #   any: true
+
+    ## Explicit list of namespace names to select
+    #   matchNames: []
+
+    ## Example
+
+    # namespaceSelector:
+    #   matchNames:
+    #   - openebs
+    #   - default
+
+    namespaceSelector:
+      any: true
+
 podMonitors:
   cstor:
     enabled: true
@@ -457,7 +531,7 @@ podMonitors:
             ]
           action: replace
           ## separator: Separator placed between concatenated source label values, default -> ;
-          separator: ""
+          separator: " "
           targetLabel: storage_pool_claim
           ## Adding comma-separated source_labels below in order to fetch the metrics for pool instances of CSP and CSPI kind
         - sourceLabels:
@@ -467,7 +541,7 @@ podMonitors:
             ]
           action: replace
           ## separator: Separator placed between concatenated source label values, default -> ;
-          separator: ""
+          separator: " "
           targetLabel: cstor_pool
         - sourceLabels:
             [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
