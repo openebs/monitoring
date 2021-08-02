@@ -8,7 +8,7 @@ groups:
           vgName: "{{ $labels.name }}"
           summary: 'LVM volume group ''{{ $labels.name }}'' is missing the underlying physical volume.'
           description: |-
-            LVM volume group '{{ $labels.name }}' on node '{{ $labels.instance }}' is missing {{ $value }} underlying physical volumes used by it
+            LVM volume group '{{ $labels.name }}' on node '{{ $labels.instance }}' is missing {{ $value }} underlying physical volume(s).
         expr: |-
           lvm_vg_missing_pv_count > 0
         for: 5m

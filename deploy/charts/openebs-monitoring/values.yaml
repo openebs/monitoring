@@ -199,7 +199,7 @@ alertRules:
     enabled: true
   Jiva:
     enabled: true
-  lvm-LocalPV:
+  lvmLocalPV:
     enabled: true
   volumes:
     enabled: true
