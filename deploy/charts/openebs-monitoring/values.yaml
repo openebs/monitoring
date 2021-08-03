@@ -209,6 +209,8 @@ customDashboards:
     enabled: true
   LocalPV:
     enabled: true
+  lvmLocalPV:
+    enabled: true
   npd:
     enabled: true
 
