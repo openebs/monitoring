@@ -199,6 +199,8 @@ alertRules:
     enabled: true
   Jiva:
     enabled: true
+  lvmLocalPV:
+    enabled: true
   Volume:
     enabled: true
   npd:

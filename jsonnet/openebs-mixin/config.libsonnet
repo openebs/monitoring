@@ -13,12 +13,14 @@
       cStor: $._config.casTypes.cStor,
       jiva: $._config.casTypes.jiva,
       localPV: $._config.casTypes.lvmLocalPV || $._config.casTypes.deviceLocalPV,
+      lvmLocalPV: $._config.casTypes.lvmLocalPV,
       npd: true,
     },
     // AlertRules configuration. If set, then rules json will be generated.
     alertRules: {
       cStor: $._config.casTypes.cStor,
       jiva: $._config.casTypes.jiva,
+      lvmLocalPV: $._config.casTypes.lvmLocalPV,
       volume: $._config.casTypes.cStor || $._config.casTypes.jiva || $._config.casTypes.lvmLocalPV || $._config.casTypes.deviceLocalPV,
       npd: true,
     },

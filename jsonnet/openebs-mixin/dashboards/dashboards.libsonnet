@@ -9,6 +9,7 @@ function(param) {
     [if dashboard._config.dashboards.cStor then 'cstor-volume-replica.json']: import './openebs/cstor-volume-replica.json',
     [if dashboard._config.dashboards.cStor then 'cstor-pool.json']: import './openebs/cstor-pool.json',
     [if dashboard._config.dashboards.localPV then 'localpv-workload.json']: import './openebs/localpv-workload.json',
+    [if dashboard._config.dashboards.lvmLocalPV then 'lvmlocalpv-pool.json']: import './openebs/lvmlocalpv-pool.json',
     [if dashboard._config.dashboards.npd then 'npd-node-volume-problem.json']: import './npd/npd-node-volume-problem.json',
   },
 }

@@ -1,5 +1,6 @@
 local cstor = (import './openebs/cstor-rules.libsonnet');
 local jiva = (import './openebs/jiva-rules.libsonnet');
+local lvmLocalPV = (import './openebs/lvmlocalpv-rules.libsonnet');
 local volume = (import './volume/volume-rules.libsonnet');
 local npd = (import './npd/npd-rules.libsonnet');
 
@@ -22,6 +23,6 @@ function(param) {
   local prometheusRules = self,
   _config+:: param,
   prometheusRules+::
-    cstor(prometheusRules._config).prometheusRules.cStor + jiva(prometheusRules._config).prometheusRules.Jiva + volume(prometheusRules._config).prometheusRules.volume
+    cstor(prometheusRules._config).prometheusRules.cStor + jiva(prometheusRules._config).prometheusRules.jiva + lvmLocalPV(prometheusRules._config).prometheusRules.lvmlocalpv + volume(prometheusRules._config).prometheusRules.volume
     + npd(prometheusRules._config).prometheusRules.npd,
 }
