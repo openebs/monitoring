@@ -215,6 +215,8 @@ customDashboards:
     enabled: true
   npd:
     enabled: true
+  ndm:
+    enabled: true
 
 serviceMonitors:
   cstor:
