@@ -1242,10 +1242,7 @@
   "refresh": false,
   "schemaVersion": 27,
   "style": "light",
-  "tags": [
-    "OpenEBS",
-    "cStor"
-  ],
+  "tags": ["OpenEBS", "cStor"],
   "templating": {
     "list": [
       {
