@@ -71,3 +71,7 @@ The available fields and their default values are present in `config.libsonnet`.
   },
 }
 ```
+---
+
+## How to use openebs-mixin?
+Please visit the [user guide](../../docs/openebs-mixin-user-guide.md) for detailed instructions.
