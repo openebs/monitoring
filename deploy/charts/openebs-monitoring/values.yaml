@@ -201,7 +201,9 @@ alertRules:
     enabled: true
   lvmLocalPV:
     enabled: true
-  volumes:
+  Volume:
+    enabled: true
+  npd:
     enabled: true
 
 customDashboards:
