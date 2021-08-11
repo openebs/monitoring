@@ -26,12 +26,14 @@
         localPV: $._config.casType.lvmLocalPV.dashboards,
         lvmLocalPV: $._config.casType.lvmLocalPV.dashboards,
         deviceLocalPV: $._config.casType.lvmLocalPV.dashboards,
+        ndm: $._config.casType.ndm.dashboards,
       },
       alertRules+: {
         cStor: $._config.casType.cStor.alertRules,
         jiva: $._config.casType.jiva.alertRules,
         lvmLocalPV: $._config.casType.lvmLocalPV.alertRules,
         deviceLocalPV: $._config.casType.lvmLocalPV.alertRules,
+        ndm: $._config.casType.ndm.alertRules,
       },
     },
   },
@@ -236,7 +238,7 @@
         },
       },
       deviceLocalPV: {
-        // To generate manifests for cstor. If set, manifests will be generated for device-localpv.
+        // To generate manifests for device-localpv. If set, manifests will be generated for device-localpv.
         enabled: true,
         // To generate dashboards configMap yamls. If set, dashboards will be appended in grafana-dashboardDefinition yaml.
         dashboards: true,
@@ -245,6 +247,24 @@
         // ServiceMonitor configuration
         serviceMonitor: serviceMonitor('metrics', '/metrics', {
           name: 'openebs-device-node',
+        }) {
+          enabled: true,
+        },
+        // PodMonitor configuration
+        podMonitor: {
+          enabled: false,
+        },
+      },
+      ndm: {
+        // To generate manifests for ndm. If set, manifests will be generated for ndm.
+        enabled: true,
+        // To generate dashboards configMap yamls. If set, dashboards will be appended in grafana-dashboardDefinition yaml.
+        dashboards: true,
+        // To generate prometheusRule yamls. If set, prometheusRule will be generated.
+        alertRules: false,
+        // ServiceMonitor configuration
+        serviceMonitor: serviceMonitor('metrics', '/metrics', {
+          name: 'openebs-ndm-exporter',
         }) {
           enabled: true,
         },

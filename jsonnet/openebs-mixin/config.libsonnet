@@ -8,6 +8,10 @@
       lvmLocalPV: true,
       deviceLocalPV: true,
     },
+    // Configuration to set which openebs component is installed. Based on this, dashboards and alert rules configuration will be set.
+    openenbsComponents: {
+      ndm: true,
+    },
     // dashboards configuration. If set, then dashboards json will be generated.
     dashboards: {
       cStor: $._config.casTypes.cStor,
@@ -15,6 +19,7 @@
       localPV: $._config.casTypes.lvmLocalPV || $._config.casTypes.deviceLocalPV,
       lvmLocalPV: $._config.casTypes.lvmLocalPV,
       npd: true,
+      ndm: $._config.openenbsComponents.ndm,
     },
     // AlertRules configuration. If set, then rules json will be generated.
     alertRules: {
