@@ -38,8 +38,9 @@ Generate YAMLs using [Helm](https://helm.sh) template.
 
 ```
 git clone https://github.com/openebs/monitoring.git
-cd monitoring/deploy
-helm template -f ./charts/openebs-monitoring/values.yaml openebs-monitoring --namespace openebs ./charts/openebs-monitoring/ > openebs-monitoring.generated.yaml
+cd monitoring/deploy/charts/openebs-monitoring
+helm dependency update
+helm template --namespace openebs . > openebs-monitoring.generated.yaml
 kubectl create -f openebs-monitoring.generated.yaml
 ```
 
