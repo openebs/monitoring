@@ -42,7 +42,7 @@ To install kube-prometheus stack with openebs-addons(serviceMonitors, grafana da
 
 	```  
 
-2. **Install kube-prometheus stack with openebs-addons**  
+2. **Install kube-prometheus stack with openebs-monitoring addons**  
    To generate manifest to install openebs-monitoring in kubernetes cluster, you need to run [main.jsonnet](../jsonnet/main.jsonnet). To generate manifests, please follow the steps listed over [here](../jsonnet/README.md).  
     ```
     . . .
@@ -84,7 +84,7 @@ To install kube-prometheus stack with openebs-addons(serviceMonitors, grafana da
 	---  
 	
 ## Install openebs-mixin in existing prometheus stack.  
-To include grafana dashboards and alert rules in the monitoring stack.
+Setup grafana dashboards and alert rules for OpenEBS monitoring.
 ### Prerequisite
 
 - OpenEBS installed
