@@ -5,16 +5,16 @@
 {{ $_ := set $customEnabledRules $dirName $fields.enabled }}
 {{- end }}
 {{- end }}
-{{- $files := .Files.Glob "rules/**.yaml" }}
+{{- $files := .Files.Glob "rules/**.json" }}
 {{- if $files }}
 {{- range $fileName, $fileContents := $files }}
 {{- $dirName := split "/" $fileName }}
 {{- if (hasKey $customEnabledRules $dirName._1 ) }}
-{{- $ruleName := regexReplaceAll "(^.*/)(.*)\\.yaml$" $fileName "${2}" }}
+{{- $ruleName := regexReplaceAll "(^.*/)(.*)\\.json$" $fileName "${2}" }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: {{ template "openebs-monitoring.name" $ }}-{{ $ruleName }}
+  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.name" $) $ruleName) | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "openebs-monitoring.namespace" $ }}
   labels:
     app: {{ template "openebs-monitoring.name" $ }}

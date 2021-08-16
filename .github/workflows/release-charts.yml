@@ -29,6 +29,7 @@ jobs:
       - name: Add dependency chart repos
         run: |
           helm repo add kube-prometheus-stack https://prometheus-community.github.io/helm-charts
+          helm repo add node-problem-detector https://charts.deliveryhero.io/
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1

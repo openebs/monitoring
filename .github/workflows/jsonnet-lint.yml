@@ -1,0 +1,30 @@
+name: Jsonnet lint
+
+on:
+  push:
+    paths:
+      - "jsonnet/**"
+    branches:
+      - develop
+  pull_request:
+    paths:
+      - "jsonnet/**"
+    branches:
+      - develop
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Jsonnet formatter
+        run: |
+          cd jsonnet && make --always-make fmt
+
+      - name: Jsonnet linter
+        run: |
+          cd jsonnet && make --always-make lint

@@ -1,3 +1,6 @@
 # Chart dependencies
 /deploy/charts/*/charts
 .idea
+jsonnet/vendor/
+jsonnet/tmp/
+jsonnet/buildscripts/vendor/
