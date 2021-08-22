@@ -1,27 +1,29 @@
-{{- if .Values.podMonitors }}
-{{- range $openebsEngine, $fields := .Values.podMonitors }}
+{{- range $monitoringAddon, $fields := .Values.openebsMonitoringAddon }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+{{- if (hasKey $fields "podMonitor") }}
+{{- if ($fields.podMonitor.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.fullname" $) $openebsEngine) | trunc 63 | trimSuffix "-" }}
+  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.fullname" $) $monitoringAddon) | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "openebs-monitoring.namespace" $ }}
   labels:
-    app: {{ template "openebs-monitoring.name" $ }}-{{ $openebsEngine }}
+    app: {{ template "openebs-monitoring.name" $ }}-{{ $monitoringAddon }}
 {{ include "openebs-monitoring.labels" $ | indent 4 }}
 spec:
   selector:
-{{ toYaml $fields.selector | indent 4 }}
+{{ toYaml $fields.podMonitor.selector | indent 4 }}
   namespaceSelector:
-{{ toYaml $fields.namespaceSelector | indent 4 }}
+{{ toYaml $fields.podMonitor.namespaceSelector | indent 4 }}
   podMetricsEndpoints:
-    - targetPort: {{ $fields.podMetricsEndpoints.targetPort }}
-      path: {{ $fields.podMetricsEndpoints.path }}
-{{- if $fields.podMetricsEndpoints.relabelings }}
+    - targetPort: {{ $fields.podMonitor.podMetricsEndpoints.targetPort }}
+      path: {{ $fields.podMonitor.podMetricsEndpoints.path }}
+{{- if $fields.podMonitor.podMetricsEndpoints.relabelings }}
       relabelings:
-{{ toYaml $fields.podMetricsEndpoints.relabelings | indent 8 }}
+{{ toYaml $fields.podMonitor.podMetricsEndpoints.relabelings | indent 8 }}
 {{- end }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
