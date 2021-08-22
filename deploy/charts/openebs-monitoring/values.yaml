@@ -16,7 +16,7 @@ fullnameOverride: ""
 
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
-  install: false
+  install: true
   prometheus-node-exporter:
     ## privilege and access control settings for node-exporter
     securityContext:
