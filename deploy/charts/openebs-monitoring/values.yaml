@@ -183,8 +183,10 @@ node-problem-detector:
 openebsMonitoringAddon:
   cStor:
     enabled: true
-    dashboards: true
-    alertRules: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
     serviceMonitor:
       enabled: true
 
@@ -370,8 +372,10 @@ openebsMonitoringAddon:
 
   jiva:
     enabled: true
-    dashboards: true
-    alertRules: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
     serviceMonitor:
       enabled: true
 
@@ -461,8 +465,10 @@ openebsMonitoringAddon:
 
   lvmLocalPV:
     enabled: true
-    dashboards: true
-    alertRules: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
     serviceMonitor:
       enabled: true
 
@@ -516,8 +522,10 @@ openebsMonitoringAddon:
 
   deviceLocalPV:
     enabled: true
-    dashboards: true
-    alertRules: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
     serviceMonitor:
       enabled: true
 
@@ -571,8 +579,10 @@ openebsMonitoringAddon:
 
   ndm:
     enabled: true
-    dashboards: true
-    alertRules: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
     serviceMonitor:
       enabled: true
 
@@ -626,13 +636,17 @@ openebsMonitoringAddon:
 
   npd:
     enabled: true
-    dashboards: true
-    alertRules: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
 
   volume:
     enabled: true
-    alertRules: true
+    alertRules:
+      enabled: true
 
   localPV:
     enabled: true
-    dashboards: true
+    dashboards:
+      enabled: true

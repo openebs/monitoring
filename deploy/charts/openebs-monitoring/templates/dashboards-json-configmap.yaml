@@ -2,8 +2,10 @@
 {{- $dashboards := dict -}}
 {{- range $monitoringAddon,$fields := .Values.openebsMonitoringAddon }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
-{{- if (and (hasKey $fields "dashboards") ($fields.dashboards)) }}
-{{ $_ := set $dashboards $monitoringAddon $fields.dashboards }}
+{{- if (hasKey $fields "dashboards") }}
+{{- if ($fields.dashboards.enabled) }}
+{{ $_ := set $dashboards $monitoringAddon $fields.dashboards.enabled }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
