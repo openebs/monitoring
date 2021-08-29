@@ -82,17 +82,3 @@ Usage:
 {{- end }}
 {{- include $template (dict "Chart" (dict "Name" (last $subchart)) "Values" $values "Release" $dot.Release "Capabilities" $dot.Capabilities) }}
 {{- end }}
-
-
-{{/* 
-grafana sidecar dashboards label
-*/}}
-{{- define "grafana-sidecar-dashboards.label" }}
-{{- if and (index .Values "kube-prometheus-stack" "install") (index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "enabled") }}
-{{- $grafanaSidecarDashboardsLabel:= index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}
-{{- printf $grafanaSidecarDashboardsLabel }}
-{{- else if and (.Values.openebsMonitoringAddon.enabled) (.Values.openebsMonitoringAddon.grafana.sidecar.dashboards.enabled )}}
-{{- $grafanaSidecarDashboardsLabel:= .Values.openebsMonitoringAddon.grafana.sidecar.dashboards.label }}
-{{- printf $grafanaSidecarDashboardsLabel }}
-{{- end }}
-{{- end }}

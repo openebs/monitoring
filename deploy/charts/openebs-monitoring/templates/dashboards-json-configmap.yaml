@@ -1,18 +1,19 @@
-{{- if or (index .Values "kube-prometheus-stack" "grafana" "enabled") (.Values.openebsMonitoringAddon.enabled ) }}
-{{- if or (index .Values "kube-prometheus-stack" "grafana" "openebsDashboardsEnabled") (.Values.openebsMonitoringAddon.grafana.openebsDashboardsEnabled )}}
-{{- $grafanaSidecarDashboardsLabel := ( include "grafana-sidecar-dashboards.label" $ ) }}
-{{- if .Values.customDashboards }}
-{{- $customEnabledDashboards := dict -}}
-{{- range $dirName,$fields := .Values.customDashboards }}
+{{- $grafanaSidecarDashboardsLabel := index .Values "kube-prometheus-stack" "grafana" "sidecar" "dashboards" "label" }}
+{{- $dashboards := dict -}}
+{{- range $monitoringAddon,$fields := .Values.openebsMonitoringAddon }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
-{{ $_ := set $customEnabledDashboards $dirName $fields.enabled }}
+{{- if (hasKey $fields "dashboards") }}
+{{- if ($fields.dashboards.enabled) }}
+{{ $_ := set $dashboards $monitoringAddon $fields.dashboards.enabled }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- $files := .Files.Glob "dashboards/**.json" }}
 {{- if $files }}
 {{- range $fileName, $fileContents := $files }}
 {{- $dirName := split "/" $fileName }}
-{{- if (hasKey $customEnabledDashboards $dirName._1 ) }}
+{{- if and (hasKey $dashboards $dirName._1 ) $dashboards }}
 {{- $dashboardName := regexReplaceAll "(^.*/)(.*)\\.json$" $fileName "${2}" }}
 apiVersion: v1
 kind: ConfigMap
@@ -26,9 +27,6 @@ metadata:
 data:
   {{ $dashboardName }}.json: {{ $.Files.Get $fileName | toPrettyJson }}
 ---
-{{- end }}
-{{- end }}
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

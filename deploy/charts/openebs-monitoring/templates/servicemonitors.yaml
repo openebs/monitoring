@@ -1,27 +1,29 @@
-{{- if .Values.serviceMonitors }}
-{{- range $openebsEngine, $fields := .Values.serviceMonitors }}
+{{- range $monitoringAddon, $fields := .Values.openebsMonitoringAddon }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
+{{- if (hasKey $fields "serviceMonitor") }}
+{{- if ($fields.serviceMonitor.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.fullname" $) $openebsEngine) | trunc 63 | trimSuffix "-" }}
+  name: {{ lower (printf "%s-%s" (include "openebs-monitoring.fullname" $) $monitoringAddon) | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "openebs-monitoring.namespace" $ }}
   labels:
-    app: {{ template "openebs-monitoring.name" $ }}-{{ $openebsEngine }}
+    app: {{ template "openebs-monitoring.name" $ }}-{{ $monitoringAddon }}
 {{ include "openebs-monitoring.labels" $ | indent 4 }}
 spec:
   selector:
-{{ toYaml $fields.selector | indent 4 }}
+{{ toYaml $fields.serviceMonitor.selector | indent 4 }}
   namespaceSelector:
-{{ toYaml $fields.namespaceSelector | indent 4 }}
+{{ toYaml $fields.serviceMonitor.namespaceSelector | indent 4 }}
   endpoints:
-    - port: {{ $fields.endpoints.port }}
-      path: {{ $fields.endpoints.path }}
-{{- if $fields.endpoints.relabelings }}
+    - port: {{ $fields.serviceMonitor.endpoints.port }}
+      path: {{ $fields.serviceMonitor.endpoints.path }}
+{{- if $fields.serviceMonitor.endpoints.relabelings }}
       relabelings:
-{{ toYaml $fields.endpoints.relabelings | indent 8 }}
+{{ toYaml $fields.serviceMonitor.endpoints.relabelings | indent 8 }}
 {{- end }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

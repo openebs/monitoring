@@ -14,21 +14,6 @@ namespaceOverride: ""
 ##
 fullnameOverride: ""
 
-## Configuration for installing openebs-monitoring dashboards in already installed prometheus stack
-openebsMonitoringAddon:
-  enabled: false
-
-  grafana:
-    ## Deploy custom openebs dashboards
-    openebsDashboardsEnabled: true
-
-    ## Sidecar container to load dashboard cm
-    sidecar:
-      dashboards:
-        enabled: true
-        # ConfigMaps with label below will be added to Grafana as dashboards.
-        label: grafana_dashboard
-
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
   install: true
@@ -194,452 +179,474 @@ node-problem-detector:
     serviceMonitor:
       enabled: true
 
-alertRules:
+## Configuration for installing openebs-monitoring addons
+openebsMonitoringAddon:
   cStor:
     enabled: true
-  Jiva:
-    enabled: true
-  lvmLocalPV:
-    enabled: true
-  Volume:
-    enabled: true
-  npd:
-    enabled: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
+    serviceMonitor:
+      enabled: true
 
-customDashboards:
-  cStor:
-    enabled: true
-  Jiva:
-    enabled: true
-  LocalPV:
-    enabled: true
-  lvmLocalPV:
-    enabled: true
-  npd:
-    enabled: true
-  ndm:
-    enabled: true
+      ## Endpoints of the selected service to be monitored
+      endpoints:
+        ## Name of the endpoint's service port
+        ## Mutually exclusive with targetPort
+        #  port: ""
+        port: exporter
 
-serviceMonitors:
-  cstor:
-    enabled: true
+        ## HTTP path to scrape for metrics
+        #  path: /metrics
+        path: /metrics
 
-    ## Endpoints of the selected service to be monitored
-    endpoints:
-      ## Name of the endpoint's service port
-      ## Mutually exclusive with targetPort
-      #  port: ""
-      port: exporter
+        ## relabel configs to apply to samples before ingestion.
+        ##
+        # relabelings: []
+        #   - sourceLabels: [__meta_kubernetes_service_name]
+        #     separator: ;
+        #     regex: (.*)
+        #     targetLabel: service
+        #     replacement: $1
+        #     action: replace
+        relabelings:
+          ## RelabelConfigs to apply to samples before scraping.
+          ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+          ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+          - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
+            regex: volume_exporter_prometheus
+            action: keep
+          ## Below entry ending with vsm is deprecated and is maintained for
+          ## backward compatibility purpose.
+          - sourceLabels: [__meta_kubernetes_pod_label_vsm]
+            action: replace
+            targetLabel: openebs_pv
+          ## Below entry is the correct entry. Though the above and below entries
+          ## are having same target_label as openebs_pv, only one of them will be
+          ## valid for any release.
+          - sourceLabels:
+              [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+            action: replace
+            targetLabel: openebs_pv
+          - sourceLabels:
+              [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+            action: replace
+            targetLabel: openebs_pvc
+          - sourceLabels: [__meta_kubernetes_pod_label_app]
+            action: replace
+            targetLabel: openebs_cstor_label
 
-      ## HTTP path to scrape for metrics
-      #  path: /metrics
-      path: /metrics
+      ## Label selector for services to which this ServiceMonitor applies
+      # selector: {}
+      #   matchLabels: {}
 
-      ## relabel configs to apply to samples before ingestion.
-      ##
-      # relabelings: []
-      #   - sourceLabels: [__meta_kubernetes_service_name]
-      #     separator: ;
-      #     regex: (.*)
-      #     targetLabel: service
-      #     replacement: $1
-      #     action: replace
-      relabelings:
-        ## RelabelConfigs to apply to samples before scraping.
-        ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
-        ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
-        - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
-          regex: volume_exporter_prometheus
-          action: keep
-        ## Below entry ending with vsm is deprecated and is maintained for
-        ## backward compatibility purpose.
-        - sourceLabels: [__meta_kubernetes_pod_label_vsm]
-          action: replace
-          targetLabel: openebs_pv
-        ## Below entry is the correct entry. Though the above and below entries
-        ## are having same target_label as openebs_pv, only one of them will be
-        ## valid for any release.
-        - sourceLabels:
-            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
-          action: replace
-          targetLabel: openebs_pv
-        - sourceLabels:
-            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
-          action: replace
-          targetLabel: openebs_pvc
-        - sourceLabels: [__meta_kubernetes_pod_label_app]
-          action: replace
-          targetLabel: openebs_cstor_label
+      ## Example
 
-    ## Label selector for services to which this ServiceMonitor applies
-    # selector: {}
-    #   matchLabels: {}
+      # selector:
+      #   matchLabels:
+      #     cas-type: cstor
 
-    ## Example
+      selector:
+        matchLabels:
+          openebs.io/cas-type: cstor
 
-    # selector:
-    #   matchLabels:
-    #     cas-type: cstor
+      ## Namespaces from which services are selected
+      # namespaceSelector: []
+      ## Match any namespace
+      #   any: true
 
-    selector:
-      matchLabels:
-        openebs.io/cas-type: cstor
+      ## Example
 
-    ## Namespaces from which services are selected
-    # namespaceSelector: []
-    ## Match any namespace
-    #   any: true
+      # namespaceSelector:
+      #   any: true
 
-    ## Example
+      ## Explicit list of namespace names to select
+      # matchNames: []
 
-    # namespaceSelector:
-    #   any: true
+      ## Example
 
-    ## Explicit list of namespace names to select
-    # matchNames: []
+      # namespaceSelector:
+      #   matchNames:
+      #   - openebs
+      #   - default
 
-    ## Example
+      namespaceSelector:
+        any: true
 
-    # namespaceSelector:
-    #   matchNames:
-    #   - openebs
-    #   - default
+    podMonitor:
+      enabled: true
 
-    namespaceSelector:
-      any: true
+      ## Endpoints of the selected pods to be monitored
+      ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
+      podMetricsEndpoints:
+        ## Name or number of the endpoint's target port
+        ## Mutually exclusive with port
+        #  targetPort: ""
+        targetPort: 9500
+
+        ## HTTP path to scrape for metrics
+        #     path: /metrics
+        path: /metrics
+
+        ## relabel configs to apply to samples before ingestion.
+        ##
+        #     relabelings: []
+        #     - sourceLabels: [__meta_kubernetes_pod_node_name]
+        #       separator: ;
+        #       regex: ^(.*)$
+        #       targetLabel: nodename
+        #       replacement: $1
+        #       action: replace
+        relabelings:
+          ## RelabelConfigs to apply to samples before scraping.
+          ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+          ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+          - sourceLabels:
+              [__meta_kubernetes_pod_annotation_openebs_io_monitoring]
+            regex: pool_exporter_prometheus
+            action: keep
+            ## Adding comma-separated source_labels below in order to fetch the metrics for pool claim instances of SPC and CSPC kind
+          - sourceLabels:
+              [
+                __meta_kubernetes_pod_label_openebs_io_storage_pool_claim,
+                __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster,
+              ]
+            action: replace
+            ## separator: Separator placed between concatenated source label values, default -> ;
+            separator: " "
+            targetLabel: storage_pool_claim
+            ## Adding comma-separated source_labels below in order to fetch the metrics for pool instances of CSP and CSPI kind
+          - sourceLabels:
+              [
+                __meta_kubernetes_pod_label_openebs_io_cstor_pool,
+                __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance,
+              ]
+            action: replace
+            ## separator: Separator placed between concatenated source label values, default -> ;
+            separator: " "
+            targetLabel: cstor_pool
+          - sourceLabels:
+              [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: ${1}:${2}
+            targetLabel: __address__
+
+      ## Label selector for pods to which this PodMonitor applies
+      # selector: {}
+      #   matchlabels: {}
+
+      ## Example
+
+      # selector: {}
+      #   matchLabels:
+      #       app: cstor-pod
+
+      selector:
+        matchLabels:
+          app: cstor-pool
+
+      ## Namespaces from which services are selected
+      # namespaceSelector: []
+      ## Match any namespace
+      #   any: true
+
+      ## Example
+
+      # namespaceSelector:
+      #   any: true
+
+      ## Explicit list of namespace names to select using matchNames
+      # matchNames: []
+
+      ## Example
+
+      # namespaceSelector:
+      #   matchNames:
+      #   - openebs
+      #   - default
+
+      namespaceSelector:
+        any: true
 
   jiva:
     enabled: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
+    serviceMonitor:
+      enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    endpoints:
-      ## Name of the endpoint's service port
-      ## Mutually exclusive with targetPort
-      #  port: ""
-      port: exporter
+      ## Endpoints of the selected service to be monitored
+      endpoints:
+        ## Name of the endpoint's service port
+        ## Mutually exclusive with targetPort
+        #  port: ""
+        port: exporter
 
-      ## HTTP path to scrape for metrics
-      #  path: /metrics
-      path: /metrics
+        ## HTTP path to scrape for metrics
+        #  path: /metrics
+        path: /metrics
 
-      ## relabel configs to apply to samples before ingestion.
-      ##
-      #  relabelings: []
-      #    - sourceLabels: [__meta_kubernetes_service_name]
-      #      separator: ;
-      #      regex: (.*)
-      #      targetLabel: service
-      #      replacement: $1
-      #      action: replace
-      relabelings:
-        ## RelabelConfigs to apply to samples before scraping.
-        ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
-        ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
-        - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
-          regex: volume_exporter_prometheus
-          action: keep
-        ## Below entry ending with vsm is deprecated and is maintained for
-        ## backward compatibility purpose.
-        - sourceLabels: [__meta_kubernetes_pod_label_vsm]
-          action: replace
-          targetLabel: openebs_pv
-        ## Below entry is the correct entry. Though the above and below entries
-        ## are having same target_label as openebs_pv, only one of them will be
-        ## valid for any release.
-        - sourceLabels:
-            [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
-          action: replace
-          targetLabel: openebs_pv
-        - sourceLabels:
-            [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
-          action: replace
-          targetLabel: openebs_pvc
-        - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_controller]
-          action: replace
-          targetLabel: openebs_jiva_label
+        ## relabel configs to apply to samples before ingestion.
+        ##
+        #  relabelings: []
+        #    - sourceLabels: [__meta_kubernetes_service_name]
+        #      separator: ;
+        #      regex: (.*)
+        #      targetLabel: service
+        #      replacement: $1
+        #      action: replace
+        relabelings:
+          ## RelabelConfigs to apply to samples before scraping.
+          ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+          ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+          - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
+            regex: volume_exporter_prometheus
+            action: keep
+          ## Below entry ending with vsm is deprecated and is maintained for
+          ## backward compatibility purpose.
+          - sourceLabels: [__meta_kubernetes_pod_label_vsm]
+            action: replace
+            targetLabel: openebs_pv
+          ## Below entry is the correct entry. Though the above and below entries
+          ## are having same target_label as openebs_pv, only one of them will be
+          ## valid for any release.
+          - sourceLabels:
+              [__meta_kubernetes_pod_label_openebs_io_persistent_volume]
+            action: replace
+            targetLabel: openebs_pv
+          - sourceLabels:
+              [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
+            action: replace
+            targetLabel: openebs_pvc
+          - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_controller]
+            action: replace
+            targetLabel: openebs_jiva_label
 
-    ## Label selector for services to which this ServiceMonitor applies
-    # selector: {}
-    #   matchLabels: {}
+      ## Label selector for services to which this ServiceMonitor applies
+      # selector: {}
+      #   matchLabels: {}
 
-    ## Example
+      ## Example
 
-    # selector:
-    #   matchLabels:
-    #     cas-type: jiva
+      # selector:
+      #   matchLabels:
+      #     cas-type: jiva
 
-    selector:
-      matchLabels:
-        openebs.io/cas-type: jiva
+      selector:
+        matchLabels:
+          openebs.io/cas-type: jiva
 
-    ## Namespaces from which services are selected
-    # namespaceSelector: []
-    ## Match any namespace
-    #   any: true
+      ## Namespaces from which services are selected
+      # namespaceSelector: []
+      ## Match any namespace
+      #   any: true
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   any: true
+      # namespaceSelector:
+      #   any: true
 
-    ## Explicit list of namespace names to select
-    #   matchNames: []
+      ## Explicit list of namespace names to select
+      #   matchNames: []
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   matchNames:
-    #   - openebs
-    #   - default
+      # namespaceSelector:
+      #   matchNames:
+      #   - openebs
+      #   - default
 
-    namespaceSelector:
-      any: true
+      namespaceSelector:
+        any: true
 
-  lvm-LocalPV:
+  lvmLocalPV:
     enabled: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
+    serviceMonitor:
+      enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    endpoints:
-      ## Name of the endpoint's service port
-      ## Mutually exclusive with targetPort
-      #  port: ""
-      port: metrics
+      ## Endpoints of the selected service to be monitored
+      endpoints:
+        ## Name of the endpoint's service port
+        ## Mutually exclusive with targetPort
+        #  port: ""
+        port: metrics
 
-      ## HTTP path to scrape for metrics
-      #  path: /metrics
-      path: /metrics
+        ## HTTP path to scrape for metrics
+        #  path: /metrics
+        path: /metrics
 
-    ## Label selector for services to which this ServiceMonitor applies
-    # selector: {}
-    #   matchLabels: {}
+      ## Label selector for services to which this ServiceMonitor applies
+      # selector: {}
+      #   matchLabels: {}
 
-    ## Example
+      ## Example
 
-    # selector:
-    #   matchLabels:
-    #     name: openebs-lvm-node
+      # selector:
+      #   matchLabels:
+      #     name: openebs-lvm-node
 
-    selector:
-      matchLabels:
-        name: openebs-lvm-node
+      selector:
+        matchLabels:
+          name: openebs-lvm-node
 
-    ## Namespaces from which services are selected
-    # namespaceSelector: []
-    ## Match any namespace
-    #   any: true
+      ## Namespaces from which services are selected
+      # namespaceSelector: []
+      ## Match any namespace
+      #   any: true
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   any: true
+      # namespaceSelector:
+      #   any: true
 
-    ## Explicit list of namespace names to select
-    #   matchNames: []
+      ## Explicit list of namespace names to select
+      #   matchNames: []
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   matchNames:
-    #   - openebs
-    #   - default
+      # namespaceSelector:
+      #   matchNames:
+      #   - openebs
+      #   - default
 
-    namespaceSelector:
-      any: true
+      namespaceSelector:
+        any: true
 
-  device-LocalPV:
+  deviceLocalPV:
     enabled: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
+    serviceMonitor:
+      enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    endpoints:
-      ## Name of the endpoint's service port
-      ## Mutually exclusive with targetPort
-      #  port: ""
-      port: metrics
+      ## Endpoints of the selected service to be monitored
+      endpoints:
+        ## Name of the endpoint's service port
+        ## Mutually exclusive with targetPort
+        #  port: ""
+        port: metrics
 
-      ## HTTP path to scrape for metrics
-      #  path: /metrics
-      path: /metrics
+        ## HTTP path to scrape for metrics
+        #  path: /metrics
+        path: /metrics
 
-    ## Label selector for services to which this ServiceMonitor applies
-    # selector: {}
-    #   matchLabels: {}
+      ## Label selector for services to which this ServiceMonitor applies
+      # selector: {}
+      #   matchLabels: {}
 
-    ## Example
+      ## Example
 
-    # selector:
-    #   matchLabels:
-    #     name: openebs-device-node
+      # selector:
+      #   matchLabels:
+      #     name: openebs-device-node
 
-    selector:
-      matchLabels:
-        name: openebs-device-node
+      selector:
+        matchLabels:
+          name: openebs-device-node
 
-    ## Namespaces from which services are selected
-    # namespaceSelector: []
-    ## Match any namespace
-    #   any: true
+      ## Namespaces from which services are selected
+      # namespaceSelector: []
+      ## Match any namespace
+      #   any: true
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   any: true
+      # namespaceSelector:
+      #   any: true
 
-    ## Explicit list of namespace names to select
-    #   matchNames: []
+      ## Explicit list of namespace names to select
+      #   matchNames: []
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   matchNames:
-    #   - openebs
-    #   - default
+      # namespaceSelector:
+      #   matchNames:
+      #   - openebs
+      #   - default
 
-    namespaceSelector:
-      any: true
+      namespaceSelector:
+        any: true
 
   ndm:
     enabled: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
+    serviceMonitor:
+      enabled: true
 
-    ## Endpoints of the selected service to be monitored
-    endpoints:
-      ## Name of the endpoint's service port
-      ## Mutually exclusive with targetPort
-      #  port: ""
-      port: metrics
+      ## Endpoints of the selected service to be monitored
+      endpoints:
+        ## Name of the endpoint's service port
+        ## Mutually exclusive with targetPort
+        #  port: ""
+        port: metrics
 
-      ## HTTP path to scrape for metrics
-      #  path: /metrics
-      path: /metrics
+        ## HTTP path to scrape for metrics
+        #  path: /metrics
+        path: /metrics
 
-    ## Label selector for services to which this ServiceMonitor applies
-    # selector: {}
-    #   matchLabels: {}
+      ## Label selector for services to which this ServiceMonitor applies
+      # selector: {}
+      #   matchLabels: {}
 
-    ## Example
+      ## Example
 
-    # selector:
-    #   matchLabels:
-    #     name: openebs-lvm-node
+      # selector:
+      #   matchLabels:
+      #     name: openebs-lvm-node
 
-    selector:
-      matchLabels:
-        name: openebs-ndm-exporter
+      selector:
+        matchLabels:
+          name: openebs-ndm-exporter
 
-    ## Namespaces from which services are selected
-    # namespaceSelector: []
-    ## Match any namespace
-    #   any: true
+      ## Namespaces from which services are selected
+      # namespaceSelector: []
+      ## Match any namespace
+      #   any: true
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   any: true
+      # namespaceSelector:
+      #   any: true
 
-    ## Explicit list of namespace names to select
-    #   matchNames: []
+      ## Explicit list of namespace names to select
+      #   matchNames: []
 
-    ## Example
+      ## Example
 
-    # namespaceSelector:
-    #   matchNames:
-    #   - openebs
-    #   - default
+      # namespaceSelector:
+      #   matchNames:
+      #   - openebs
+      #   - default
 
-    namespaceSelector:
-      any: true
+      namespaceSelector:
+        any: true
 
-podMonitors:
-  cstor:
+  npd:
     enabled: true
+    dashboards:
+      enabled: true
+    alertRules:
+      enabled: true
 
-    ## Endpoints of the selected pods to be monitored
-    ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
-    podMetricsEndpoints:
-      ## Name or number of the endpoint's target port
-      ## Mutually exclusive with port
-      #  targetPort: ""
-      targetPort: 9500
+  volume:
+    enabled: true
+    alertRules:
+      enabled: true
 
-      ## HTTP path to scrape for metrics
-      #     path: /metrics
-      path: /metrics
-
-      ## relabel configs to apply to samples before ingestion.
-      ##
-      #     relabelings: []
-      #     - sourceLabels: [__meta_kubernetes_pod_node_name]
-      #       separator: ;
-      #       regex: ^(.*)$
-      #       targetLabel: nodename
-      #       replacement: $1
-      #       action: replace
-      relabelings:
-        ## RelabelConfigs to apply to samples before scraping.
-        ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
-        ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
-        - sourceLabels: [__meta_kubernetes_pod_annotation_openebs_io_monitoring]
-          regex: pool_exporter_prometheus
-          action: keep
-          ## Adding comma-separated source_labels below in order to fetch the metrics for pool claim instances of SPC and CSPC kind
-        - sourceLabels:
-            [
-              __meta_kubernetes_pod_label_openebs_io_storage_pool_claim,
-              __meta_kubernetes_pod_label_openebs_io_cstor_pool_cluster,
-            ]
-          action: replace
-          ## separator: Separator placed between concatenated source label values, default -> ;
-          separator: " "
-          targetLabel: storage_pool_claim
-          ## Adding comma-separated source_labels below in order to fetch the metrics for pool instances of CSP and CSPI kind
-        - sourceLabels:
-            [
-              __meta_kubernetes_pod_label_openebs_io_cstor_pool,
-              __meta_kubernetes_pod_label_openebs_io_cstor_pool_instance,
-            ]
-          action: replace
-          ## separator: Separator placed between concatenated source label values, default -> ;
-          separator: " "
-          targetLabel: cstor_pool
-        - sourceLabels:
-            [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-          action: replace
-          regex: ([^:]+)(?::\d+)?;(\d+)
-          replacement: ${1}:${2}
-          targetLabel: __address__
-
-    ## Label selector for pods to which this PodMonitor applies
-    # selector: {}
-    #   matchlabels: {}
-
-    ## Example
-
-    # selector: {}
-    #   matchLabels:
-    #       app: cstor-pod
-
-    selector:
-      matchLabels:
-        app: cstor-pool
-
-    ## Namespaces from which services are selected
-    # namespaceSelector: []
-    ## Match any namespace
-    #   any: true
-
-    ## Example
-
-    # namespaceSelector:
-    #   any: true
-
-    ## Explicit list of namespace names to select using matchNames
-    # matchNames: []
-
-    ## Example
-
-    # namespaceSelector:
-    #   matchNames:
-    #   - openebs
-    #   - default
-
-    namespaceSelector:
-      any: true
+  localPV:
+    enabled: true
+    dashboards:
+      enabled: true

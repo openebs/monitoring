@@ -1,15 +1,18 @@
-{{- if .Values.alertRules }}
-{{- $customEnabledRules := dict -}}
-{{- range $dirName,$fields := .Values.alertRules }}
+{{- $alertRules := dict -}}
+{{- range $monitoringAddon,$fields := .Values.openebsMonitoringAddon }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
-{{ $_ := set $customEnabledRules $dirName $fields.enabled }}
+{{- if (hasKey $fields "alertRules") }}
+{{- if ($fields.alertRules.enabled) }}
+{{ $_ := set $alertRules $monitoringAddon $fields.alertRules.enabled }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- $files := .Files.Glob "rules/**.json" }}
 {{- if $files }}
 {{- range $fileName, $fileContents := $files }}
 {{- $dirName := split "/" $fileName }}
-{{- if (hasKey $customEnabledRules $dirName._1 ) }}
+{{- if and (hasKey $alertRules $dirName._1 ) $alertRules }}
 {{- $ruleName := regexReplaceAll "(^.*/)(.*)\\.json$" $fileName "${2}" }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -21,7 +24,6 @@ metadata:
 {{ include "openebs-monitoring.labels" $ | indent 4 }}
 spec:
 {{ $.Files.Get $fileName | indent 2 }}
-{{- end }}
 ---
 {{- end }}
 {{- end }}
