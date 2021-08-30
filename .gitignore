@@ -1,5 +1,5 @@
 # Chart dependencies
-/deploy/charts/*/charts
+/deploy/charts/charts
 .idea
 jsonnet/vendor/
 jsonnet/tmp/
