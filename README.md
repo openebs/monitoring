@@ -43,7 +43,7 @@ _See [helm install](https://helm.sh/docs/helm/helm_install/) for command documen
 #Helm
 helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, openebsMonitoringAddon.enabled=true
 ```
-Please visit the [link](https://openebs.github.io/monitoring/docs/guide.md) for more detailed instructions.
+Please visit the [link](/docs/guide.md) for more detailed instructions.
 
 
 #### Accessing Grafana
@@ -67,7 +67,7 @@ kubectl port-forward --namespace [NAMESPACE] pods/[grafana-pod-name] 32515:3000
 ```
 
 <!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
-The detailed chart documentation is available in [openebs-monitoring directory](https://github.com/openebs/monitoring/blob/develop/deploy/charts/openebs-monitoring/README.md).
+The detailed chart documentation is available in [charts directory](/deploy/charts/README.md).
 
 ## Contributing
 
