@@ -144,7 +144,6 @@ kube-prometheus-stack:
     ## Deploy default dashboards.
     ##
     defaultDashboardsEnabled: true
-    openebsDashboardsEnabled: true
     adminPassword: admin
 
     sidecar:
@@ -233,9 +232,10 @@ openebsMonitoringAddon:
               [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
             action: replace
             targetLabel: openebs_pvc
-          - sourceLabels: [__meta_kubernetes_pod_label_app]
+          - sourceLabels:
+              [__meta_kubernetes_endpoints_label_openebs_io_cas_type]
             action: replace
-            targetLabel: openebs_cstor_label
+            targetLabel: openebs_cas_type
 
       ## Label selector for services to which this ServiceMonitor applies
       # selector: {}
@@ -403,9 +403,6 @@ openebsMonitoringAddon:
           ## RelabelConfigs to apply to samples before scraping.
           ## More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
           ## To know more about RelabelConfig schema visit: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
-          - sourceLabels: [__meta_kubernetes_pod_label_monitoring]
-            regex: volume_exporter_prometheus
-            action: keep
           ## Below entry ending with vsm is deprecated and is maintained for
           ## backward compatibility purpose.
           - sourceLabels: [__meta_kubernetes_pod_label_vsm]
@@ -422,9 +419,10 @@ openebsMonitoringAddon:
               [__meta_kubernetes_pod_label_openebs_io_persistent_volume_claim]
             action: replace
             targetLabel: openebs_pvc
-          - sourceLabels: [__meta_kubernetes_pod_label_openebs_io_controller]
+          - sourceLabels:
+              [__meta_kubernetes_endpoints_label_openebs_io_cas_type]
             action: replace
-            targetLabel: openebs_jiva_label
+            targetLabel: openebs_cas_type
 
       ## Label selector for services to which this ServiceMonitor applies
       # selector: {}
