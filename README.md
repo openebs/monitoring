@@ -41,7 +41,7 @@ _See [helm install](https://helm.sh/docs/helm/helm_install/) for command documen
 
 ```console
 #Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false, openebsMonitoringAddon.enabled=true
+helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false
 ```
 Please visit the [link](/docs/guide.md) for more detailed instructions.
 

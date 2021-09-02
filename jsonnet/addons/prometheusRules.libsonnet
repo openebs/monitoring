@@ -6,15 +6,15 @@ local config = import '../config.libsonnet';
   // PrometheusRule yamls for different cas types
   prometheusRules:
     {
-      [if config.openebsMixin._config.alertRules[casType] then casType]:
+      [if config.openebsMixin._config.alertRules[monitoringAddon] then monitoringAddon]:
 
-        utils.PrometheusRule(std.asciiLower(casType)) {
+        utils.PrometheusRule(std.asciiLower(monitoringAddon)) {
           spec+: {
-            groups: prometheusRules[casType].groups,
+            groups: prometheusRules[monitoringAddon].groups,
           },
         }
 
-      for casType in std.objectFields(config._config.casType)
+      for monitoringAddon in std.objectFields(config._config.openebsMonitoringAddon)
 
     } +
     { [if config.openebsMixin._config.alertRules.volume then 'volume']:
