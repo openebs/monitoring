@@ -5,7 +5,8 @@ To generate dashboards and alert rules for monitoring helm chart and release a n
 ## Step by Step Process
 1. Add [dashboards](dashboards.md) and [alerts rules](alerts.md) in openebs-mixin by following the document.
 
-2. Update the dashboards and rules folder in [build.sh](../jsonnet/openebs-mixin/build.sh). The auto generated json files will be inside this folder.
+2. Update the dashboards and rules folder in [build.sh](../jsonnet/openebs-mixin/build.sh). The auto generated json files will be inside this folder.  
+   
    For example: If you add dashboards and alert rules for mayastor in openebs-mixin, then add mayastor as a folder name in build.sh file. 
    ```
 	generateDashboards(){
@@ -26,7 +27,8 @@ To generate dashboards and alert rules for monitoring helm chart and release a n
    $ make generate
    ```
    
-4. Update [helm configurations](../deploy/charts/values.yaml). 
+4. Update [helm configurations](../deploy/charts/values.yaml).   
+   
    For example: Add mayastor configurations in values.yaml with the following fields.
    ```
    . . . 
