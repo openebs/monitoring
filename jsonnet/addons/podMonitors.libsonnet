@@ -5,8 +5,8 @@ local oc = import '../lib/utils.libsonnet';
   // PodMonitor yamls for different cas types
   podMonitors:
     {
-      [if config._config.casType[casType].enabled && config._config.casType[casType].podMonitor.enabled then casType]:
-        oc.PodMonitor(std.asciiLower(casType), casType)
-      for casType in std.objectFields(config._config.casType)
+      [if config._config.openebsMonitoringAddon[monitoringAddon].enabled && config._config.openebsMonitoringAddon[monitoringAddon].podMonitor.enabled then monitoringAddon]:
+        oc.PodMonitor(std.asciiLower(monitoringAddon), monitoringAddon)
+      for monitoringAddon in std.objectFields(config._config.openebsMonitoringAddon)
     },
 }

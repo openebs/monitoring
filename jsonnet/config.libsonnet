@@ -21,19 +21,19 @@
   openebsMixin: (import './openebs-mixin/mixin.libsonnet') {
     _config+:: {
       dashboards+: {
-        cStor: $._config.casType.cStor.dashboards,
-        jiva: $._config.casType.jiva.dashboards,
-        localPV: $._config.casType.lvmLocalPV.dashboards,
-        lvmLocalPV: $._config.casType.lvmLocalPV.dashboards,
-        deviceLocalPV: $._config.casType.lvmLocalPV.dashboards,
-        ndm: $._config.casType.ndm.dashboards,
+        cStor: $._config.openebsMonitoringAddon.cStor.dashboards,
+        jiva: $._config.openebsMonitoringAddon.jiva.dashboards,
+        localPV: $._config.openebsMonitoringAddon.lvmLocalPV.dashboards,
+        lvmLocalPV: $._config.openebsMonitoringAddon.lvmLocalPV.dashboards,
+        deviceLocalPV: $._config.openebsMonitoringAddon.deviceLocalPV.dashboards,
+        ndm: $._config.openebsMonitoringAddon.ndm.dashboards,
       },
       alertRules+: {
-        cStor: $._config.casType.cStor.alertRules,
-        jiva: $._config.casType.jiva.alertRules,
-        lvmLocalPV: $._config.casType.lvmLocalPV.alertRules,
-        deviceLocalPV: $._config.casType.lvmLocalPV.alertRules,
-        ndm: $._config.casType.ndm.alertRules,
+        cStor: $._config.openebsMonitoringAddon.cStor.alertRules,
+        jiva: $._config.openebsMonitoringAddon.jiva.alertRules,
+        lvmLocalPV: $._config.openebsMonitoringAddon.lvmLocalPV.alertRules,
+        deviceLocalPV: $._config.openebsMonitoringAddon.deviceLocalPV.alertRules,
+        ndm: $._config.openebsMonitoringAddon.ndm.alertRules,
       },
     },
   },
@@ -85,7 +85,7 @@
       namespace: 'openebs-monitoring',
     },
     // Configuration for different cas types.
-    casType: {
+    openebsMonitoringAddon: {
       cStor: {
         // To generate manifests for cstor. If set, manifests will be generated for cStor.
         enabled: true,
@@ -120,8 +120,8 @@
                 action: 'replace',
               },
               {
-                sourceLabels: ['__meta_kubernetes_pod_label_app'],
-                targetLabel: 'openebs_cstor_label',
+                sourceLabels: ['__meta_kubernetes_endpoints_label_openebs_io_cas_type'],
+                targetLabel: 'openebs_cas_type',
                 action: 'replace',
               },
             ],
@@ -187,11 +187,6 @@
             // relabel configs to apply to samples before ingestion.
             relabelings: [
               {
-                sourceLabels: ['__meta_kubernetes_pod_label_monitoring'],
-                regex: 'volume_exporter_prometheus',
-                action: 'keep',
-              },
-              {
                 sourceLabels: ['__meta_kubernetes_pod_label_vsm'],
                 targetLabel: 'openebs_pv',
                 action: 'replace',
@@ -207,8 +202,8 @@
                 action: 'replace',
               },
               {
-                sourceLabels: ['__meta_kubernetes_pod_label_app'],
-                targetLabel: 'openebs_jiva_label',
+                sourceLabels: ['__meta_kubernetes_endpoints_label_openebs_io_cas_type'],
+                targetLabel: 'openebs_cas_type',
                 action: 'replace',
               },
             ],
@@ -225,7 +220,7 @@
         // To generate dashboards configMap yamls. If set, dashboards will be appended in grafana-dashboardDefinition yaml.
         dashboards: true,
         // To generate prometheusRule yamls. If set, prometheusRule will be generated.
-        alertRules: false,
+        alertRules: true,
         // ServiceMonitor configuration
         serviceMonitor: serviceMonitor('metrics', '/metrics', {
           name: 'openebs-lvm-node',

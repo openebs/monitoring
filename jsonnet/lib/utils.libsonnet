@@ -13,28 +13,28 @@ local config = import '../config.libsonnet';
   },
 
   // Template function to create ServiceMonitor.
-  ServiceMonitor(name, casType): $._Object('monitoring.coreos.com/v1', 'ServiceMonitor', name) {
+  ServiceMonitor(name, monitoringAddon): $._Object('monitoring.coreos.com/v1', 'ServiceMonitor', name) {
     local svm = self,
     sc:: {
-      st: config._config.casType,
+      st: config._config.openebsMonitoringAddon,
     },
     spec: {
       endpoints: [
-        svm.sc.st[casType].serviceMonitor.endpoints,
+        svm.sc.st[monitoringAddon].serviceMonitor.endpoints,
       ],
-      namespaceSelector: svm.sc.st[casType].serviceMonitor.namespaceSelector,
-      selector: svm.sc.st[casType].serviceMonitor.selector,
+      namespaceSelector: svm.sc.st[monitoringAddon].serviceMonitor.namespaceSelector,
+      selector: svm.sc.st[monitoringAddon].serviceMonitor.selector,
     },
   },
 
   // Template function to create PodMonitor.
-  PodMonitor(name, casType): $._Object('monitoring.coreos.com/v1', 'PodMonitor', name) {
+  PodMonitor(name, monitoringAddon): $._Object('monitoring.coreos.com/v1', 'PodMonitor', name) {
     spec: {
       podMetricsEndpoints: [
-        config._config.casType[casType].podMonitor.podMetricsEndpoints,
+        config._config.openebsMonitoringAddon[monitoringAddon].podMonitor.podMetricsEndpoints,
       ],
-      namespaceSelector: config._config.casType[casType].podMonitor.namespaceSelector,
-      selector: config._config.casType[casType].podMonitor.selector,
+      namespaceSelector: config._config.openebsMonitoringAddon[monitoringAddon].podMonitor.namespaceSelector,
+      selector: config._config.openebsMonitoringAddon[monitoringAddon].podMonitor.selector,
     },
   },
 

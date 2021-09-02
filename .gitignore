@@ -4,3 +4,4 @@
 jsonnet/vendor/
 jsonnet/tmp/
 jsonnet/buildscripts/vendor/
+jsonnet/manifests
