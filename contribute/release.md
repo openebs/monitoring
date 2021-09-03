@@ -3,7 +3,7 @@
 To generate dashboards and alert rules for monitoring helm chart and release a new version of helm chart.
 
 ## Step by Step Process
-1. Add [dashboards](dashboards.md) and [alerts rules](alerts.md) in openebs-mixin by following the document.
+1. Add [dashboards](dashboards.md) and [alerts rules](alerts.md) in openebs-mixin by following the documented steps.
 
 2. Update the dashboards and rules folder in [build.sh](../jsonnet/openebs-mixin/build.sh). The auto generated json files will be inside this folder.  
    
@@ -29,7 +29,7 @@ To generate dashboards and alert rules for monitoring helm chart and release a n
    
 4. Update [helm configurations](../deploy/charts/values.yaml).   
    
-   For example: Add mayastor configurations in values.yaml with the following fields.
+   For example: Add mayastor configuration in values.yaml with the following fields.
    ```
    . . . 
 	openebsMonitoringAddon:
@@ -48,3 +48,21 @@ To generate dashboards and alert rules for monitoring helm chart and release a n
    version: 0.4.x
    . . .
    ```
+
+---
+**NOTE**
+
+- To upgrade the depdendencies like kube-prometheus, do `jb update`. 
+	```
+	cd jsonnet
+	jb update
+	```
+
+- To upgrade the dependencies like kube-prometheus-stack in helm chart, update its version in [chart.yaml](../deploy/charts/Chart.yaml)
+	```
+	. . . 
+	dependencies:
+	  - name: kube-prometheus-stack
+	    version: "16.5.*"
+	    . . .
+	```
