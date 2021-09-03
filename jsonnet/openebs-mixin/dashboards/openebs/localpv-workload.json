@@ -1838,7 +1838,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "node_filesystem_size_bytes {fstype=~\"ext4|xfs\",mountpoint=~\"(.+/($pvName/mount))\"}",
+              "expr": "node_filesystem_size_bytes {fstype=~\"ext4|xfs\",mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"}",
               "instant": true,
               "interval": "",
               "intervalFactor": 2,
@@ -1926,7 +1926,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(.+/($pvName/mount))\",fstype=~\"ext4|xfs\"})",
+              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(^/var/lib/.+/($pvName/mount))\",fstype=~\"ext4|xfs\"})",
               "interval": "10s",
               "intervalFactor": 2,
               "legendFormat": "",
@@ -1999,7 +1999,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(.+/($pvName/mount))\"})",
+              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"})",
               "interval": "10s",
               "intervalFactor": 2,
               "legendFormat": "Pvc: $pvcName, Mount Point: {{mountpoint}}",
@@ -2102,7 +2102,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\"}",
+              "expr": "node_filesystem_avail_bytes{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"}",
               "format": "time_series",
               "hide": false,
               "interval": "",
@@ -2208,7 +2208,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "node_filesystem_files_free{mountpoint=~\"(.+/($pvName/mount))\"}",
+              "expr": "node_filesystem_files_free{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"}",
               "format": "time_series",
               "hide": false,
               "interval": "",
@@ -2313,7 +2313,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "node_filesystem_files{mountpoint=~\"(.+/($pvName/mount))\"}",
+              "expr": "node_filesystem_files{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"}",
               "format": "time_series",
               "hide": false,
               "interval": "",
@@ -2423,7 +2423,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "node_filesystem_readonly{mountpoint=~\"(.+/($pvName/mount))\"}",
+              "expr": "node_filesystem_readonly{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"}",
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
@@ -2533,7 +2533,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "node_filesystem_device_error{mountpoint=~\"(.+/($pvName/mount))\"} ",
+              "expr": "node_filesystem_device_error{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"} ",
               "format": "time_series",
               "hide": false,
               "interval": "",
@@ -2668,7 +2668,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(.+/($pvName/mount))\"} * 100) / node_filesystem_size_bytes{mountpoint=~\"(.+/($pvName/mount))\"})",
+              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"} * 100) / node_filesystem_size_bytes{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"})",
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
