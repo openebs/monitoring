@@ -8,7 +8,7 @@ Example:
 	_config+:: {
 		. . .
 		// Configuration for different cas types.
-		casType: {
+		openebsMonitoringAddon: {
 			mayastor: {
 				serviceMonitor: serviceMonitor(<PORTt>, <PATH>, <SELECTOR_NAME>) {
 					enabled: true,
