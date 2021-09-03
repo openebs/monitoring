@@ -24,17 +24,17 @@ To install kube-prometheus stack with openebs-addons(serviceMonitors, grafana da
 	openebsMixin: (import './openebs-mixin/mixin.libsonnet') {
 		_config+:: {
 			dashboards+: {
-				cStor: $._config.casType.cStor.dashboards,
-				jiva: $._config.casType.jiva.dashboards,
-				localPV: $._config.casType.lvmLocalPV.dashboards,
-				lvmLocalPV: $._config.casType.lvmLocalPV.dashboards,
-				deviceLocalPV: $._config.casType.lvmLocalPV.dashboards,
+				cStor: $._config.openebsMonitoringAddon.cStor.dashboards,
+				jiva: $._config.openebsMonitoringAddon.jiva.dashboards,
+				localPV: $._config.openebsMonitoringAddon.lvmLocalPV.dashboards,
+				lvmLocalPV: $._config.openebsMonitoringAddon.lvmLocalPV.dashboards,
+				deviceLocalPV: $._config.openebsMonitoringAddon.deviceLocalPV.dashboards,
 			},
 			alertRules+: {
-				cStor: $._config.casType.cStor.alertRules,
-				jiva: $._config.casType.jiva.alertRules,
-				lvmLocalPV: $._config.casType.lvmLocalPV.alertRules,
-				deviceLocalPV: $._config.casType.lvmLocalPV.alertRules,
+				cStor: $._config.openebsMonitoringAddon.cStor.alertRules,
+				jiva: $._config.openebsMonitoringAddon.jiva.alertRules,
+				lvmLocalPV: $._config.openebsMonitoringAddon.lvmLocalPV.alertRules,
+				deviceLocalPV: $._config.openebsMonitoringAddon.deviceLocalPV.alertRules,
 			},
 		},
 	},
