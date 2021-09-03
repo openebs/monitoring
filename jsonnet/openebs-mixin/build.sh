@@ -6,8 +6,8 @@ set -x
 # only exit with zero if all commands of the pipeline exit successfully
 set -o pipefail
 
-dashboardsDirPath=../../deploy/charts/openebs-monitoring/dashboards
-rulesDirPath=../../deploy/charts/openebs-monitoring/rules
+dashboardsDirPath=../../deploy/charts/dashboards
+rulesDirPath=../../deploy/charts/rules
 
 generateDashboards(){
 	rm -rf $dashboardsDirPath
