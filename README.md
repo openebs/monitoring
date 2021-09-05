@@ -1,52 +1,50 @@
 # OpenEBS Monitoring add-on
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring?ref=badge_shield)
 
-
-This repository contains monitoring-related (like Prometheus, grafana, etc,) artifacts like helm charts/ YAMLs. The goal of this repository is to provide an easy to setup monitoring stack for OpenEBS.
-
-This repository will aggregate all the monitoring related artifacts that are currently spread across multiple repositories like:
-
-- https://github.com/openebs/openebs/tree/master/k8s
-- https://github.com/openebs/charts/tree/gh-pages/grafana-charts
+A set of Grafana dashboards and Prometheus alerts for OpenEBS that can be installed as an [helm chart](./deploy/charts/) or imported as [jsonnet mixin](./jsonnet/).
 
 ## Status
 
-Pre-alpha. Under active development.
+**Beta**. Under active development and seeking [contributions from the community](#contributing).
+This repository currently supports dashboards and alerts for `cStor`, `Jiva`, `LVM LocalPV` OpenEBS storage engines.
 
-## Usage
 
-[Helm](https://helm.sh) must be installed to use the charts.
-Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
+## Install
 
-Once Helm is set up properly, add the repo as follows:
+### Using helm
+
+Setup the monitoring helm repository.
 
 ```console
 helm repo add openebs-monitoring https://openebs.github.io/monitoring/
+helm repo update
 ```
 
 You can then run `helm search repo openebs-monitoring` to see the charts.
 
-#### Install Chart
-
-Please visit the [link](https://openebs.github.io/monitoring/) for install instructions via helm3.
-
-```console
-# Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring --namespace [NAMESPACE] --create-namespace
+Install the helm chart. 
+```
+helm install openebs-monitoring openebs-monitoring/openebs-monitoring --namespace openebs --create-namespace
 ```
 
-_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+The detailed chart documentation is available in [charts directory](/deploy/charts/README.md).
 
-#### Install openebs-addon-only
+### Using kubectl
 
-```console
-#Helm
-helm install [RELEASE_NAME] openebs-monitoring/openebs-monitoring -n  [PROMETHEUS-STACK-NAMESPACE]  --set kube-prometheus-stack.install=false
+Generate an YAML using `helm template`
+
 ```
-Please visit the [link](/docs/guide.md) for more detailed instructions.
+git clone https://github.com/openebs/monitoring.git
+cd monitoring/deploy/charts/openebs-monitoring
+helm dependency update
+helm template openebs-monitoring . --namespace openebs > openebs-monitoring.generated.yaml
+kubectl create -f openebs-monitoring.generated.yaml
+```
 
+## Usage
 
-#### Accessing Grafana
+### Accessing Grafana
 
 ```console
 # Look at the grafana pod and check that the pod is in running state
@@ -66,29 +64,28 @@ kubectl port-forward --namespace [NAMESPACE] pods/[grafana-pod-name] 32515:3000
 # Default Grafana login credentials- [username: admin, password: admin]
 ```
 
-<!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
-The detailed chart documentation is available in [charts directory](/deploy/charts/README.md).
 
 ## Contributing
 
-OpenEBS community welcomes your feedback and contributions in any form possible.
+OpenEBS welcomes your feedback and contributions in any form possible.
 
-Want to raise an issue or help with fixes and features?
-- See [open issues](https://github.com/openebs/openebs/issues)
+- Want to raise an issue or help with fixes and features?
+    - See [open issues](https://github.com/openebs/monitoring/issues)
+    - See [Project Roadmap](https://github.com/orgs/openebs/projects/41)
 - See [contributing guide](./CONTRIBUTING.md)
 
 ## Community
 
 - [Join OpenEBS community on Kubernetes Slack](https://kubernetes.slack.com)
   - Already signed up? Head to our discussions at [#openebs](https://kubernetes.slack.com/messages/openebs/)
-  - Want to join our contributor community meetings, [check this out](https://github.com/openebs/openebs/blob/master/community/README.md).
+  - Want to join our contributor community meetings, [check this out](https://github.com/openebs/openebs/blob/HEAD/community/README.md).
 - Join our OpenEBS CNCF Mailing lists
   - For OpenEBS project updates, subscribe to [OpenEBS Announcements](https://lists.cncf.io/g/cncf-openebs-announcements)
   - For interacting with other OpenEBS users, subscribe to [OpenEBS Users](https://lists.cncf.io/g/cncf-openebs-users)
 
 ## Code of conduct
 
-Participation in the OpenEBS community is governed by the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
+Participation in the OpenEBS community is governed by the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/HEAD/code-of-conduct.md).
 
 
 ## License

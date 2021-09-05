@@ -82,7 +82,7 @@
   // Configuration for openebs monitoring
   _config+:: {
     openebsMonitoring: {
-      namespace: 'openebs-monitoring',
+      namespace: 'openebs',
     },
     // Configuration for different cas types.
     openebsMonitoringAddon: {
