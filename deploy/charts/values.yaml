@@ -160,7 +160,7 @@ kube-prometheus-stack:
 
 ## Configuration for node-problem-detector subchart
 node-problem-detector:
-  install: true
+  install: false
 
   ## Volume for storing logs
   extraVolumes:
