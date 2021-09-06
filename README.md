@@ -32,15 +32,22 @@ The detailed chart documentation is available in [charts directory](/deploy/char
 
 ### Using kubectl
 
-Generate an YAML using `helm template`
-
 ```
 git clone https://github.com/openebs/monitoring.git
-cd monitoring/deploy/charts/openebs-monitoring
-helm dependency update
-helm template openebs-monitoring . --namespace openebs > openebs-monitoring.generated.yaml
+cd monitoring/deploy/yaml
+kubectl create -f openebs-monitoring.generated.crds.yaml
 kubectl create -f openebs-monitoring.generated.yaml
 ```
+
+> Note: The above files are generated using `helm tempalate` as follows: 
+> ```
+> git clone https://github.com/openebs/monitoring.git
+> cd monitoring/deploy/charts
+> helm dependency update
+> helm template openebs-monitoring . --include-crds --namespace openebs > openebs-monitoring.generated.yaml
+> #Copy the CRDs into ../yaml/openebs-monitoring.generated.crds.yaml
+> #Copy the rest into ../yaml/openebs-monitoring.generated.yaml
+> ```
 
 ## Usage
 
