@@ -125,14 +125,14 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_total_size_bytes{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_total_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "Total size",
                "refId": "A"
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_free_size_bytes{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_free_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "Free size",
@@ -140,7 +140,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_total_size_bytes{name=~\"$volume_group\"}-lvm_vg_free_size_bytes{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_total_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}-lvm_vg_free_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "Used size",
@@ -244,14 +244,14 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_mda_total_size_bytes{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_mda_total_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "Metadata total size",
                "refId": "A"
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_mda_free_size_bytes{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_mda_free_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "Metadata free size",
@@ -259,7 +259,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_mda_total_size_bytes{name=~\"$volume_group\"}-lvm_vg_mda_free_size_bytes{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_mda_total_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}-lvm_vg_mda_free_size_bytes{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "Metadata used size",
@@ -360,7 +360,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_permission{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_permission{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "Permission",
                "refId": "A"
@@ -484,7 +484,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_allocation_policy{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_allocation_policy{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "allocation policy",
                "refId": "A"
@@ -580,14 +580,14 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_lv_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_lv_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "current lv count",
                "refId": "A"
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_max_lv_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_max_lv_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "max lv count",
@@ -710,14 +710,14 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_pv_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_pv_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "current pv count",
                "refId": "A"
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_missing_pv_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_missing_pv_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "missing pv count",
@@ -725,7 +725,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_max_pv_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_max_pv_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "max pv count",
@@ -784,14 +784,14 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_mda_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_mda_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "current metadata count",
                "refId": "A"
             },
             {
                "exemplar": true,
-               "expr": "lvm_vg_mda_used_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_mda_used_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "used metadata count",
@@ -889,7 +889,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_vg_snap_count{name=~\"$volume_group\"}",
+               "expr": "lvm_vg_snap_count{name=~\"$volume_group\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "snapshots count",
                "refId": "A"
@@ -1048,7 +1048,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_used_percent{vg=~\"$volume_group\",segtype=~\"$thinVolume\"}",
+               "expr": "lvm_lv_used_percent{vg=~\"$volume_group\",segtype!=\"$thinPool\", instance=~\"$node.*\"}",
                "format": "table",
                "instant": true,
                "interval": "",
@@ -1057,7 +1057,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_lv_total_size_bytes{vg=~\"$volume_group\",segtype!=\"$thinPool\"}",
+               "expr": "lvm_lv_total_size_bytes{vg=~\"$volume_group\",segtype!=\"$thinPool\", instance=~\"$node.*\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -1173,7 +1173,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_reads_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\"} * 0))",
+               "expr": "sum(rate(node_disk_reads_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\", instance=~\"$node.*\"} * 0))",
                "interval": "",
                "intervalFactor": 2,
                "legendFormat": "reads/sec",
@@ -1271,7 +1271,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_writes_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\"} * 0))",
+               "expr": "sum(rate(node_disk_writes_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\", instance=~\"$node.*\"} * 0))",
                "interval": "",
                "intervalFactor": 2,
                "legendFormat": "writes/sec",
@@ -1371,7 +1371,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\"} * 0))",
+               "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\", instance=~\"$node.*\"} * 0))",
                "hide": false,
                "interval": "",
                "intervalFactor": 4,
@@ -1380,7 +1380,7 @@
             },
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\"} * 0))",
+               "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\", instance=~\"$node.*\"} * 0))",
                "hide": false,
                "interval": "",
                "intervalFactor": 4,
@@ -1479,7 +1479,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_io_time_seconds_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\"} * 0))",
+               "expr": "sum(rate(node_disk_io_time_seconds_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\", instance=~\"$node.*\"} * 0))",
                "interval": "",
                "intervalFactor": 2,
                "legendFormat": "utilization",
@@ -1651,7 +1651,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_health_status{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_health_status{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "Health Status",
                "refId": "A"
@@ -1751,7 +1751,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_when_full{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_when_full{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "behaviour",
                "refId": "A"
@@ -1838,14 +1838,14 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_total_size_bytes{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_total_size_bytes{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "Total size",
                "refId": "A"
             },
             {
                "exemplar": true,
-               "expr": "lvm_lv_used_percent{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_used_percent{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "Used %",
@@ -1933,14 +1933,14 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_mda_total_size_bytes{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_mda_total_size_bytes{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "Metadata size",
                "refId": "A"
             },
             {
                "exemplar": true,
-               "expr": "lvm_lv_mda_used_percent{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_mda_used_percent{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "hide": false,
                "interval": "",
                "legendFormat": "Metadata used %",
@@ -1999,7 +1999,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_snap_percent{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_snap_percent{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "snapshot full %",
                "refId": "A"
@@ -2156,7 +2156,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_permission{name=~\"$thin_pool\"}",
+               "expr": "lvm_lv_permission{name=~\"$thin_pool\", instance=~\"$node.*\"}",
                "interval": "",
                "legendFormat": "permission",
                "refId": "A"
@@ -2256,7 +2256,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_lv_used_percent{pool=~\"$thin_pool\",segtype=~\"$thinVolume\"}",
+               "expr": "lvm_lv_used_percent{pool=~\"$thin_pool\",segtype=~\"$thinVolume\", instance=~\"$node.*\"}",
                "format": "table",
                "instant": true,
                "interval": "",
@@ -2265,7 +2265,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_lv_total_size_bytes{pool=~\"$thin_pool\",segtype=~\"$thinVolume\"}",
+               "expr": "lvm_lv_total_size_bytes{pool=~\"$thin_pool\",segtype=~\"$thinVolume\", instance=~\"$node.*\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -2380,7 +2380,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_reads_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\"} * 0))",
+               "expr": "sum(rate(node_disk_reads_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\", instance=~\"$node.*\"} * 0))",
                "interval": "",
                "intervalFactor": 2,
                "legendFormat": "reads/sec",
@@ -2478,7 +2478,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_writes_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\"} * 0))",
+               "expr": "sum(rate(node_disk_writes_completed_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\", instance=~\"$node.*\"} * 0))",
                "interval": "",
                "intervalFactor": 2,
                "legendFormat": "writes/sec",
@@ -2576,7 +2576,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\"} * 0))",
+               "expr": "sum(rate(node_disk_read_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\", instance=~\"$node.*\"} * 0))",
                "interval": "",
                "intervalFactor": 4,
                "legendFormat": "Read bytes",
@@ -2584,7 +2584,7 @@
             },
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\"} * 0))",
+               "expr": "sum(rate(node_disk_written_bytes_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\", instance=~\"$node.*\"} * 0))",
                "hide": false,
                "interval": "",
                "intervalFactor": 4,
@@ -2683,7 +2683,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "sum(rate(node_disk_io_time_seconds_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\"} * 0))",
+               "expr": "sum(rate(node_disk_io_time_seconds_total{instance=~\"$node.*\"}[5m]) + on(device) group_left(name) (lvm_lv_when_full{vg=~\"$volume_group\",segtype=~\"$thinVolume\", instance=~\"$node.*\"} * 0))",
                "interval": "",
                "intervalFactor": 2,
                "legendFormat": "utililization",
@@ -2870,7 +2870,7 @@
          "targets": [
             {
                "exemplar": true,
-               "expr": "lvm_pv_total_size_bytes{vg=~\"$volume_group\"}",
+               "expr": "lvm_pv_total_size_bytes{vg=~\"$volume_group\", instance=~\"$node.*\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -2880,7 +2880,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_pv_used_size_bytes{vg=~\"$volume_group\"}",
+               "expr": "lvm_pv_used_size_bytes{vg=~\"$volume_group\", instance=~\"$node.*\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -2890,7 +2890,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_pv_free_size_bytes{vg=~\"$volume_group\"}",
+               "expr": "lvm_pv_free_size_bytes{vg=~\"$volume_group\", instance=~\"$node.*\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -2900,7 +2900,7 @@
             },
             {
                "exemplar": true,
-               "expr": "lvm_pv_device_size_bytes{vg=~\"$volume_group\"}",
+               "expr": "lvm_pv_device_size_bytes{vg=~\"$volume_group\", instance=~\"$node.*\"}",
                "format": "table",
                "hide": false,
                "instant": true,
@@ -2955,6 +2955,7 @@
    "schemaVersion": 27,
    "style": "dark",
    "tags": [
+      "OpenEBS",
       "LVM"
    ],
    "templating": {
@@ -2990,7 +2991,7 @@
             "hide": 0,
             "includeAll": false,
             "label": "node",
-            "multi": true,
+            "multi": false,
             "name": "node",
             "options": [ ],
             "query": "label_values(node_uname_info, instance)",
@@ -3052,7 +3053,7 @@
             "allValue": null,
             "current": { },
             "datasource": "$datasource",
-            "definition": "label_values(lvm_lv_total_size_bytes{vg=~\"$volume_group\", segtype=~\"$thinPool\"},  name) ",
+            "definition": "label_values(lvm_lv_total_size_bytes{vg=~\"$volume_group\", segtype=~\"$thinPool\", instance=~\"$node.*\"},  name) ",
             "description": null,
             "error": null,
             "hide": 0,
@@ -3061,7 +3062,7 @@
             "multi": false,
             "name": "thin_pool",
             "options": [ ],
-            "query": "label_values(lvm_lv_total_size_bytes{vg=~\"$volume_group\", segtype=~\"$thinPool\"},  name) ",
+            "query": "label_values(lvm_lv_total_size_bytes{vg=~\"$volume_group\", segtype=~\"$thinPool\", instance=~\"$node.*\"},  name) ",
             "refresh": 2,
             "regex": "",
             "skipUrlSync": false,
