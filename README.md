@@ -6,8 +6,8 @@ A set of Grafana dashboards and Prometheus alerts for OpenEBS that can be instal
 
 ## Status
 
-**Beta**. Under active development and seeking [contributions from the community](#contributing).
-This repository currently supports dashboards and alerts for `cStor`, `Jiva`, `LVM LocalPV` OpenEBS storage engines.
+**Beta**. This repository currently supports dashboards and alerts for `cStor`, `Jiva`, `LVM LocalPV` OpenEBS storage engines.
+This project is under active development and seeking [contributions from the community](#contributing).
 
 
 ## Install
@@ -32,22 +32,7 @@ The detailed chart documentation is available in [charts directory](/deploy/char
 
 ### Using kubectl
 
-```
-git clone https://github.com/openebs/monitoring.git
-cd monitoring/deploy/yaml
-kubectl create -f openebs-monitoring.generated.crds.yaml
-kubectl create -f openebs-monitoring.generated.yaml
-```
-
-> Note: The above files are generated using `helm tempalate` as follows: 
-> ```
-> git clone https://github.com/openebs/monitoring.git
-> cd monitoring/deploy/charts
-> helm dependency update
-> helm template openebs-monitoring . --include-crds --namespace openebs > openebs-monitoring.generated.yaml
-> #Copy the CRDs into ../yaml/openebs-monitoring.generated.crds.yaml
-> #Copy the rest into ../yaml/openebs-monitoring.generated.yaml
-> ```
+You can generate YAMLs and install using kubectl. See detailed steps at [./jsonnet](/jsonnet/README.md).
 
 ## Usage
 
@@ -58,16 +43,19 @@ kubectl create -f openebs-monitoring.generated.yaml
 kubectl get pods -n [NAMESPACE] | grep -i grafana
 # Note the public IP of any one of the nodes
 kubectl get nodes -o wide
-# Open browser and visit http://<NodeIp>:<NodePort> (where <NodeIp> is the public IP address of your node, and default Grafana <NodePort> is 32515)
-# Default Grafana login credentials- [username: admin, password: admin]
+# Note the Grafana Service IP
+kubectl get svc -n [NAMESPACE] | grep -i grafana
+# Open browser and visit http://<NodeIp>:<NodePort> 
+#  (where <NodeIp> is the public IP address of your node, and <NodePort> is Grafana Service Port)
+#  Default Grafana login credentials- [username: admin, password: admin]
 ```
 
 **NOTE:** If public IP is not available then you can access it via port-forwarding
 
 ```console
 # Perform port-forwarding
-kubectl port-forward --namespace [NAMESPACE] pods/[grafana-pod-name] 32515:3000
-# Open browser and visit http://127.0.0.1:32515
+# kubectl port-forward --namespace [NAMESPACE] pods/[grafana-pod-name] [grafrana-foward-port]:[grafana-cluster-port]
+# Open browser and visit http://127.0.0.1:[grafana-forward-port]
 # Default Grafana login credentials- [username: admin, password: admin]
 ```
 
