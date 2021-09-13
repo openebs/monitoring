@@ -2,7 +2,7 @@
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fopenebs%2Fmonitoring?ref=badge_shield)
 
-A set of Grafana dashboards and Prometheus alerts for OpenEBS that can be installed as an [helm chart](./deploy/charts/) or imported as [jsonnet mixin](./jsonnet/).
+A set of Grafana dashboards and Prometheus alerts for OpenEBS that can be installed as a [helm chart](./deploy/charts/) or imported as [jsonnet mixin](./jsonnet/).
 
 ## Status
 
