@@ -7,8 +7,8 @@ else
 endif
 JSONNET_FMT := $(JSONNET_FMT_CMD) $(JSONNET_FMT_ARGS)
 
-dashboardsDirPath=../../deploy/charts/openebs-monitoring/dashboards
-rulessDirPath=../../deploy/charts/openebs-monitoring/rules
+dashboardsDirPath=../../deploy/charts/dashboards
+rulessDirPath=../../deploy/charts/rules
 
 all: fmt generate lint
 
