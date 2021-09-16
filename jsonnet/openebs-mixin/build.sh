@@ -13,7 +13,7 @@ generateDashboards(){
 	rm -rf $dashboardsDirPath
 	mkdir -p $dashboardsDirPath
 	jsonnet -J vendor -m $dashboardsDirPath lib/dashboards.jsonnet
-	dashboardsFolder=(cStor jiva localPV npd lvmLocalPV ndm)
+	dashboardsFolder=(cStor jiva localPV npd lvmLocalPV ndm zfsLocalPV)
 	for i in ${dashboardsFolder[@]}
 	do
 	    x=`echo $i | awk '{print tolower($0)}'`
