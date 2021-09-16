@@ -163,6 +163,8 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `openebsMonitoringAddon.cStor.podMonitor.podMetricsEndpoints.relabelings`                                       | RelabelConfigs to apply to cstor pools before scraping                              | `[...]`                                                   |
 | `openebsMonitoringAddon.cStor.podMonitor.selector`                                                              | Selector to select endpoints objects                                                | `{matchLabels: {app: cstor-pool}}`                        |
 | `openebsMonitoringAddon.cStor.podMonitor.namespaceSelector`                                                     | Selector to select which namespaces the endpoints objects are discovered from       | `[any: true]`                                             |
+| `openebsMonitoringAddon.zfsLocalPV.enabled`                                                          | Enables installation of monitoring addons for zfs LocalPV                      | `true`                                                    |
+| `openebsMonitoringAddon.zfsLocalPV.dashboards.enabled`                                                        | Enables dashboard installation of openebs zfs localPV Storage engine                   | `true`                                                    |
 
 We can edit the npd parameters too accordingly from [here](https://artifacthub.io/packages/helm/deliveryhero/node-problem-detector)
 
