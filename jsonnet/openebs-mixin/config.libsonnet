@@ -7,6 +7,7 @@
       jiva: true,
       lvmLocalPV: true,
       deviceLocalPV: true,
+      zfsLocalPV: true,
     },
     // Configuration to set which openebs component is installed. Based on this, dashboards and alert rules configuration will be set.
     openenbsComponents: {
@@ -18,6 +19,7 @@
       jiva: $._config.casTypes.jiva,
       localPV: $._config.casTypes.lvmLocalPV || $._config.casTypes.deviceLocalPV,
       lvmLocalPV: $._config.casTypes.lvmLocalPV,
+      zfsLocalPV: $._config.casTypes.zfsLocalPV,
       npd: true,
       ndm: $._config.openenbsComponents.ndm,
     },

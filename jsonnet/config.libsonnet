@@ -27,6 +27,7 @@
         localPV: $._config.openebsMonitoringAddon.lvmLocalPV.dashboards,
         lvmLocalPV: $._config.openebsMonitoringAddon.lvmLocalPV.dashboards,
         deviceLocalPV: $._config.openebsMonitoringAddon.deviceLocalPV.dashboards,
+        zfsLocalPV: $._config.openebsMonitoringAddon.zfsLocalPV.dashboards,
         ndm: $._config.openebsMonitoringAddon.ndm.dashboards,
       },
       alertRules+: {
@@ -34,6 +35,7 @@
         jiva: $._config.openebsMonitoringAddon.jiva.alertRules,
         lvmLocalPV: $._config.openebsMonitoringAddon.lvmLocalPV.alertRules,
         deviceLocalPV: $._config.openebsMonitoringAddon.deviceLocalPV.alertRules,
+        zfsLocalPV: $._config.openebsMonitoringAddon.zfsLocalPV.alertRules,
         ndm: $._config.openebsMonitoringAddon.ndm.alertRules,
       },
     },
@@ -263,6 +265,22 @@
           name: 'openebs-ndm-exporter',
         }) {
           enabled: true,
+        },
+        // PodMonitor configuration
+        podMonitor: {
+          enabled: false,
+        },
+      },
+      zfsLocalPV: {
+        // To generate manifests for zfs localpv. If set, manifests will be generated.
+        enabled: true,
+        // To generate dashboards configMap yamls. If set, dashboards will be appended in grafana-dashboardDefinition yaml.
+        dashboards: true,
+        // To generate prometheusRule yamls. If set, prometheusRule will be generated.
+        alertRules: false,
+        // ServiceMonitor configuration
+        serviceMonitor: {
+          enabled: false,
         },
         // PodMonitor configuration
         podMonitor: {

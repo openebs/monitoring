@@ -648,3 +648,8 @@ openebsMonitoringAddon:
     enabled: true
     dashboards:
       enabled: true
+
+  zfsLocalPV:
+    enabled: true
+    dashboards:
+      enabled: true
