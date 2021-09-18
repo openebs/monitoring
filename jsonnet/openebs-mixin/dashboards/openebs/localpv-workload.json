@@ -1838,7 +1838,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "node_filesystem_size_bytes {fstype=~\"ext4|xfs\",mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"}",
+              "expr": "node_filesystem_size_bytes {fstype=~\"ext4|xfs|zfs\",mountpoint=~\"(^/var/lib/.+/($pvName/mount))\"}",
               "instant": true,
               "interval": "",
               "intervalFactor": 2,
@@ -1926,7 +1926,7 @@
           "targets": [
             {
               "exemplar": true,
-              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(^/var/lib/.+/($pvName/mount))\",fstype=~\"ext4|xfs\"})",
+              "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=~\"(^/var/lib/.+/($pvName/mount))\",fstype=~\"ext4|xfs|zfs\"} * 100) / node_filesystem_size_bytes {mountpoint=~\"(^/var/lib/.+/($pvName/mount))\",fstype=~\"ext4|xfs|zfs\"})",
               "interval": "10s",
               "intervalFactor": 2,
               "legendFormat": "",
