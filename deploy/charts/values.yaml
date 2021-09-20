@@ -607,7 +607,7 @@ openebsMonitoringAddon:
 
       selector:
         matchLabels:
-          name: openebs-ndm-exporter
+          app: openebs-ndm-exporter
 
       ## Namespaces from which services are selected
       # namespaceSelector: []
