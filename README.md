@@ -39,7 +39,7 @@ You can generate YAMLs and install using kubectl. See detailed steps at [./jsonn
 ### Accessing Grafana
 
 ```console
-# Look at the grafana pod and check that the pod is in running state
+# Look at the Grafana pod and check that the pod is in running state
 kubectl get pods -n [NAMESPACE] | grep -i grafana
 # Note the public IP of any one of the nodes
 kubectl get nodes -o wide

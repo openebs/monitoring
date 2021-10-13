@@ -2,7 +2,7 @@
 
 ![openebs-monitoring](images/openebs-monitoring.png)
 
-openEBS monitoring written in jsonnet has two components:
+OpenEBS monitoring written in jsonnet has two components:
 1. [**kube-prometheus stack**](https://github.com/prometheus-operator/kube-prometheus/tree/main/jsonnet/kube-prometheus)  
    It is a monitoring stack which includes prometheus, grafana and alertmanager.  
 2. [**openebs-mixin**](https://github.com/openebs/monitoring/tree/develop/jsonnet/openebs-mixin)  
@@ -10,7 +10,7 @@ openEBS monitoring written in jsonnet has two components:
 
 ## Directory structure
 
-- openEBS Monitoring  
+- OpenEBS Monitoring  
 
 	```
 	jsonnet
