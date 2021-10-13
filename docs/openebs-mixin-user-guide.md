@@ -84,7 +84,7 @@ To install kube-prometheus stack with openebs-addons(serviceMonitors, grafana da
 	---  
 	
 ## Install openebs-mixin in existing prometheus stack.  
-Setup grafana dashboards and alert rules for OpenEBS monitoring.
+Setup Grafana dashboards and alert rules for OpenEBS monitoring.
 ### Prerequisite
 
 - OpenEBS installed

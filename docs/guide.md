@@ -12,7 +12,7 @@
 
 - Install grafana plugin
    
-   -   There are two plugins that we are using for openEBS dashboards.
+   -   There are two plugins that we are using for OpenEBS dashboards.
   
        -  [grafana-polystat-panel]([https://link](https://grafana.com/grafana/plugins/grafana-polystat-panel/))
 
@@ -23,7 +23,7 @@
 		grafana-cli plugins install grafana-polystat-panel 
 		grafana-cli plugins install snuids-trafficlights-panel
 		```
-- Update grafana configuration
+- Update Grafana configuration
    
    - Append the below configuration in the configmap in which Grafana initialisation is done or cm in which `grafana.ini` file is declared.
 		```console
@@ -42,8 +42,8 @@
 1. **Update values.yaml**
    
    -  Disable dependent chart(kube-prometheus-stack) by updating `kube-prometheus-stack.install` to `false`
-   -  If you have updated the label for grafana sidecar container(`grafana-sc-dashboard`), then update `kube-prometheus-stack.grafana.sidecar.dashboards.label: <UPDATED_LABEL>`
-   -  Update `namespaceOverride` with the namespace name in which prometheus stack is installed
+   -  If you have updated the label for Grafana sidecar container(`grafana-sc-dashboard`), then update `kube-prometheus-stack.grafana.sidecar.dashboards.label: <UPDATED_LABEL>`
+   -  Update `namespaceOverride` with the namespace name in which Prometheus stack is installed
    -  After updating these specific values in values.yaml, these fields should look like this(example) :
 		```console
 		...
