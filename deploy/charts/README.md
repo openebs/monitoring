@@ -4,7 +4,7 @@
 ![Chart Lint and Test](https://github.com/openebs/monitoring/workflows/Chart%20Lint%20and%20Test/badge.svg)
 ![Release Charts](https://github.com/openebs/monitoring/workflows/Release%20Charts/badge.svg?branch=develop)
 
-A Helm chart for openebs monitoring. This chart bootstraps OpenEBS monitoring stack on a [Kubernetes](http://kubernetes.io) cluster using the  
+A Helm chart for OpenEBS monitoring. This chart bootstraps OpenEBS monitoring stack on a [Kubernetes](http://kubernetes.io) cluster using the  
 [Helm](https://helm.sh) package manager.
 
 **Homepage:** <http://www.openebs.io/>
