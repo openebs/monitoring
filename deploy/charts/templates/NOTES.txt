@@ -9,9 +9,7 @@ To access the dashboards, form the Grafana URL and open it in the browser
 {{- if (index $.Values "kube-prometheus-stack" "install") }}
 {{- if (index $.Values "kube-prometheus-stack" "grafana" "ingress" "enabled") }}
 {{- range $host := (index $.Values "kube-prometheus-stack" "grafana" "ingress" "hosts") }}
-  {{- range .paths }}
-  http{{ if (index $.Values "kube-prometheus-stack" "grafana" "ingress" "tls") }}s{{ end }}://{{ $host.host }}{{ . }}
-  {{- end }}
+http{{ if (index $.Values "kube-prometheus-stack" "grafana" "ingress" "tls") }}s{{ end }}://{{ $host }}{{ regexReplaceAll "\\(.*\\)" (index $.Values "kube-prometheus-stack" "grafana" "ingress" "path") "" }}
 {{- end }}
 {{- else if contains "NodePort" (index $.Values "kube-prometheus-stack" "grafana" "service" "type") }}
   export NODE_PORT={{ index $.Values "kube-prometheus-stack" "grafana" "service" "nodePort" }}
