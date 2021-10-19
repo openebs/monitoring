@@ -57,7 +57,7 @@ If you defined a **dependency condition** in **Chart.yaml**, you will have to de
 
 if you provide only the condition value, you will deploy OpenEBS monitoring stack with the default values provided in there chart.
 
-####value.yaml (with default values)
+#### value.yaml (with default values)
 ````yaml
 openebs-monitoring:
   install: true
