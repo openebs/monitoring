@@ -113,15 +113,6 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `kube-prometheus-stack.grafana.sidecar.dashboards.label`                                  | Labels for configmaps to be collected by Grafana sidecars                           | `"grafana_dashboard"`                                     |
 | `kube-prometheus-stack.grafana.plugins`                                                   | Adds Grafana plugin list to be installed                                            | `["grafana-polystat-panel","snuids-trafficlights-panel"]` |
 | `openebsMonitoringAddon.cStor.enabled`                                                    | Enables installation of monitoring addons for cStor                                 | `true`                                                    |
-<<<<<<< HEAD
-| `openebsMonitoringAddon.cStor.dashboards.enabled`                                         | Enables dashboard installation of openebs cStor Storage engine                      | `true`                                                    |
-| `openebsMonitoringAddon.jiva.enabled`                                                     | Enables installation of monitoring addons for Jiva                                  | `true`                                                    |
-| `openebsMonitoringAddon.jiva.dashboards.enabled`                                          | Enables dashboard installation of openebs Jiva Storage engine                       | `true`                                                    |
-| `openebsMonitoringAddon.localPV.enabled`                                                  | Enables installation of monitoring addons for localPV                               | `true`                                                    |
-| `openebsMonitoringAddon.lvmLocalPV.enabled`                                               | Enables installation of monitoring addons for lvm-LocalPV                           | `true`                                                    |
-| `openebsMonitoringAddon.localPV.dashboards.enabled`                                       | Enables dashboard installation of openebs Local PV Storage engine                   | `true`                                                    |
-| `openebsMonitoringAddon.lvmLocalPV.dashboards.enabled`                                    | Enables dashboard installation of openebs lvm-localpv storage engine                | `true`                                                    |
-=======
 | `openebsMonitoringAddon.cStor.dashboards.enabled`                                         | Enables dashboard installation of OpenEBS cStor Storage engine                      | `true`                                                    |
 | `openebsMonitoringAddon.jiva.enabled`                                                     | Enables installation of monitoring addons for Jiva                                  | `true`                                                    |
 | `openebsMonitoringAddon.jiva.dashboards.enabled`                                          | Enables dashboard installation of OpenEBS Jiva Storage engine                       | `true`                                                    |
@@ -129,21 +120,14 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `openebsMonitoringAddon.lvmLocalPV.enabled`                                               | Enables installation of monitoring addons for lvm-LocalPV                           | `true`                                                    |
 | `openebsMonitoringAddon.localPV.dashboards.enabled`                                       | Enables dashboard installation of OpenEBS Local PV Storage engine                   | `true`                                                    |
 | `openebsMonitoringAddon.lvmLocalPV.dashboards.enabled`                                    | Enables dashboard installation of OpenEBS lvm-localpv storage engine                | `true`                                                    |
->>>>>>> origin
 | `openebsMonitoringAddon.npd.dashboards.enabled`                                           | Enables dashboard installation related to node problems                             | `true`                                                    |
 | `openebsMonitoringAddon.ndm.dashboards.enabled`                                           | Enables dashboard installation of OpenEBS node-disk-manager(NDM)                    | `true`                                                    |
 | `node-problem-detector.extraVolumes`                                                      | Volumes needed by node problem detector                                             | `[...]`                                                   |
 | `node-problem-detector.extraVolumeMounts`                                                 | Volumes mounts needed by node problem detector                                      | `[...]`                                                   |
 | `node-problem-detector.metrics.serviceMonitor.enabled`                                    | Enables node problem detector monitoring                                            | `true`                                                    |
-<<<<<<< HEAD
-| `openebsMonitoringAddon.cStor.alertRules.enabled`                                         | Enables openebs pool and volume rules for cStor                                     | `true`                                                    |
-| `openebsMonitoringAddon.jiva.alertRules.enabled`                                          | Enables openebs volume rules for Jiva                                               | `true`                                                    |
-| `openebsMonitoringAddon.lvmLocalPV.alertRules.enabled`                                    | Enables openebs lvm-localpv Storage engine rules                                    | `true`                                                    |
-=======
 | `openebsMonitoringAddon.cStor.alertRules.enabled`                                         | Enables OpenEBS pool and volume rules for cStor                                     | `true`                                                    |
 | `openebsMonitoringAddon.jiva.alertRules.enabled`                                          | Enables OpenEBS volume rules for Jiva                                               | `true`                                                    |
 | `openebsMonitoringAddon.lvmLocalPV.alertRules.enabled`                                    | Enables OpenEBS lvm-localpv Storage engine rules                                    | `true`                                                    |
->>>>>>> origin
 | `openebsMonitoringAddon.volume.alertRules.enabled`                                        | Enables persistent volume rules                                                     | `true`                                                    |
 | `openebsMonitoringAddon.cstor.serviceMonitor.enabled`                                     | Enables monitoring of cStor volumes                                                 | `true`                                                    |
 | `openebsMonitoringAddon.cstor.serviceMonitor.endpoints.port`                              | Name of the service port cstor volume endpoint refers to                            | `"exporter"`                                              |
@@ -166,11 +150,7 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `openebsMonitoringAddon.ndm.serviceMonitor.enabled`                                       | Enables monitoring of OpenEBS ndm                                                   | `true`                                                    |
 | `openebsMonitoringAddon.ndm.serviceMonitor.endpoints.port`                                | Name of the service port ndm exporters endpoint refers to                           | `"metrics"`                                               |
 | `openebsMonitoringAddon.ndm.serviceMonitor.endpoints.path`                                | HTTP path to scrape for metrics from ndm exporters                                  | `"/metrics"`                                              |
-<<<<<<< HEAD
-| `openebsMonitoringAddon.ndm.serviceMonitor.selector`                                      | Selector to select endpoints objects                                                | `{matchLabels: {app: openebs-ndm-exporter}}`              |
-=======
 | `openebsMonitoringAddon.ndm.serviceMonitor.selector`                                      | Selector to select endpoints objects                                                | `{matchLabels: {name: openebs-ndm-exporter}}`             |
->>>>>>> origin
 | `openebsMonitoringAddon.ndm.serviceMonitor.namespaceSelector`                             | Selector to select which namespaces the endpoints objects are discovered from       | `[any: true]`                                             |
 | `openebsMonitoringAddon.deviceLocalPV.enabled`                                            | Enables installation of monitoring addons for device-LocalPV                        | `true`                                                    |
 | `openebsMonitoringAddon.deviceLocalPV.serviceMonitor.enabled`                             | Enables monitoring of device localPV                                                | `true`                                                    |
@@ -185,11 +165,7 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `openebsMonitoringAddon.cStor.podMonitor.selector`                                        | Selector to select endpoints objects                                                | `{matchLabels: {app: cstor-pool}}`                        |
 | `openebsMonitoringAddon.cStor.podMonitor.namespaceSelector`                               | Selector to select which namespaces the endpoints objects are discovered from       | `[any: true]`                                             |
 | `openebsMonitoringAddon.zfsLocalPV.enabled`                                               | Enables installation of monitoring addons for zfs LocalPV                           | `true`                                                    |
-<<<<<<< HEAD
-| `openebsMonitoringAddon.zfsLocalPV.dashboards.enabled`                                    | Enables dashboard installation of openebs zfs localPV Storage engine                | `true`                                                    |
-=======
 | `openebsMonitoringAddon.zfsLocalPV.dashboards.enabled`                                    | Enables dashboard installation of OpenEBS zfs localPV Storage engine                | `true`                                                    |
->>>>>>> origin
 
 We can edit the npd parameters too accordingly from [here](https://artifacthub.io/packages/helm/deliveryhero/node-problem-detector)
 
