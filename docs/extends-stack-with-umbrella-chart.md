@@ -5,7 +5,7 @@
 - Helm 3+ installed
 - OpenEBS installed
 
-#What is a umbrella chart and why use it ?
+# What is a umbrella chart and why use it ?
 
 An umbrella chart is a way of encapsulate multiple complex charts with one chart.
 
@@ -29,13 +29,13 @@ To create your our umbrella chart, you will have a create a folder structure lik
 | Chart.yaml         | Contains your chart identification with a dependency to OpenEBS monitoring stack |
 | values.yaml        | Contains all your settings values                                                |
 
-#Umbrella chart with ingress and storage enabled
+# Umbrella chart with ingress and storage enabled
 
 Here a example that will enable ingress and storage for OpenEBS monitoring stack.
 
 In the file **Chart.yaml**, you will enter your umbrella chart information with a dependency to OpenEBS monitoring stack.  The property name : `condition` is optional.  That property will allow you to install that dependency or not depending of the value in `values.yaml`. 
 
-####Chart.yaml
+#### Chart.yaml
 ````yaml
 apiVersion: v2
 name: monitoring-stack
@@ -63,7 +63,7 @@ openebs-monitoring:
   install: true
 ````
 
-####value.yaml (with ingress and storage)
+#### value.yaml (with ingress and storage)
 
 To use storage for the monitoring stack, you will have to create the storage class before using it.  In this example, I use a storage class named : `sc-metrics`.
 
@@ -179,7 +179,7 @@ openebs-monitoring:
     install: true
 ````
 
-#How to deploy the umbrella chart
+# How to deploy the umbrella chart
 
 ### Download the dependencies
 The first step will be to download the dependencies by running this command in a terminal in the umbrella folder.     
@@ -208,7 +208,7 @@ You will obtain that folder structure
 
 ### Install the chart
 
-####From the umbrella folder
+#### From the umbrella folder
 
 In a terminal in the umbrella folder run this command :
 
@@ -221,7 +221,7 @@ ex :
 helm install monitoring . -n monitoring --create-namespace
 ````
 
-####From a helm chart repository
+#### From a helm chart repository
 
 In a terminal in the umbrella folder run this command :
 
