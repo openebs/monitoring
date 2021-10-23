@@ -65,7 +65,7 @@ openebs-monitoring:
 
 #### value.yaml (with ingress and storage)
 
-To use storage for the monitoring stack, you will have to create the storage class before using it.  In this example, I use a storage class named : `sc-metrics`.
+To use storage for the monitoring stack, you will have to create the storage class before using it.  In the following example, I use a storage class named: `sc-metrics` which already exists in my cluster.
 
 For ingress, I used a domain name : `dev.dynamic.cluster109.local`
 
