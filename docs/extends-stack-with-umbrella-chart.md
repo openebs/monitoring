@@ -67,7 +67,7 @@ openebs-monitoring:
 
 To use storage for the monitoring stack, you will have to create the storage class before using it.  In the following example, I use a storage class named: `sc-metrics` which already exists in my cluster.
 
-For ingress, I used a domain name : `dev.dynamic.cluster109.local`
+Similarly you can also customize other parameters. For instance, if domain name has to be used to access the user interfaces, the `ingress` section needs to be updated. In the following example I use the value: `dev.dynamic.cluster109.local`. 
 
 The applications will be accessible from :
 - http://dev.dynamic.cluster109.local/prometheus
