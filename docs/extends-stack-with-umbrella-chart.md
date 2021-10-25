@@ -187,7 +187,7 @@ In the monitoring stack, there is a folder named `dashboards` that contains Graf
 
 Our umbrella chart folder structure will look like that :
 
-| Folder/File               | Description                                                                 |
+| Folder/File          | Description                                                                      |
 | ------               | ------                                                                           |
 | charts               | Contains your chart dependencies (auto-generated with helm)                      |
 | dashboards           | Contains all your Grafana dashboards (json format)                               |
