@@ -262,7 +262,7 @@
         alertRules: false,
         // ServiceMonitor configuration
         serviceMonitor: serviceMonitor('metrics', '/metrics', {
-          name: 'openebs-ndm-exporter',
+          app: 'openebs-ndm-exporter',
         }) {
           enabled: true,
         },
