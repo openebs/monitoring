@@ -76,16 +76,18 @@ The following table lists the configurable parameters of the OpenEBS monitoring 
 
 You can modify different parameters by specifying the desired value in the `helm install` command by using the `--set` and/or the `--set-string` flag(s). You can modify the parameters of the [kube-prometheus-stack chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) by adding `kube-prometheus-stack` before the desired parameter in the `helm install` command.
 
-In the following sample command we modify `serviceMonitors.cstor.enabled` from the openebs-monitoring chart and `kube-prometheus-stack.kubeProxy.enabled` from the kube-prometheus-stack chart to disable monitoring for cstor volumes and kube-proxy.
+In the following sample command we modify `openebsMonitoringAddon.cStor.enabled` from the openebs-monitoring chart and `kube-prometheus-stack.kubeProxy.enabled` from the kube-prometheus-stack chart to disable monitoring for cstor and kube-proxy.
 
 ```console
 helm install openebs-monitoring openebs-monitoring/monitoring --namespace openebs-monitoring --create-namespace \
-	--set serviceMonitors.cstor.enabled=false \
+	--set openebsMonitoringAddon.cStor.enabled=false \
 	--set kube-prometheus-stack.kubeProxy.enabled=false
 ```
 
 | Parameter                                                                                 | Description                                                                         | Default                                                   |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `kube-prometheus-stack.global.rbac.pspEnabled`                                           | Disable psp for alertmanager, prometheus and prometheus-operator                                                         | `false`                                              |
+| `kube-prometheus-stack.kube-state-metrics.podSecurityPolicy.enabled`                                           | Disable psp for kube-state-metrics                                                        | `false`                                              |
 | `kube-prometheus-stack.prometheus.service.type`                                           | Service type for Prometheus                                                         | `"NodePort"`                                              |
 | `kube-prometheus-stack.prometheus.service.nodePort`                                       | NodePort value for Prometheus service                                               | `32514`                                                   |
 | `kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` | Enables Prometheus to select every service monitors                                 | `false`                                                   |
@@ -93,6 +95,7 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `kube-prometheus-stack.prometheus.prometheusSpec.ruleSelectorNilUsesHelmValues`           | Enables Prometheus to select every Prometheus rules                                 | `false`                                                   |
 | `kube-prometheus-stack.prometheus.prometheusSpec.replicas`                                | Number of instances to deploy for a Prometheus deployment                           | `1`                                                       |
 | `kube-prometheus-stack.prometheus.prometheusSpec.storageSpec`                             | Storage spec to specify how storage shall be used.                                  | `{}`                                                      |
+| `kube-prometheus-stack.prometheus-node-exporter.rbac.pspEnabled`                                           | Disable psp for node-exporter                                                         | `false`                                              |
 | `kube-prometheus-stack.prometheus-node-exporter.securityContext`                          | Privilege and access control settings for node-exporter                             | `{...}`                                                   |
 | `kube-prometheus-stack.prometheus-node-exporter.extraArgs`                                | Additional container arguments                                                      | `[...]`                                                   |
 | `kube-prometheus-stack.alertmanager.enabled`                                              | Deploy Alertmanager                                                                 | `true`                                                    |
@@ -102,7 +105,8 @@ helm install openebs-monitoring openebs-monitoring/monitoring --namespace openeb
 | `kube-prometheus-stack.alertmanager.alertmanagerSpec.replicas`                            | Number of instances to deploy for a Alertmanager deployment                         | `1`                                                       |
 | `kube-prometheus-stack.alertmanager.alertmanagerSpec.storage`                             | Storage is the definition of how storage will be used by the Alertmanager instances | `{}`                                                      |
 | `kube-prometheus-stack.prometheusOperator.enabled`                                        | Deploy Prometheus Operator                                                          | `true`                                                    |
-| `kube-prometheus-stack.grafana.enabled`                                                   | Enables monitoring of Grafana itself                                                | `true`                                                    |
+| `kube-prometheus-stack.grafana.enabled`                                                   | Enables monitoring of grafana itself                                                | `true`                                                    |
+| `kube-prometheus-stack.grafana.rbac.pspEnabled`                                           | Disable psp for grafana                                                        | `false`                                              |
 | `kube-prometheus-stack.grafana.grafana.ini`                                               | Append to Grafana's primary configuration                                           | `{panels: {disable_sanitize_html: true}}`                 |
 | `kube-prometheus-stack.grafana.service.type`                                              | Service type for Grafana                                                            | `"NodePort"`                                              |
 | `kube-prometheus-stack.grafana.service.nodePort`                                          | NodePort value for Grafana service                                                  | `32515`                                                   |
