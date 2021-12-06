@@ -17,7 +17,19 @@ fullnameOverride: ""
 ## Configuration for kube-prometheus-stack subchart
 kube-prometheus-stack:
   install: true
+
+  global:
+    rbac:
+      pspEnabled: false
+
+  kube-state-metrics:
+    podSecurityPolicy:
+      enabled: false
+
   prometheus-node-exporter:
+    rbac:
+      pspEnabled: false
+
     ## privilege and access control settings for node-exporter
     securityContext:
       fsGroup: 65534
@@ -130,6 +142,9 @@ kube-prometheus-stack:
 
   grafana:
     enabled: true
+
+    rbac:
+      pspEnabled: false
 
     ## In order to render HTML and Javascript in a text panel without being sanitized
     ## enable the `disable_sanitize_html` settings in Grafana ini file
