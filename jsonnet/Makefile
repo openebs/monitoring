@@ -1,4 +1,4 @@
-SHELL=/bin/bash -o pipefail
+SHELL=/usr/bin/env bash -o pipefail
 
 BIN_DIR?=$(shell pwd)/tmp/bin
 
