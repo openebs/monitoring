@@ -23,6 +23,6 @@ function(param) {
   local prometheusRules = self,
   _config+:: param,
   prometheusRules+::
-    cstor(prometheusRules._config).prometheusRules.cStor + jiva(prometheusRules._config).prometheusRules.jiva + lvmLocalPV(prometheusRules._config).prometheusRules.lvmlocalpv + volume(prometheusRules._config).prometheusRules.volume
+    cstor(prometheusRules._config).prometheusRules.cStor + jiva(prometheusRules._config).prometheusRules.jiva + lvmLocalPV(prometheusRules._config).prometheusRules.lvmLocalPV + volume(prometheusRules._config).prometheusRules.volume
     + npd(prometheusRules._config).prometheusRules.npd,
 }
