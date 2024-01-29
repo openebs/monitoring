@@ -1,3 +1,4 @@
+{{ if (.Capabilities.APIVersions.Has "monitoring.coreos.com/v1") }}
 {{- $alertRules := dict -}}
 {{- range $monitoringAddon,$fields := .Values.openebsMonitoringAddon }}
 {{- if (and (hasKey $fields "enabled") ($fields.enabled)) }}
@@ -25,6 +26,7 @@ metadata:
 spec:
 {{ $.Files.Get $fileName | indent 2 }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
