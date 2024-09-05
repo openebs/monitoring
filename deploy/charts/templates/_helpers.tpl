@@ -80,5 +80,8 @@ Usage:
 {{- range $subchart }}
 {{- $values = index $values . }}
 {{- end }}
-{{- include $template (dict "Chart" (dict "Name" (last $subchart)) "Values" $values "Release" $dot.Release "Capabilities" $dot.Capabilities) }}
+{{- if $values.enabled }}  # Add this condition to check if the subchart is enabled
+  {{- include $template (dict "Chart" (dict "Name" (last $subchart)) "Values" $values "Release" $dot.Release "Capabilities" $dot.Capabilities) }}
 {{- end }}
+{{- end }}
+
