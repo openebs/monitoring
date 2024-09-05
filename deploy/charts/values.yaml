@@ -271,11 +271,11 @@ openebsMonitoringAddon:
         any: true
 
   npd:
-    enabled: true
+    enabled: false
     dashboards:
-      enabled: true
+      enabled: false
     alertRules:
-      enabled: true
+      enabled: false
 
   volume:
     enabled: true
