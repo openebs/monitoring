@@ -23,8 +23,8 @@ jobs:
 
       - name: Jsonnet formatter
         run: |
-          cd jsonnet && make --always-make fmt
+          cd jsonnet/openebs-mixin && make --always-make fmt
 
       - name: Jsonnet linter
         run: |
-          cd jsonnet && make --always-make lint
+          cd jsonnet/openebs-mixin && make --always-make lint
