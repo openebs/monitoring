@@ -6,6 +6,7 @@ on:
       - "jsonnet/**"
     branches:
       - develop
+      - test
   pull_request:
     paths:
       - "jsonnet/**"
@@ -23,8 +24,8 @@ jobs:
 
       - name: Jsonnet formatter
         run: |
-          cd jsonnet/openebs-mixin && make --always-make fmt
+          cd jsonnet && make --always-make fmt
 
       - name: Jsonnet linter
         run: |
-          cd jsonnet/openebs-mixin && make --always-make lint
+          cd jsonnet && make --always-make lint
