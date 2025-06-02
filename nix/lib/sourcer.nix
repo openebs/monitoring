@@ -13,7 +13,7 @@ let
         # && path != (toString (src + "/utils/dependencies/scripts/release.sh"))
       );
       path = src;
-      name = "puls8";
+      name = "monitoring";
     };
 in
 {

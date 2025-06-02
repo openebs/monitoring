@@ -14,7 +14,7 @@ function(param) {
                 summary: "Persistent Volume Claim '{{ $labels.persistentvolumeclaim }}' in namespace '{{ $labels.namespace }}' is not consumed by any pod in any namespace",
                 description: "Persistent Volume Claim '{{ $labels.persistentvolumeclaim }}' has no consumer",
               },
-              expr: 'kube_persistentvolumeclaim_info unless (kube_persistentvolumeclaim_info * on(persistentvolumeclaim) group_left kube_pod_spec_volumes_persistentvolumeclaims_info) == 1',
+              expr: 'kube_persistentvolumeclaim_info UNLESS ON (namespace, persistentvolumeclaim) count by (namespace, persistentvolumeclaim) (kube_pod_spec_volumes_persistentvolumeclaims_info) == 1',
               'for': '5m',
               labels: {
                 severity: 'info',
