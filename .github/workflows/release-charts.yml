@@ -6,6 +6,7 @@ on:
       - "deploy/charts/**"
     branches:
       - develop
+  workflow_dispatch:
 
 jobs:
   release:
@@ -24,7 +25,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v4
         with:
-          version: v3.14.3
+          version: v3.17
 
       - name: Add dependency chart repos
         run: |
@@ -33,7 +34,7 @@ jobs:
           helm repo add localpv-provisioner https://openebs.github.io/dynamic-localpv-provisioner
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+        uses: helm/chart-releaser-action@v1.7.0
         env:
           CR_TOKEN: "${{ secrets.CR_TOKEN }}"
         with:
