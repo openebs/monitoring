@@ -802,7 +802,7 @@
             },
             "datasource": {
                "type": "prometheus",
-               "uid": "prometheus"
+               "uid": "${datasource}"
             },
             "definition": "label_values(diskpool_status,name)",
             "hide": 0,
