@@ -380,10 +380,10 @@
             "current": {
                "selected": true,
                "text": [
-                  "pvc-d070ac1c-6bb7-4ece-9893-5471c0c636a8"
+                  "All"
                ],
                "value": [
-                  "pvc-d070ac1c-6bb7-4ece-9893-5471c0c636a8"
+                  "*"
                ]
             },
             "datasource": {

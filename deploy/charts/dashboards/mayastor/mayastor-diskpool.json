@@ -793,12 +793,8 @@
          {
             "current": {
                "selected": true,
-               "text": [
-                  "pool-on-node-1"
-               ],
-               "value": [
-                  "pool-on-node-1"
-               ]
+               "text": "All",
+               "value": "*"
             },
             "datasource": {
                "type": "prometheus",
