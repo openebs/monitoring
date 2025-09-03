@@ -29,6 +29,8 @@ kube-prometheus-stack:
   prometheus-node-exporter:
     rbac:
       pspEnabled: false
+    service:
+      port: 49201
 
     ## privilege and access control settings for node-exporter
     securityContext:
