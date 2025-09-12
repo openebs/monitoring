@@ -793,16 +793,12 @@
          {
             "current": {
                "selected": true,
-               "text": [
-                  "pool-on-node-1"
-               ],
-               "value": [
-                  "pool-on-node-1"
-               ]
+               "text": "All",
+               "value": "*"
             },
             "datasource": {
                "type": "prometheus",
-               "uid": "prometheus"
+               "uid": "${datasource}"
             },
             "definition": "label_values(diskpool_status,name)",
             "hide": 0,
